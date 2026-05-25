@@ -36,7 +36,7 @@ function EmailInput({
         className={cn(
           'flex-1 min-w-0 bg-transparent outline-none border-none',
           'font-sans text-[0.75rem] font-medium leading-[110%] tracking-[-0.015em]',
-          'text-foreground placeholder:text-muted-foreground',
+          'text-foreground placeholder:text-muted-fg',
         )}
       />
       <Button variant="submit" onClick={handleSubmit}>
