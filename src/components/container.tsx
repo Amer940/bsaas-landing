@@ -6,7 +6,7 @@ const containerVariants = cva('w-full max-w-[76.5rem] mx-auto px-4', {
   variants: {
     border: {
       none: '',
-      bottom: 'border-b border-[var(--border)]',
+      sides: 'border-x border-[var(--border)]',
     },
   },
   defaultVariants: {
