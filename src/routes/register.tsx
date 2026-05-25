@@ -1,13 +1,18 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import { supabase } from '#/lib/supabase'
 import { FieldInfo } from '#/components/ui/field-info'
 
 export const Route = createFileRoute('/register')({
+  validateSearch: (search: Record<string, unknown>) => ({
+    redirect: (search.redirect as string) || '',
+  }),
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const navigate = useNavigate()
+  const { redirect } = Route.useSearch()
   const form = useForm({
     defaultValues: {
       full_name: '',
@@ -26,7 +31,11 @@ function RouteComponent() {
       }
       console.log('Uspjesan login')
       // redirect to login or dashboard
-      // navigate({ to: '/' })
+      if (redirect === 'checkout') {
+        window.location.href = `https://brat.lemonsqueezy.com/checkout/buy/d3c08faf-42e8-426e-b852-f4ab2332c65d?checkout[custom][user_id]=${data.user?.id}&checkout[email]=${encodeURIComponent(data.user?.email || '')}&checkout[name]=${encodeURIComponent(value.full_name)}`
+      } else {
+        navigate({ to: redirect || '/' })
+      }
     },
   })
 
@@ -135,6 +144,9 @@ function RouteComponent() {
                   >
                     Reset
                   </button>
+                  <span>
+                    Already have an account? <Link to="/login">Sign In</Link>
+                  </span>
                 </div>
               )}
             />
