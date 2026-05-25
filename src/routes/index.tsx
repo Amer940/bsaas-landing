@@ -30,7 +30,7 @@ function Home() {
           textPosition="bottom"
         />
       </div>
-      <FeaturesGridSection></FeaturesGridSection>
+      <FeaturesGridSection />
     </>
   )
 }
