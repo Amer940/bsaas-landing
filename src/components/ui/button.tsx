@@ -14,9 +14,8 @@ const buttonVariants = cva(
         outline:
           'bg-transparent text-black min-w-[9.625rem] h-8 px-3 gap-[0.625rem] font-[family-name:var(--font-sans)] rounded-full border border-black text-[0.875rem]',
         submit:
-          'bg-black text-white px-5 py-[0.625rem] gap-[0.625rem] font-[family-name:var(--font-sans)] rounded-full text-[0.75rem] uppercase',
+          'bg-black text-white px-5 gap-[0.625rem] font-[family-name:var(--font-sans)] rounded-full text-[0.75rem] uppercase max-h-[2rem]',
       },
-
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
         xs: "h-6 gap-1 rounded-md px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
