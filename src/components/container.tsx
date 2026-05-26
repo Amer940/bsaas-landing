@@ -1,27 +1,13 @@
 import * as React from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '#/lib/utils.ts'
 
-const containerVariants = cva('w-full max-w-[76.5rem] mx-auto px-4', {
-  variants: {
-    border: {
-      none: '',
-      sides: 'border-x border-[var(--border)]',
-    },
-  },
-  defaultVariants: {
-    border: 'none',
-  },
-})
-
-function Container({
-  className,
-  border,
-  ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof containerVariants>) {
+function Container({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div className={cn(containerVariants({ border }), className)} {...props} />
+    <div
+      className={cn('w-full md:max-w-306 mx-auto md:px-4 px-3', className)}
+      {...props}
+    />
   )
 }
 
-export { Container, containerVariants }
+export { Container }
