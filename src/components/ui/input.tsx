@@ -24,7 +24,7 @@ function EmailInput({
   return (
     <div
       className={cn(
-        'flex items-center h-10 w-99 rounded-full bg-white pr-1 py-1 pl-5',
+        'flex items-center h-10 md:w-99 w-full rounded-full bg-white pr-1 py-1 pl-5',
         className,
       )}
     >

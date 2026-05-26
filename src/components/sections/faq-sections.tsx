@@ -32,24 +32,16 @@ const faqItems = [
 
 export function FAQSection() {
   return (
-    <Section border="sides">
+    <Section border="sides" className="bg-white">
       <Container>
         <div className="w-full flex-col">
-          <div
-            className="flex flex-col items-center text-center mx-auto "
-            style={{ marginBottom: '4rem' }}
-          >
-            <h2 className="text-50-medium">
+          <div className="flex flex-col items-center text-center mx-auto md:mb-16 mb-8">
+            <h2 className="md:text-50-medium text-[36px] leading-[110%] font-medium">
               Questions, <span className="text-primary">answered</span>.
             </h2>
-            <p
-              className="text-18-medium text-muted-foreground"
-              style={{ marginTop: '1.25rem' }}
-            >
+            <p className="md:text-18-medium text-[14px] font-normal text-muted-foreground mt-5 md:max-w-157 max-w-71">
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-              <br />
-              Lorem Ipsum has been.
+              industry. Lorem Ipsum has been.
             </p>
           </div>
           <FAQAccordion className="w-full" items={faqItems} />

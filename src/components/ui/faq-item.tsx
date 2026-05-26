@@ -105,7 +105,7 @@ function FAQAccordion({
 
   return (
     <div className={cn('flex flex-col w-full', className)}>
-      <div className="max-w-[50.5rem] w-full mx-auto">
+      <div className="max-w-202 w-full mx-auto">
         {items.map((item, index) => (
           <FAQItem
             key={index}
