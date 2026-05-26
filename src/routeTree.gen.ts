@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+<<<<<<< HEAD
 import { Route as TestRouteImport } from './routes/test'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
@@ -27,6 +28,14 @@ const RegisterRoute = RegisterRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+=======
+import { Route as StyleGuideRouteImport } from './routes/style-guide'
+import { Route as IndexRouteImport } from './routes/index'
+
+const StyleGuideRoute = StyleGuideRouteImport.update({
+  id: '/style-guide',
+  path: '/style-guide',
+>>>>>>> 3577596d2cf4bad026b02ce9526cfc12116701f5
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,6 +46,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+<<<<<<< HEAD
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/test': typeof TestRoute
@@ -46,10 +56,18 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/test': typeof TestRoute
+=======
+  '/style-guide': typeof StyleGuideRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/style-guide': typeof StyleGuideRoute
+>>>>>>> 3577596d2cf4bad026b02ce9526cfc12116701f5
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+<<<<<<< HEAD
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/test': typeof TestRoute
@@ -60,17 +78,32 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/login' | '/register' | '/test'
   id: '__root__' | '/' | '/login' | '/register' | '/test'
+=======
+  '/style-guide': typeof StyleGuideRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/style-guide'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/style-guide'
+  id: '__root__' | '/' | '/style-guide'
+>>>>>>> 3577596d2cf4bad026b02ce9526cfc12116701f5
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+<<<<<<< HEAD
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   TestRoute: typeof TestRoute
+=======
+  StyleGuideRoute: typeof StyleGuideRoute
+>>>>>>> 3577596d2cf4bad026b02ce9526cfc12116701f5
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+<<<<<<< HEAD
     '/test': {
       id: '/test'
       path: '/test'
@@ -90,6 +123,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+=======
+    '/style-guide': {
+      id: '/style-guide'
+      path: '/style-guide'
+      fullPath: '/style-guide'
+      preLoaderRoute: typeof StyleGuideRouteImport
+>>>>>>> 3577596d2cf4bad026b02ce9526cfc12116701f5
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,9 +144,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+<<<<<<< HEAD
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   TestRoute: TestRoute,
+=======
+  StyleGuideRoute: StyleGuideRoute,
+>>>>>>> 3577596d2cf4bad026b02ce9526cfc12116701f5
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
