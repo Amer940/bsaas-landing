@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@300;400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
   --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
   --primary: #e6c53e;
   --primary-fg: #000000;
   --background: #ffffff;
@@ -32,6 +33,7 @@
 
 @theme inline {
   --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-fg);
@@ -45,6 +47,19 @@
   --color-muted-foreground: var(--muted-foreground);
 
   --color-border: var(--border);
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer base {
