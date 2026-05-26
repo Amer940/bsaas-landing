@@ -55,11 +55,11 @@ function FeatureCard({
       {...props}
     >
       {!isBottom && (
-        <CardHeader className="gap-2 p-0 mb-6">
+        <CardHeader className="gap-2 p-0 md:mb-6 mb-4">
           <CardTitle className="text-18-medium text-foreground">
             {title}
           </CardTitle>
-          <CardDescription className="text-14-regular text-muted-foreground">
+          <CardDescription className="md:text-14-regular text-[12px] text-muted-foreground">
             {description}
           </CardDescription>
         </CardHeader>
