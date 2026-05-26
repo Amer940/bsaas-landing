@@ -9,9 +9,7 @@ export const Route = createFileRoute('/')({
 function Home() {
   return (
     <>
-      <div className="p-8 gap-4 flex">
-        <Navbar></Navbar>
-      </div>
+      <Navbar />
       <FeaturesGridSection />
     </>
   )

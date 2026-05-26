@@ -16,7 +16,7 @@ interface NavbarProps {
 function Navbar({ className }: NavbarProps) {
   return (
     <header
-      className={cn('fixed top-0 left-0 right-0 z-50 bg-white', className)}
+      className={cn('sticky top-0 left-0 right-0 z-50 bg-white', className)}
     >
       <div className="border-b border-border">
         <Container className="flex items-center justify-between py-6">
