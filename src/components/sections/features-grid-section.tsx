@@ -5,7 +5,7 @@ import { Section } from '../wrappers/section-wrapper'
 function FeaturesGridSection({ className }: { className?: string }) {
   return (
     <Section className={className} border="sides">
-      <Container className="px-0 border border-b-border border-t-border">
+      <Container className="px-0 md:px-0 border border-y border-x-0">
         <div className="grid grid-cols-[1fr_2.93fr]">
           <FeatureCard
             title="Upravljaj profilom"
