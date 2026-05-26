@@ -10,7 +10,7 @@ function Home() {
       <div className="p-8 gap-4 flex">
         <Navbar></Navbar>
       </div>
-      <FeaturesGridSection></FeaturesGridSection>
+      <FeaturesGridSection />
     </>
   )
 }
