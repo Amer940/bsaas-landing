@@ -33,12 +33,6 @@ function RouteComponent() {
           media={<img src={placeHolder} />}
           textPosition="bottom"
         />
-        <div className="bg-black py-16 w-screen px-2 mx-auto max-w-350">
-          <FAQSection />
-        </div>
-        <div className="w-screen px-2 mx-auto">
-          <CTASection />
-        </div>
       </div>
     </div>
   )
