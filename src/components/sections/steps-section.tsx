@@ -74,7 +74,7 @@ const StepsSection = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full md:px-4 px-2">
       <div className="site-container site-border overflow-hidden">
         <div className="flex flex-col relative">
           <div className="bg-gradient-to-t from-white/60 absolute bottom-0 left-0 right-0 h-[3%] z-[5] hidden md:block"></div>
@@ -82,7 +82,7 @@ const StepsSection = () => {
             <img src={ell} alt="" className="w-full" />
           </div>
           <div className="flex flex-col items-center text-center mx-auto">
-            <h2 className="md:text-[50px] max-w-[628px] text-[36px] tracking-[-0.015em] leading-[110%] font-medium">
+            <h2 className="md:text-[50px] max-w-[628px] text-[36px] tracking-[-0.015em] leading-[110%] font-medium md:mt-0 mt-10">
               From sign-up to{' '}
               <span className="block md:inline">first booking in</span>{' '}
               <span className="text-primary block md:inline">
@@ -131,7 +131,13 @@ const StepsSection = () => {
                     width: '90%',
                     scale: active === item.id ? 1 : 0.8,
                   }}
-                  onClick={(e) => (e.currentTarget as HTMLElement).scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })}
+                  onClick={(e) =>
+                    (e.currentTarget as HTMLElement).scrollIntoView({
+                      behavior: 'smooth',
+                      inline: 'center',
+                      block: 'nearest',
+                    })
+                  }
                 >
                   <img
                     src={item.img}
