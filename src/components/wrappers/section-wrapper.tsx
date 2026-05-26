@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
 import { cn } from '#/lib/utils.ts'
 
-const sectionVariants = cva('w-full max-w-[76.5rem] mx-auto px-2 md:px-0', {
+const sectionVariants = cva('w-full max-w-[1440px] mx-auto px-2 md:px-0', {
   variants: {
     border: {
       none: '',
