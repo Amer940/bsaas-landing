@@ -126,3 +126,25 @@
   font-weight: 500;
   line-height: 100%;
 }
+
+@utility site-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 768px) {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+@utility site-border {
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 768px) {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
