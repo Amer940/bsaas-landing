@@ -1,4 +1,5 @@
 import { Navbar } from '#/components/navigation'
+import { FAQSection } from '#/components/sections/faq-sections'
 import { Button } from '#/components/ui/button'
 import { FAQAccordion } from '#/components/ui/faq-item'
 import { FeatureCard } from '#/components/ui/features-card'
@@ -32,27 +33,8 @@ function RouteComponent() {
           media={<img src={placeHolder} />}
           textPosition="bottom"
         />
-        <div className="bg-white py-16 w-full mx-auto max-w-[1400px] flex items-center justify-center">
-          <FAQAccordion
-            className="max-w-[808px] w-full px-4 md:px-0"
-            items={[
-              {
-                title: 'How quickly can I start taking bookings?',
-                answer:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-              },
-              {
-                title: 'What payment methods do you support?',
-                answer:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-              },
-              {
-                title: 'Can I customize my booking page?',
-                answer:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-              },
-            ]}
-          />
+        <div className="bg-white py-16 w-full mx-auto max-w-[1400px]">
+          <FAQSection></FAQSection>
         </div>
       </div>
     </div>
