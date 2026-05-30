@@ -88,7 +88,7 @@ const StepsSection = () => {
                 under a minute.
               </span>
             </h2>
-            <p className="md:text-[18px] text-[14px] font-normal text-muted-foreground mt-5 md:max-w-157">
+            <p className="md:text-[18px] max-w-[400px] text-[14px] font-normal text-muted-foreground mt-5 md:max-w-157">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been.
             </p>
