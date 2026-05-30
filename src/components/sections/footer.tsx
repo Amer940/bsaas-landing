@@ -1,5 +1,9 @@
-import { Facebook, Instagram, Twitter, Linkedin, Youtube } from 'lucide-react'
 import Logo from '../../images/brat..svg'
+import { facebookIcon } from '../ui/facebook-icon'
+import { instagramIcon } from '../ui/instagram-icon'
+import { youtubeIcon } from '../ui/youtube-icon'
+import { linkedInIcon } from '../ui/linkedIn-icon'
+import { xIcon } from '../ui/x-icon'
 
 const FOOTER_LINKS = [
   { label: 'Kako radi', href: '#kako-radi' },
@@ -8,11 +12,11 @@ const FOOTER_LINKS = [
 ]
 
 const SOCIAL_LINKS = [
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Youtube, href: '#', label: 'YouTube' },
+  { icon: facebookIcon, href: '#', label: 'Facebook' },
+  { icon: instagramIcon, href: '#', label: 'Instagram' },
+  { icon: xIcon, href: '#', label: 'Twitter' },
+  { icon: linkedInIcon, href: '#', label: 'LinkedIn' },
+  { icon: youtubeIcon, href: '#', label: 'YouTube' },
 ]
 
 const LEGAL_LINKS = [
@@ -24,8 +28,8 @@ const LEGAL_LINKS = [
 function Footer() {
   return (
     <div className="w-full md:px-4 px-2">
-      <div className="site-container site-border border-t overflow-hidden lg:px-0 md:px-4 md:py-20 py-[48px]">
-        <div className="md:px-10 px-[12px]">
+      <div className="site-container site-border border-t overflow-hidden lg:px-0 md:px-4 md:py-20 py-12">
+        <div className="md:px-10 px-3">
           <div className="flex flex-col items-center justify-between">
             <div className="flex w-full md:flex-row flex-col md:justify-between items-center justify-center md:gap-0 gap-12">
               {' '}
@@ -60,7 +64,7 @@ function Footer() {
               </div>
             </div>
 
-            <div className="h-[1px] w-full bg-muted-foreground/20 mt-6 md:mb-4 mb-6" />
+            <div className="h-px w-full bg-muted-foreground/20 mt-6 md:mb-4 mb-6" />
             <div>
               <div className="flex items-center justify-center md:gap-6 gap-8 md:flex-row flex-col">
                 <p className="md:text-12-regular text-14-regular text-muted-foreground md:order-1 order-2">
@@ -71,7 +75,7 @@ function Footer() {
                     <a
                       key={link.href}
                       href={link.href}
-                      className="md:text-12-regular text-14-regular text-muted-foreground no-underline hover:text-primary transition-colors duration-250 underline"
+                      className="md:text-12-regular text-14-regular text-muted-foreground hover:text-primary transition-colors duration-250 underline"
                     >
                       {link.label}
                     </a>
