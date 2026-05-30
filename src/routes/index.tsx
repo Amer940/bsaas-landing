@@ -5,6 +5,7 @@ import { CTASection } from '#/components/sections/CTA-section'
 import { FAQSection } from '#/components/sections/faq-sections'
 import StepsSection from '#/components/sections/steps-section'
 import { PricingSection } from '#/components/sections/pricing-section'
+import { Footer } from '#/components/sections/footer'
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -19,6 +20,7 @@ function Home() {
       <PricingSection />
       <CTASection />
       <FAQSection />
+      <Footer />
     </>
   )
 }
