@@ -11,7 +11,7 @@ export function CTASection() {
         <div className="site-border py-[48px] border-b !border-[#E1E2E4]">
           <div className="w-full md:px-0 px-1 flex flex-col items-center">
             <div className="flex flex-col items-center text-center mx-auto md:mb-8 mb-6">
-              <h2 className="md:text-[50px] text-[36px] leading-[110%] font-medium text-white">
+              <h2 className="md:text-[50px] text-[36px] leading-[110%] tracking-[-0.015em] font-medium text-white">
                 Take care of your <br />
                 client today!
               </h2>
