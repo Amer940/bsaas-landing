@@ -2,19 +2,19 @@ import { Button } from '../ui/button'
 import arrowSvg from '../../images/arrow-svg.svg'
 import FeatureItem from '../ui/pricing-feature-label'
 
-function PricingSection({ className }: { className?: string }) {
+function PricingSection() {
   return (
     <div className="w-full md:px-4 px-2">
-      <div className="site-container site-border border md:py-20 flex flex-col md:gap-24 gap-8">
-        <div className="flex flex-col md:items-center md:text-center text-left mx-auto md:px-0 px-2">
-          <h2 className="md:text-[50px] max-w-157 text-[36px] tracking-[-0.015em] leading-[110%] font-medium md:mt-0 mt-10">
+      <div className="site-container site-border border md:py-20 flex flex-col md:gap-24 gap-8 py-10">
+        <div className="flex w-full flex-col md:items-center md:text-center text-left mx-auto md:px-0 px-2">
+          <h2 className="md:text-[50px] max-w-157 text-[36px] tracking-[-0.015em] leading-[110%] font-medium ">
             One{' '}
             <span className="text-primary md:inline inline-block"> price.</span>
             <br className="md:block hidden"></br>
             <span className="block md:inline">Something included.</span>
           </h2>
           <p className="md:text-[18px] text-[14px] font-normal text-muted-foreground mt-5 md:max-w-157">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
+            Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been.
           </p>
         </div>

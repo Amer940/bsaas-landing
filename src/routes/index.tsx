@@ -16,9 +16,9 @@ function Home() {
       <Navbar />
       <FeaturesGridSection />
       <StepsSection />
+      <PricingSection />
       <CTASection />
       <FAQSection />
-      <PricingSection />
     </>
   )
 }

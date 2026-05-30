@@ -41,12 +41,11 @@ const StepsSection = () => {
 
     if (scrollRef.current) {
       isAutoScrolling.current = true
-      const target = scrollRef.current.children[nextIdx] as HTMLElement
-      target.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest',
-      })
+      const container = scrollRef.current
+      const target = container.children[nextIdx] as HTMLElement
+      const scrollTarget =
+        target.offsetLeft - container.offsetWidth / 2 + target.offsetWidth / 2
+      container.scrollTo({ left: scrollTarget, behavior: 'smooth' })
       setTimeout(() => {
         isAutoScrolling.current = false
       }, 600)
@@ -131,13 +130,19 @@ const StepsSection = () => {
                     width: '90%',
                     scale: active === item.id ? 1 : 0.8,
                   }}
-                  onClick={(e) =>
-                    (e.currentTarget as HTMLElement).scrollIntoView({
+                  onClick={(e) => {
+                    const container = scrollRef.current
+                    if (!container) return
+                    const target = e.currentTarget as HTMLElement
+                    const scrollTarget =
+                      target.offsetLeft -
+                      container.offsetWidth / 2 +
+                      target.offsetWidth / 2
+                    container.scrollTo({
+                      left: scrollTarget,
                       behavior: 'smooth',
-                      inline: 'center',
-                      block: 'nearest',
                     })
-                  }
+                  }}
                 >
                   <img
                     src={item.img}
