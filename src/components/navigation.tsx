@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Button } from './ui/button'
 import { cn } from '#/lib/utils.ts'
 import Logo from '../images/brat..svg'
@@ -13,6 +14,12 @@ interface NavbarProps {
 }
 
 function Navbar({ className }: NavbarProps) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggle = () => setIsOpen((prev) => !prev)
+
+  const close = () => setIsOpen(false)
+
   return (
     <header
       className={cn('sticky top-0 left-0 right-0 z-50 bg-white', className)}
@@ -23,7 +30,9 @@ function Navbar({ className }: NavbarProps) {
             <a href="/" aria-label="Početna">
               <img src={Logo} />
             </a>
-            <div className="flex items-center">
+
+            {/* Desktop nav */}
+            <div className="hidden md:flex items-center">
               <ul className="flex items-center gap-4 list-none m-0 p-0">
                 {NAV_LINKS.map((link) => (
                   <li key={link.href}>
@@ -41,8 +50,65 @@ function Navbar({ className }: NavbarProps) {
                 <Button variant="default">Zapocni danas</Button>
               </div>
             </div>
+
+            {/* Hamburger button */}
+            <button
+              type="button"
+              onClick={toggle}
+              className="md:hidden relative w-8 h-8 flex items-center justify-center"
+              aria-label={isOpen ? 'Zatvori meni' : 'Otvori meni'}
+              aria-expanded={isOpen}
+            >
+              <span
+                className={cn(
+                  'absolute h-[2px] w-5 bg-foreground rounded-full transition-all duration-300 ease-in-out',
+                  isOpen ? 'rotate-45 translate-y-0' : '-translate-y-[6px]',
+                )}
+              />
+              <span
+                className={cn(
+                  'absolute h-[2px] w-5 bg-foreground rounded-full transition-all duration-300 ease-in-out',
+                  isOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100',
+                )}
+              />
+              <span
+                className={cn(
+                  'absolute h-[2px] w-5 bg-foreground rounded-full transition-all duration-300 ease-in-out',
+                  isOpen ? '-rotate-45 translate-y-0' : 'translate-y-[6px]',
+                )}
+              />
+            </button>
           </div>
         </div>
+      </div>
+
+      {/* Mobile menu */}
+      <div
+        className={cn(
+          'md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-b border-border',
+          isOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0 border-b-0',
+        )}
+      >
+        <nav className="site-container py-6">
+          <ul className="flex flex-col gap-5 list-none m-0 p-0">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={close}
+                  className="text-18-medium text-foreground no-underline hover:text-primary transition-colors duration-250 block"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="pt-5">
+            <Button variant="default" className="w-full" onClick={close}>
+              Zapocni danas
+            </Button>
+          </div>
+        </nav>
       </div>
     </header>
   )
