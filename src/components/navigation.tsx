@@ -17,7 +17,7 @@ function Navbar({ className }: NavbarProps) {
     <header
       className={cn('sticky top-0 left-0 right-0 z-50 bg-white', className)}
     >
-      <div className="border-b border-border">
+      <div className="md:border-b border-border">
         <div className="site-container">
           <div className="flex items-center justify-between py-6">
             <a href="/" aria-label="Početna">
