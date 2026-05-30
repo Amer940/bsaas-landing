@@ -75,7 +75,7 @@ const StepsSection = () => {
 
   return (
     <div className="w-full md:px-4 px-2">
-      <div className="site-container site-border overflow-hidden">
+      <div className="site-container site-border overflow-hidden lg:px-0 md:px-4">
         <div className="flex flex-col relative">
           <div className="bg-gradient-to-t from-white/60 absolute bottom-0 left-0 right-0 h-[3%] z-[5] hidden md:block"></div>
           <div className="absolute bottom-0 left-0 right-0 w-full hidden md:block">

@@ -2,10 +2,10 @@ import { FeatureCard } from '../ui/features-card'
 
 function FeaturesGridSection({ className }: { className?: string }) {
   return (
-    <div className={`w-full ${className ?? ''}`}>
-      <div className="site-container site-border py-[80px]">
-        <div className="border border-y border-x-0">
-          <div className="grid md:grid-cols-[1fr_2.93fr] grid-cols-1">
+    <div className={`w-full md:px-4 ${className ?? ''}`}>
+      <div className="site-container site-border md:py-[80px]">
+        <div className="border border-y border-x-0 ">
+          <div className="grid md:grid-cols-[1fr_2.93fr] grid-cols-1 ">
             <FeatureCard
               title="Upravljaj profilom"
               description="One flat fee unlocks your chair on Faded. Set your hours, list your services."
