@@ -77,12 +77,12 @@ const StepsSection = () => {
     <div className="w-full md:px-4 px-2">
       <div className="site-container site-border overflow-hidden lg:px-0 md:px-4">
         <div className="flex flex-col relative">
-          <div className="bg-gradient-to-t from-white/60 absolute bottom-0 left-0 right-0 h-[3%] z-[5] hidden md:block"></div>
+          <div className="bg-linear-to-t from-white/60 absolute bottom-0 left-0 right-0 h-[3%] z-5 hidden md:block"></div>
           <div className="absolute bottom-0 left-0 right-0 w-full hidden md:block">
             <img src={ell} alt="" className="w-full" />
           </div>
           <div className="flex flex-col items-center text-center mx-auto">
-            <h2 className="md:text-[50px] max-w-[628px] text-[36px] tracking-[-0.015em] leading-[110%] font-medium md:mt-0 mt-10">
+            <h2 className="md:text-[50px] max-w-157 text-[36px] tracking-[-0.015em] leading-[110%] font-medium md:mt-0 mt-10">
               From sign-up to{' '}
               <span className="block md:inline">first booking in</span>{' '}
               <span className="text-primary block md:inline">
@@ -96,11 +96,11 @@ const StepsSection = () => {
           </div>
 
           {/* Mobile */}
-          <div className="md:hidden flex flex-col mt-10 pb-[40px]">
-            <div className="flex flex-col gap-2 px-4 max-w-[380px] mx-auto">
+          <div className="md:hidden flex flex-col mt-10 pb-10">
+            <div className="flex flex-col gap-2 px-4 max-w-95 mx-auto">
               <div className="flex items-center gap-[3.5px] font-mono text-[12px] font-medium pr-2">
                 {activeItem.id}
-                <div className="w-full h-[2px] bg-border relative overflow-hidden">
+                <div className="w-full h-0.5 bg-border relative overflow-hidden">
                   <div
                     key={active}
                     className="absolute inset-0 bg-primary"
@@ -154,7 +154,7 @@ const StepsSection = () => {
           </div>
 
           {/* Desktop */}
-          <div className="hidden md:flex max-w-[1015px] mx-auto items-center justify-between w-full gap-8 md:mt-16 mt-[40px]">
+          <div className="hidden md:flex max-w-253.75 mx-auto items-center justify-between w-full gap-8 md:mt-16 mt-10">
             {items.map((item) => (
               <div
                 className="flex flex-col gap-16 transition-colors duration-500"
@@ -169,7 +169,7 @@ const StepsSection = () => {
                 <div className="flex flex-col gap-6">
                   <div className="flex items-center gap-[3.5px] font-mono text-[14px] font-medium pr-2">
                     {item.id}
-                    <div className="w-full h-[2px] bg-border relative overflow-hidden">
+                    <div className="w-full h-0.5 bg-border relative overflow-hidden">
                       <div
                         className="absolute inset-0 bg-primary"
                         style={

@@ -1,5 +1,4 @@
 import React from 'react'
-import dotSrc from '../../images/dot.svg'
 
 interface FeatureItemProps {
   text: string

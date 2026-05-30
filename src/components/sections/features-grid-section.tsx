@@ -3,7 +3,7 @@ import { FeatureCard } from '../ui/features-card'
 function FeaturesGridSection({ className }: { className?: string }) {
   return (
     <div className={`w-full md:px-4 ${className ?? ''}`}>
-      <div className="site-container site-border md:py-[80px]">
+      <div className="site-container site-border md:py-20">
         <div className="border border-y border-x-0 ">
           <div className="grid md:grid-cols-[1fr_2.93fr] grid-cols-1 ">
             <FeatureCard

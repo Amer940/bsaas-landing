@@ -32,7 +32,7 @@ export function FAQSection() {
   return (
     <div className="md:px-4 px-2">
       <div className="w-full bg-white">
-        <div className="site-container site-border py-[80px]">
+        <div className="site-container site-border py-20">
           <div className="w-full flex-col">
             <div className="flex flex-col items-center text-center mx-auto md:mb-16 mb-8">
               <h2 className="md:text-[50px] text-[36px] leading-[110%] font-medium">
