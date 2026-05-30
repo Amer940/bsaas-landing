@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Twitter, Linkedin, Youtube } from 'lucide-react'
+import Logo from '../../images/brat..svg'
 
 const FOOTER_LINKS = [
   { label: 'Kako radi', href: '#kako-radi' },
@@ -23,12 +24,16 @@ const LEGAL_LINKS = [
 function Footer() {
   return (
     <div className="w-full md:px-4 px-2">
-      <div className="site-container site-border border-t overflow-hidden lg:px-0 md:px-4 py-20">
-        <div className="px-6 py-8">
+      <div className="site-container site-border border-t overflow-hidden lg:px-0 md:px-4 md:py-20 py-[48px]">
+        <div className="md:px-10 px-[12px]">
           <div className="flex flex-col items-center justify-between">
-            <div className="flex ">
+            <div className="flex w-full md:flex-row flex-col md:justify-between items-center justify-center md:gap-0 gap-12">
               {' '}
-              <div className="w-24 h-8 bg-gray-200 rounded" aria-label="Logo" />
+              <img
+                className="w-17.5 h-9 rounded"
+                aria-label="Logo"
+                src={Logo}
+              />
               <ul className="flex items-center gap-4 list-none m-0 p-0">
                 {FOOTER_LINKS.map((link) => (
                   <li key={link.href}>
@@ -55,22 +60,23 @@ function Footer() {
               </div>
             </div>
 
-            <div className="h-[1px] w-full bg-black mt-6 mb-4" />
+            <div className="h-[1px] w-full bg-muted-foreground/20 mt-6 md:mb-4 mb-6" />
             <div>
-              <div className="flex items-center justify-center gap-6">
-                <p className="text-12-regular text-muted-foreground">
+              <div className="flex items-center justify-center md:gap-6 gap-8 md:flex-row flex-col">
+                <p className="md:text-12-regular text-14-regular text-muted-foreground md:order-1 order-2">
                   © 2024 Relume. All rights reserved.
                 </p>
-
-                {LEGAL_LINKS.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="text-12-regular text-muted-foreground no-underline hover:text-primary transition-colors duration-250"
-                  >
-                    {link.label}
-                  </a>
-                ))}
+                <div className="flex items-center justify-center gap-6 md:flex-row flex-col md:order-2 order-1">
+                  {LEGAL_LINKS.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      className="md:text-12-regular text-14-regular text-muted-foreground no-underline hover:text-primary transition-colors duration-250 underline"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
