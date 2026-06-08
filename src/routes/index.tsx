@@ -1,4 +1,12 @@
+import { Navbar } from '#/components/navigation'
 import { createFileRoute } from '@tanstack/react-router'
+import { FeaturesGridSection } from '#/components/sections/features-grid-section'
+import { CTASection } from '#/components/sections/CTA-section'
+import { FAQSection } from '#/components/sections/faq-sections'
+import StepsSection from '#/components/sections/steps-section'
+import { PricingSection } from '#/components/sections/pricing-section'
+import Hero from '#/components/sections/hero-section'
+import { Footer } from '#/components/sections/footer'
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -6,11 +14,15 @@ export const Route = createFileRoute('/')({
 
 function Home() {
   return (
-    <div className="p-8">
-      <h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
-      <p className="mt-4 text-lg">
-        Edit <code>src/routes/index.tsx</code> to get started.
-      </p>
-    </div>
+    <>
+      <Navbar />
+      <Hero />
+      <FeaturesGridSection />
+      <StepsSection />
+      <PricingSection />
+      <CTASection />
+      <FAQSection />
+      <Footer />
+    </>
   )
 }
