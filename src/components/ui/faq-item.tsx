@@ -47,11 +47,11 @@ function FAQItem({
       onClick={onClick}
       {...props}
     >
-      <div className="flex justify-between items-center py-[16px] md:py-[24px]">
+      <div className="flex justify-between items-center py-4 md:py-6 ">
         <span className="text-[14px] md:text-[18px] font-medium text-black">
           {title}
         </span>
-        <div className="relative w-[14px] h-[14px] md:w-[17px] md:h-[17px] shrink-0 ml-4">
+        <div className="relative w-3.5 h-3.5 md:w-4.25 md:h-4.25 shrink-0 ml-4">
           <svg
             className="absolute inset-0 w-full h-full"
             viewBox="0 0 17 17"
@@ -84,8 +84,8 @@ function FAQItem({
         className="grid transition-[grid-template-rows] duration-300 ease-in-out"
         style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
       >
-        <div className="pl-2 md:pr-[48px] overflow-hidden">
-          <span className="block pb-[16px] md:pb-[24px] text-[12px] md:text-[16px] font-medium text-muted-foreground">
+        <div className="pl-2 md:pr-12 overflow-hidden">
+          <span className="block pb-4 md:pb-6 text-[12px] md:text-[16px] font-medium text-muted-foreground">
             {answer}
           </span>
         </div>
@@ -104,17 +104,19 @@ function FAQAccordion({
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <div className={cn('flex flex-col', className)}>
-      {items.map((item, index) => (
-        <FAQItem
-          key={index}
-          title={item.title}
-          answer={item.answer}
-          isOpen={openIndex === index}
-          onClick={() => setOpenIndex(index)}
-          className={index == items.length - 1 ? 'border-y' : ''}
-        />
-      ))}
+    <div className={cn('flex flex-col w-full', className)}>
+      <div className="max-w-202 w-full mx-auto lg:px-0 md:px-6 px-1">
+        {items.map((item, index) => (
+          <FAQItem
+            key={index}
+            title={item.title}
+            answer={item.answer}
+            isOpen={openIndex === index}
+            onClick={() => setOpenIndex(index)}
+            className={index == items.length - 1 ? 'border-y' : ''}
+          />
+        ))}
+      </div>
     </div>
   )
 }
