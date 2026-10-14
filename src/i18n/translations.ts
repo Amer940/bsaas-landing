@@ -14,6 +14,10 @@ export const translations = {
     'nav.openMenu': 'Otvori meni',
     'nav.closeMenu': 'Zatvori meni',
     'language.label': 'Jezik',
+    'footer.privacy': 'Politika privatnosti',
+    'footer.terms': 'Uslovi korištenja',
+    'footer.support': 'Podrška',
+    'footer.deleteAccount': 'Brisanje računa',
   },
   en: {
     'nav.howItWorks': 'How it works',
@@ -24,6 +28,10 @@ export const translations = {
     'nav.openMenu': 'Open menu',
     'nav.closeMenu': 'Close menu',
     'language.label': 'Language',
+    'footer.privacy': 'Privacy policy',
+    'footer.terms': 'Terms of use',
+    'footer.support': 'Support',
+    'footer.deleteAccount': 'Delete account',
   },
 } satisfies Record<Locale, Record<string, string>>
 

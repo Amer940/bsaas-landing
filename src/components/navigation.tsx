@@ -7,9 +7,9 @@ import { useLocale } from '#/i18n/locale-context'
 import type { TranslationKey } from '#/i18n/translations'
 
 const NAV_LINKS: Array<{ labelKey: TranslationKey; href: string }> = [
-  { labelKey: 'nav.howItWorks', href: '#kako-radi' },
-  { labelKey: 'nav.faq', href: '#pitanja' },
-  { labelKey: 'nav.buy', href: '#kupi' },
+  { labelKey: 'nav.howItWorks', href: '/#kako-radi' },
+  { labelKey: 'nav.faq', href: '/#pitanja' },
+  { labelKey: 'nav.buy', href: '/#kupi' },
 ]
 
 interface NavbarProps {
