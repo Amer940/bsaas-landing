@@ -19,7 +19,7 @@ function RouteComponent() {
       data: { user },
     } = await supabase.auth.getUser()
     if (user) {
-      navigate({ to: '/' })
+      navigate({ to: '/{-$locale}', params: { locale: undefined } })
     } else {
       navigate({ to: '/register', search: { redirect: 'checkout' } })
     }

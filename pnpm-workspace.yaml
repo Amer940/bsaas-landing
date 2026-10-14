@@ -1,0 +1,3 @@
+allowBuilds:
+  lightningcss: true
+  unrs-resolver: false

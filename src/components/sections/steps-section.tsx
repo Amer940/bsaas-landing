@@ -1,8 +1,13 @@
 import iphoneImg from '#/images/iphone.png'
 import ell from '#/images/ell.png'
 import { useEffect, useRef, useState } from 'react'
+import { RichText } from '../rich-text'
+import { useLocale } from '#/i18n/locale-context'
+import { landingContent } from '#/content/landing'
 
 const StepsSection = () => {
+  const { locale } = useLocale()
+  const c = landingContent[locale].steps
   const [active, setActive] = useState('')
   const scrollRef = useRef<HTMLDivElement>(null)
   const isAutoScrolling = useRef(false)
@@ -11,26 +16,11 @@ const StepsSection = () => {
     setActive('01')
   }, [])
 
-  const items = [
-    {
-      id: '01',
-      title: 'Pay & go live',
-      text: 'One flat fee unlocks your chair on Faded. Set your hours, list your services, and the booking page is online the moment you tap publish.',
-      img: iphoneImg,
-    },
-    {
-      id: '02',
-      title: 'Share your code',
-      text: 'One flat fee unlocks your chair on Faded. Set your hours, list your services, and the booking page is online the moment you tap publish.',
-      img: iphoneImg,
-    },
-    {
-      id: '03',
-      title: 'It lands in your calendar',
-      text: 'One flat fee unlocks your chair on Faded. Set your hours, list your services, and the booking page is online the moment you tap publish.',
-      img: iphoneImg,
-    },
-  ]
+  const items = c.items.map((item, i) => ({
+    ...item,
+    id: String(i + 1).padStart(2, '0'),
+    img: iphoneImg,
+  }))
 
   const activeItem = items.find((i) => i.id === active) || items[0]
 
@@ -73,7 +63,7 @@ const StepsSection = () => {
   }
 
   return (
-    <div className="w-full md:px-4 px-2">
+    <div id="kako-radi" className="w-full md:px-4 px-2 scroll-mt-24">
       <div className="site-container site-border overflow-hidden lg:px-0 md:px-4">
         <div className="flex flex-col relative">
           <div className="bg-linear-to-t from-white/60 absolute bottom-0 left-0 right-0 h-[3%] z-5 hidden md:block"></div>
@@ -82,15 +72,10 @@ const StepsSection = () => {
           </div>
           <div className="flex flex-col items-center text-center mx-auto">
             <h2 className="md:text-[50px] max-w-157 text-[36px] tracking-[-0.015em] leading-[110%] font-medium md:mt-0 mt-10">
-              From sign-up to{' '}
-              <span className="block md:inline">first booking in</span>{' '}
-              <span className="text-primary block md:inline">
-                under a minute.
-              </span>
+              <RichText text={c.title} />
             </h2>
             <p className="md:text-[18px] max-w-[400px] text-[14px] font-normal text-muted-foreground mt-5 md:max-w-157">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been.
+              {c.body}
             </p>
           </div>
 
@@ -146,7 +131,7 @@ const StepsSection = () => {
                 >
                   <img
                     src={item.img}
-                    alt="iPhone preview"
+                    alt={c.imageAlt}
                     className="transition-[filter] duration-500"
                     style={{
                       filter:
@@ -162,6 +147,7 @@ const StepsSection = () => {
           <div className="hidden md:flex max-w-253.75 mx-auto items-center justify-between w-full gap-8 md:mt-16 mt-10">
             {items.map((item) => (
               <div
+                key={item.id}
                 className="flex flex-col gap-16 transition-colors duration-500"
                 onClick={() => setActive(item.id)}
                 style={{
@@ -207,7 +193,7 @@ const StepsSection = () => {
                 >
                   <img
                     src={item.img}
-                    alt="iPhone preview"
+                    alt={c.imageAlt}
                     className="transition-[filter] duration-500"
                     style={{
                       filter:

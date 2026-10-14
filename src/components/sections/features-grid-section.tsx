@@ -1,14 +1,19 @@
 import { FeatureCard } from '../ui/features-card'
+import { useLocale } from '#/i18n/locale-context'
+import { landingContent } from '#/content/landing'
 
 function FeaturesGridSection({ className }: { className?: string }) {
+  const { locale } = useLocale()
+  const c = landingContent[locale].features
+
   return (
     <div className={`w-full md:px-4 px-2 ${className ?? ''}`}>
       <div className="site-container site-border md:py-20">
         <div className="border border-y border-x-0 -mx-2 md:mx-0">
           <div className="grid md:grid-cols-[1fr_2.93fr] flex-col flex ">
             <FeatureCard
-              title="Upravljaj profilom"
-              description="One flat fee unlocks your chair on Faded. Set your hours, list your services."
+              title={c.profile.title}
+              description={c.profile.description}
               textPosition="bottom"
               media={
                 <div className="rounded-sm overflow-hidden min-h-103.5 bg-[#111]" />
@@ -16,8 +21,8 @@ function FeaturesGridSection({ className }: { className?: string }) {
               className="md:flex hidden border-0"
             />
             <FeatureCard
-              title="Upravljaj profilom"
-              description="One flat fee unlocks your chair on Faded. Set your hours, list your services."
+              title={c.profile.title}
+              description={c.profile.description}
               textPosition="top"
               media={
                 <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#111]" />
@@ -28,8 +33,8 @@ function FeaturesGridSection({ className }: { className?: string }) {
             <div className="flex-col w-full">
               <div className="grid md:grid-cols-[2fr_1fr] grid-cols-1">
                 <FeatureCard
-                  title="Ubacuj u kalendar"
-                  description="One flat fee unlocks your chair on Faded. Set your hours, list your services, and the booking page is online the moment you tap publish."
+                  title={c.calendar.title}
+                  description={c.calendar.description}
                   textPosition="top"
                   media={
                     <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#1a1a1a]" />
@@ -38,8 +43,8 @@ function FeaturesGridSection({ className }: { className?: string }) {
                 />
 
                 <FeatureCard
-                  title="Prati statistiku"
-                  description="One flat fee unlocks your chair on Faded. Set your hours."
+                  title={c.stats.title}
+                  description={c.stats.description}
                   textPosition="top"
                   media={
                     <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#1a1a1a]" />
@@ -50,8 +55,8 @@ function FeaturesGridSection({ className }: { className?: string }) {
 
               <div className="grid md:grid-cols-[1fr_2.3fr]">
                 <FeatureCard
-                  title="Ocijeni klijenta"
-                  description="One flat fee unlocks your chair on Faded. Set your hours, list your services."
+                  title={c.noShows.title}
+                  description={c.noShows.description}
                   textPosition="bottom"
                   media={
                     <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#1a1a1a]" />
@@ -60,8 +65,8 @@ function FeaturesGridSection({ className }: { className?: string }) {
                 />
 
                 <FeatureCard
-                  title="Ocijeni klijenta"
-                  description="One flat fee unlocks your chair on Faded. Set your hours, list your services."
+                  title={c.noShows.title}
+                  description={c.noShows.description}
                   textPosition="top"
                   media={
                     <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#1a1a1a]" />

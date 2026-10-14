@@ -4,11 +4,13 @@ import { instagramIcon } from '../ui/instagram-icon'
 import { youtubeIcon } from '../ui/youtube-icon'
 import { linkedInIcon } from '../ui/linkedIn-icon'
 import { xIcon } from '../ui/x-icon'
+import { useLocale } from '#/i18n/locale-context'
+import { LocalizedLink } from '#/i18n/localized-link'
+import type { TranslationKey } from '#/i18n/translations'
 
-const FOOTER_LINKS = [
-  { label: 'Kako radi', href: '#kako-radi' },
-  { label: 'Kupi', href: '#kupi' },
-  { label: 'Pitanja', href: '#pitanja' },
+const FOOTER_LINKS: Array<{ labelKey: TranslationKey; hash: string }> = [
+  { labelKey: 'nav.howItWorks', hash: 'kako-radi' },
+  { labelKey: 'nav.faq', hash: 'pitanja' },
 ]
 
 const SOCIAL_LINKS = [
@@ -20,12 +22,15 @@ const SOCIAL_LINKS = [
 ]
 
 const LEGAL_LINKS = [
-  { label: 'Privacy Policy', href: '#' },
-  { label: 'Terms of Service', href: '#' },
-  { label: 'Cookies Settings', href: '#' },
-]
+  { labelKey: 'footer.privacy', to: '/privacy' },
+  { labelKey: 'footer.terms', to: '/terms' },
+  { labelKey: 'footer.support', to: '/support' },
+  { labelKey: 'footer.deleteAccount', to: '/delete-account' },
+] as const
 
 function Footer() {
+  const { t } = useLocale()
+
   return (
     <div className="w-full md:px-4 px-2">
       <div className="site-container site-border border-t overflow-hidden lg:px-0 md:px-4 md:py-20 py-12">
@@ -40,13 +45,14 @@ function Footer() {
               />
               <ul className="flex items-center gap-4 list-none m-0 p-0">
                 {FOOTER_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
+                  <li key={link.hash}>
+                    <LocalizedLink
+                      to="/"
+                      hash={link.hash}
                       className="text-14-medium text-muted-foreground no-underline hover:text-primary transition-colors duration-250"
                     >
-                      {link.label}
-                    </a>
+                      {t(link.labelKey)}
+                    </LocalizedLink>
                   </li>
                 ))}
               </ul>
@@ -68,17 +74,17 @@ function Footer() {
             <div>
               <div className="flex items-center justify-center md:gap-6 gap-8 md:flex-row flex-col">
                 <p className="md:text-12-regular text-14-regular text-muted-foreground md:order-1 order-2">
-                  © 2024 Relume. All rights reserved.
+                  © {new Date().getFullYear()} Chairo. {t('footer.rights')}
                 </p>
                 <div className="flex items-center justify-center gap-6 md:flex-row flex-col md:order-2 order-1">
                   {LEGAL_LINKS.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
+                    <LocalizedLink
+                      key={link.to}
+                      to={link.to}
                       className="md:text-12-regular text-14-regular text-muted-foreground hover:text-primary transition-colors duration-250 underline"
                     >
-                      {link.label}
-                    </a>
+                      {t(link.labelKey)}
+                    </LocalizedLink>
                   ))}
                 </div>
               </div>

@@ -211,3 +211,13 @@ Files prefixed with `demo` can be safely deleted. They are there to provide a st
 You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
 
 For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+
+## Deploying (Cloudflare Pages)
+
+The site is a static single-page app. In the Cloudflare Pages project:
+
+- Build command: `pnpm build`
+- Build output directory: `dist`
+- Environment variables: `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` (they're baked in at build time)
+
+Node comes from `.node-version` and pnpm from `packageManager` in `package.json`. There's no `404.html`, so Pages serves `index.html` for every path and the router takes it from there; don't add a `/* /index.html 200` rule to `_redirects`. Fonts (Geist) are self-hosted from `public/fonts`, so the site loads nothing from Google.

@@ -1,4 +1,5 @@
 import { Navbar } from '#/components/navigation'
+import { LocaleProvider } from '#/i18n/locale-context'
 import { CTASection } from '#/components/sections/CTA-section'
 import { FAQSection } from '#/components/sections/faq-sections'
 import { Button } from '#/components/ui/button'
@@ -15,7 +16,9 @@ export const Route = createFileRoute('/style-guide')({
 function RouteComponent() {
   return (
     <div className="md:p-8 bg-amber-200 gap-4 flex pt-37.5 ">
-      <Navbar />
+      <LocaleProvider locale="bs">
+        <Navbar />
+      </LocaleProvider>
       <div className="w-full mx-auto max-w-350 flex flex-col items-center gap-4 ">
         <Button>Benjamin</Button>
         <Button variant="outline">Benjamin</Button>
