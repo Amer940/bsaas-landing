@@ -413,4 +413,13 @@ function TeamDemo({ data }: { data: FeatureDemos['team'] }) {
   )
 }
 
-export { BookingDemo, EarningsDemo, RecurringDemo, ScheduleDemo, TeamDemo }
+export {
+  Avatar,
+  BookingDemo,
+  EarningsDemo,
+  Panel,
+  RecurringDemo,
+  ScheduleDemo,
+  ScheduleRow,
+  TeamDemo,
+}
