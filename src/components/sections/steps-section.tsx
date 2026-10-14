@@ -1,214 +1,176 @@
-import iphoneImg from '#/images/iphone.png'
-import ell from '#/images/ell.png'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RichText } from '../rich-text'
+import { SectionHeading } from '../section-heading'
+import { cn } from '#/lib/utils.ts'
 import { useLocale } from '#/i18n/locale-context'
 import { landingContent } from '#/content/landing'
+import step1Img from '#/images/landing/step-1.webp'
+import step2Img from '#/images/landing/step-2.webp'
+import step3Img from '#/images/landing/step-3.webp'
+
+const STEP_IMAGES = [step1Img, step2Img, step3Img]
+
+/** How long each step stays active; keep in sync with the progress bar animation. */
+const STEP_DURATION_MS = 8000
+
+const glowClass =
+  'pointer-events-none absolute -inset-x-[10%] top-52.5 h-225 rounded-[50%] bg-[radial-gradient(60%_40%_at_50%_10%,rgba(255,255,255,.10),rgba(255,255,255,.03)_60%,transparent)]'
 
 const StepsSection = () => {
   const { locale } = useLocale()
   const c = landingContent[locale].steps
-  const [active, setActive] = useState('')
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const isAutoScrolling = useRef(false)
+  const [active, setActive] = useState(0)
 
   useEffect(() => {
-    setActive('01')
-  }, [])
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const timer = setTimeout(
+      () => setActive((i) => (i + 1) % c.items.length),
+      STEP_DURATION_MS,
+    )
+    return () => clearTimeout(timer)
+  }, [active, c.items.length])
 
   const items = c.items.map((item, i) => ({
     ...item,
     id: String(i + 1).padStart(2, '0'),
-    img: iphoneImg,
+    img: STEP_IMAGES[i],
   }))
-
-  const activeItem = items.find((i) => i.id === active) || items[0]
-
-  const handleCycle = (currentId: string) => {
-    const idx = items.findIndex((i) => i.id === currentId)
-    const nextIdx = (idx + 1) % items.length
-    setActive(items[nextIdx].id)
-
-    if (scrollRef.current) {
-      isAutoScrolling.current = true
-      const container = scrollRef.current
-      const target = container.children[nextIdx] as HTMLElement
-      const scrollTarget =
-        target.offsetLeft - container.offsetWidth / 2 + target.offsetWidth / 2
-      container.scrollTo({ left: scrollTarget, behavior: 'smooth' })
-      setTimeout(() => {
-        isAutoScrolling.current = false
-      }, 600)
-    }
-  }
-
-  const handleScroll = () => {
-    if (isAutoScrolling.current) return
-    const el = scrollRef.current
-    if (!el) return
-    const center = el.scrollLeft + el.offsetWidth / 2
-    let closest = 0
-    let minDist = Infinity
-    for (let i = 0; i < el.children.length; i++) {
-      const child = el.children[i] as HTMLElement
-      const childCenter = child.offsetLeft + child.offsetWidth / 2
-      const dist = Math.abs(center - childCenter)
-      if (dist < minDist) {
-        minDist = dist
-        closest = i
-      }
-    }
-    const newId = items[closest]?.id
-    if (newId && newId !== active) setActive(newId)
-  }
+  const activeItem = items[active]
 
   return (
-    <div id="kako-radi" className="w-full md:px-4 px-2 scroll-mt-24">
-      <div className="site-container site-border overflow-hidden lg:px-0 md:px-4">
-        <div className="flex flex-col relative">
-          <div className="bg-linear-to-t from-white/60 absolute bottom-0 left-0 right-0 h-[3%] z-5 hidden md:block"></div>
-          <div className="absolute bottom-0 left-0 right-0 w-full hidden md:block">
-            <img src={ell} alt="" className="w-full" />
-          </div>
-          <div className="flex flex-col items-center text-center mx-auto">
-            <h2 className="md:text-[50px] max-w-157 text-[36px] tracking-[-0.015em] leading-[110%] font-medium md:mt-0 mt-10">
-              <RichText text={c.title} />
-            </h2>
-            <p className="md:text-[18px] max-w-[400px] text-[14px] font-normal text-muted-foreground mt-5 md:max-w-157">
-              {c.body}
-            </p>
-          </div>
+    <section
+      id="kako-radi"
+      className="mx-auto max-w-300 scroll-mt-24 px-5 pt-14 md:pt-27.5 xl:px-0"
+    >
+      <SectionHeading eyebrow={c.eyebrow}>
+        <RichText text={c.title} />
+      </SectionHeading>
+      <p className="m-0 mt-3.5 max-w-130 text-[1.0625rem] leading-normal text-foreground/65 md:mx-auto md:text-center md:text-lg">
+        {c.body}
+      </p>
 
-          {/* Mobile */}
-          <div className="md:hidden flex flex-col mt-10 pb-10">
-            <div className="flex flex-col gap-2 px-4 max-w-95 mx-auto">
-              <div className="flex items-center gap-[3.5px] font-mono text-[12px] font-medium pr-2">
-                {activeItem.id}
-                <div className="w-full h-0.5 bg-border relative overflow-hidden">
-                  <div
-                    key={active}
-                    className="absolute inset-0 bg-primary"
-                    style={{ animation: 'progress-fill 8s linear forwards' }}
-                    onAnimationEnd={() => handleCycle(active)}
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-[1.5rem] font-medium">
-                  {activeItem.title}
-                </span>
-                <span className="text-[14px] text-muted-foreground leading-[140%]">
-                  {activeItem.text}
-                </span>
-              </div>
-            </div>
-            <div
-              ref={scrollRef}
-              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide mt-8 px-[22%]"
-              onScroll={handleScroll}
+      {/* Mobile */}
+      <div className="md:hidden mt-8">
+        <div className="grid grid-cols-3 rounded-full bg-white/8 p-1">
+          {items.map((item, i) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setActive(i)}
+              aria-pressed={active === i}
+              className={cn(
+                'h-10 rounded-full text-[0.9375rem] font-bold tabular-nums transition-colors duration-300',
+                active === i
+                  ? 'bg-foreground text-background'
+                  : 'text-foreground/60',
+              )}
             >
-              {items.map((item, i) => (
-                <div
-                  key={item.id}
-                  className="shrink-0 w-fit snap-center flex items-center justify-center transition-all duration-200 cursor-pointer"
-                  style={{
-                    width: '90%',
-                    scale: active === item.id ? 1 : 0.8,
-                  }}
-                  onClick={(e) => {
-                    const container = scrollRef.current
-                    if (!container) return
-                    const target = e.currentTarget as HTMLElement
-                    const scrollTarget =
-                      target.offsetLeft -
-                      container.offsetWidth / 2 +
-                      target.offsetWidth / 2
-                    container.scrollTo({
-                      left: scrollTarget,
-                      behavior: 'smooth',
-                    })
-                  }}
-                >
-                  <img
-                    src={item.img}
-                    alt={c.imageAlt}
-                    className="transition-[filter] duration-500"
-                    style={{
-                      filter:
-                        active == item.id ? 'brightness(1)' : 'brightness(0.9)',
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+              {item.id}
+            </button>
+          ))}
+        </div>
+        <h3 className="m-0 mt-4 text-xl font-bold tracking-[-0.02em]">
+          {activeItem.title}
+        </h3>
+        <p className="m-0 mt-1.5 text-[0.9375rem] leading-normal text-foreground/60">
+          {activeItem.text}
+        </p>
+        <div className="relative mt-6 h-117.5 overflow-hidden">
+          <div className={glowClass} style={{ top: 160 }} />
+          {items.map((item, i) => (
+            <img
+              key={item.id}
+              src={item.img}
+              alt={item.imageAlt}
+              width={304}
+              height={658}
+              loading="lazy"
+              aria-hidden={active !== i}
+              className={cn(
+                'absolute left-1/2 top-0 w-67.5 max-w-none -translate-x-1/2 transition-opacity duration-500',
+                active === i ? 'opacity-100' : 'opacity-0',
+              )}
+            />
+          ))}
+        </div>
+      </div>
 
-          {/* Desktop */}
-          <div className="hidden md:flex max-w-253.75 mx-auto items-center justify-between w-full gap-8 md:mt-16 mt-10">
-            {items.map((item) => (
-              <div
+      {/* Desktop */}
+      <div className="hidden md:block">
+        <div className="mt-14 flex items-start gap-10">
+          {items.map((item, i) => {
+            const isActive = active === i
+            return (
+              <button
                 key={item.id}
-                className="flex flex-col gap-16 transition-colors duration-500"
-                onClick={() => setActive(item.id)}
-                style={{
-                  color:
-                    active == item.id
-                      ? 'var(--foreground)'
-                      : 'var(--muted-foreground)',
-                }}
+                type="button"
+                onClick={() => setActive(i)}
+                aria-pressed={isActive}
+                className="flex flex-1 flex-col gap-3 text-left"
               >
-                <div className="flex flex-col gap-6">
-                  <div className="flex items-center gap-[3.5px] font-mono text-[14px] font-medium pr-2">
-                    {item.id}
-                    <div className="w-full h-0.5 bg-border relative overflow-hidden">
-                      <div
-                        className="absolute inset-0 bg-primary"
-                        style={
-                          active == item.id
-                            ? { width: '100%', transition: 'width 8s linear' }
-                            : { width: '0%', transition: 'width 400ms ease-in' }
-                        }
-                        onTransitionEnd={(e) => {
-                          if (active == item.id && e.propertyName === 'width') {
-                            handleCycle(item.id)
-                          }
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <span className="text-24-medium">{item.title}</span>
-                    <span className="text-16-regular text-muted-foreground leading-[140%]">
-                      {item.text}
-                    </span>
-                  </div>
-                </div>
-                <div
-                  className="w-full flex items-center justify-center transition-all duration-500 ease-out"
-                  style={{
-                    scale: active == item.id ? 1 : 0.85,
-                    marginBottom: active == item.id ? '-5rem' : '-10rem',
-                    marginTop: active == item.id ? 0 : '5rem',
-                  }}
+                <span className="relative block h-0.5 w-full overflow-hidden bg-white/10">
+                  {isActive && (
+                    <span
+                      key={active}
+                      className="absolute inset-y-0 left-0 bg-foreground animate-[progress-fill_8s_linear_forwards] motion-reduce:w-full motion-reduce:animate-none"
+                    />
+                  )}
+                </span>
+                <span
+                  className={cn(
+                    'text-[0.8125rem] font-extrabold tabular-nums transition-opacity duration-500',
+                    !isActive && 'opacity-45',
+                  )}
                 >
-                  <img
-                    src={item.img}
-                    alt={c.imageAlt}
-                    className="transition-[filter] duration-500"
-                    style={{
-                      filter:
-                        active == item.id
-                          ? 'brightness(1)'
-                          : 'brightness(0.95)',
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
+                  {item.id}
+                </span>
+                <span
+                  className={cn(
+                    'text-[1.375rem] font-bold tracking-[-0.02em] transition-opacity duration-500',
+                    !isActive && 'opacity-55',
+                  )}
+                >
+                  {item.title}
+                </span>
+                <span
+                  className={cn(
+                    'text-[0.9375rem] leading-normal transition-opacity duration-500',
+                    isActive ? 'opacity-60' : 'opacity-40',
+                  )}
+                >
+                  {item.text}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+
+        <div className="relative mt-14 h-150 overflow-hidden">
+          <div className={glowClass} />
+          <div className="absolute inset-0 flex items-start justify-around px-10">
+            {items.map((item, i) => {
+              const isActive = active === i
+              return (
+                <img
+                  key={item.id}
+                  src={item.img}
+                  alt={item.imageAlt}
+                  width={304}
+                  height={658}
+                  loading="lazy"
+                  className={cn(
+                    'h-auto shrink-0 transition-all duration-500 ease-out',
+                    isActive
+                      ? 'mt-0 w-76 opacity-100'
+                      : 'mt-30 w-64.25 opacity-50',
+                  )}
+                />
+              )
+            })}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

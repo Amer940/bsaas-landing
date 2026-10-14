@@ -1,8 +1,8 @@
 import type { Locale } from '#/i18n/translations'
 
 /**
- * Landing page copy. Headings use `==text==` for the highlighted (primary
- * colour) part and `\n` for a line break; see `RichText`.
+ * Landing page copy. Headings use `==text==` for the highlighted (accent
+ * underline) part and `\n` for a line break; see `RichText`.
  */
 interface LandingContent {
   meta: { title: string; description: string }
@@ -11,28 +11,31 @@ interface LandingContent {
     title: string
     body: string
     howItWorks: string
+    note: string
+    imageAlt: string
   }
   features: {
-    profile: { title: string; description: string }
-    calendar: { title: string; description: string }
-    stats: { title: string; description: string }
-    noShows: { title: string; description: string }
+    eyebrow: string
+    title: string
+    /** Order matches the screenshots in `FeaturesGridSection`. */
+    items: Array<{ title: string; description: string }>
   }
   steps: {
+    eyebrow: string
     title: string
     body: string
-    imageAlt: string
-    items: Array<{ title: string; text: string }>
+    items: Array<{ title: string; text: string; imageAlt: string }>
   }
   pricing: {
+    eyebrow: string
     title: string
-    body: string
     plan: string
     price: string
     period: string
     description: string
     cta: string
     note: string
+    includedLabel: string
     features: Array<string>
   }
   cta: {
@@ -44,13 +47,9 @@ interface LandingContent {
     error: string
   }
   faq: {
+    eyebrow: string
     title: string
-    body: string
     items: Array<{ title: string; answer: string }>
-  }
-  calendar: {
-    days: Array<string>
-    service: string
   }
 }
 
@@ -62,114 +61,118 @@ export const landingContent: Record<Locale, LandingContent> = {
         'Chairo je aplikacija za online zakazivanje termina u frizerskim salonima. Klijenti rezervišu sami, a vi imate kalendar, tim i nedolaske pod kontrolom.',
     },
     hero: {
-      eyebrow: 'Zakazivanje za frizerske salone',
-      title: 'Vaša stolica\nuvijek ==puna==.',
-      body: 'Chairo je aplikacija za zakazivanje termina u frizerskim salonima. Klijenti rezervišu sami, a vi se bavite onim što najbolje radite.',
-      howItWorks: 'Kako radi',
+      eyebrow: 'Za frizere i salone',
+      title: 'Tvoja stolica,\nuvijek ==puna==.',
+      body: 'Klijenti zakazuju sami, ti vidiš cijeli dan na jednom ekranu — termine, pauze, nedolaske i zaradu.',
+      howItWorks: 'Pogledaj kako radi',
+      note: '14 dana besplatno · bez kartice',
+      imageAlt:
+        'chairo aplikacija: današnji raspored salona i obavijest o novom terminu',
     },
     features: {
-      profile: {
-        title: 'Profil salona',
-        description:
-          'Usluge, cijene, radno vrijeme i fotografije salona na jednom mjestu.',
-      },
-      calendar: {
-        title: 'Kalendar termina',
-        description:
-          'Svaka rezervacija odmah stiže u kalendar salona i frizera. Bez poziva i poruka.',
-      },
-      stats: {
-        title: 'Pregled poslovanja',
-        description: 'Termini i usluge po frizeru, na jednom ekranu.',
-      },
-      noShows: {
-        title: 'Nedolasci pod kontrolom',
-        description:
-          'Chairo bilježi nedolaske, a vi možete ograničiti buduće rezervacije.',
-      },
-    },
-    steps: {
-      title: 'Od registracije do\nprvog termina ==za par minuta==.',
-      body: 'Otvorite salon, podijelite kod i pustite klijente da sami rezervišu.',
-      imageAlt: 'Chairo aplikacija na telefonu',
+      eyebrow: 'Šta dobiješ',
+      title: 'Sve što salon treba,\nništa što ne treba.',
       items: [
         {
-          title: 'Otvorite salon',
-          text: 'Unesite usluge, cijene i radno vrijeme, i pozovite svoj tim.',
+          title: 'Cijeli dan na jednom ekranu',
+          description: 'Termini, pauze i slobodna mjesta — i za cijeli tim.',
         },
         {
-          title: 'Podijelite kod',
-          text: 'Klijenti se pridružuju salonu skeniranjem QR koda, unosom koda ili preko linka.',
+          title: 'Klijenti zakazuju sami',
+          description: 'Frizer, usluga, vrijeme — tri dodira.',
         },
         {
-          title: 'Termini stižu u kalendar',
-          text: 'Klijent bira frizera, uslugu i vrijeme, a termin se odmah pojavi u vašem kalendaru.',
+          title: 'Stalni termini',
+          description: 'Isti klijent, isto vrijeme — bez dopisivanja.',
+        },
+        {
+          title: 'Zarada i nedolasci',
+          description: 'Sedmica, mjesec, po frizeru.',
+        },
+        {
+          title: 'Tim i šabloni',
+          description: 'Jedna sedmica za cijeli tim, slobodni dani uz zahtjev.',
+        },
+      ],
+    },
+    steps: {
+      eyebrow: 'Kako radi',
+      title: 'Od prijave do prvog\ntermina za ==minut==.',
+      body: 'Bez instalacije kod klijenta, bez obuke. Ti postaviš salon, klijenti dođu sami.',
+      items: [
+        {
+          title: 'Plati i kreni',
+          text: 'Postavi radno vrijeme i usluge. Stranica za zakazivanje je online čim objaviš.',
+          imageAlt: 'Postavke salona: naziv, slogan, adresa i telefon',
+        },
+        {
+          title: 'Podijeli kod',
+          text: 'Klijenti upišu kod salona ili skeniraju QR na ogledalu — i već su kod tebe.',
+          imageAlt: 'Kod salona i QR kod za dijeljenje',
+        },
+        {
+          title: 'Termin stiže u kalendar',
+          text: 'Svaki novi termin odmah vidiš u Rasporedu, a klijent dobija podsjetnik.',
+          imageAlt: 'Dnevni raspored s obaviješću o novom terminu',
         },
       ],
     },
     pricing: {
-      title: 'Jedna ==cijena==.\nSve uključeno.',
-      body: 'Za klijente je Chairo besplatan. Plaća samo salon, jednom mjesečno.',
-      plan: 'Chairo • Mjesečno',
-      price: '$29',
+      eyebrow: 'Cijena',
+      title: 'Jedna cijena.\n==Sve== uključeno.',
+      plan: 'Jedna stolica · mjesečno',
+      price: '29 KM',
       period: '/ mjesečno',
       description:
-        'Za frizerske salone koji žele brže rezervacije, manje nedolazaka i bolje iskustvo za klijente.',
-      cta: 'Pokrenite salon',
-      note: '14 dana besplatno • Otkažite bilo kada',
+        'Za salone koji žele brže zakazivanje, manje nedolazaka i mirniji dan.',
+      cta: 'Uzmi svoju stolicu',
+      note: '14 dana besplatno · otkaži kad hoćeš',
+      includedLabel: 'Sve uključeno',
       features: [
-        'Online rezervacije 0–24',
-        'Obavijesti o terminima u aplikaciji',
-        'Upravljanje timom i rasporedom',
-        'Historija klijenata i nedolasci',
-        'QR kod i link za vaš salon',
+        'Online zakazivanje 0–24',
+        'SMS i email podsjetnici',
+        'Tim, šabloni i neradni dani',
+        'Historija klijenata i stalni termini',
+        'Pregled zarade i nedolazaka',
       ],
     },
     cta: {
-      title: 'Zainteresovani?\nBudite ==među prvima==.',
-      body: 'Ostavite email i javit ćemo vam se čim Chairo bude spreman za vaš salon.',
-      emailPlaceholder: 'Unesite email',
+      title: 'Brini o klijentima,\nne o ==rasporedu==.',
+      body: 'Ostavi email i javimo se s pristupom za tvoj salon.',
+      emailPlaceholder: 'tvoj@email.com',
       submit: 'Prijavi se',
-      success: 'Hvala! Javit ćemo vam se čim Chairo bude spreman.',
-      error: 'Nešto nije u redu. Pokušajte ponovo.',
+      success: 'Hvala! Javit ćemo ti se čim chairo bude spreman.',
+      error: 'Nešto nije u redu. Pokušaj ponovo.',
     },
     faq: {
-      title: 'Pitanja i ==odgovori==.',
-      body: 'Sve što trebate znati prije nego počnete.',
+      eyebrow: 'Pitanja',
+      title: 'Pitanja i odgovori.',
       items: [
         {
-          title: 'Koliko brzo mogu početi primati rezervacije?',
+          title: 'Koliko brzo mogu početi primati termine?',
           answer:
-            'Čim unesete usluge i radno vrijeme i podijelite kod salona. Za većinu salona to traje nekoliko minuta.',
+            'Čim uneseš usluge i radno vrijeme i podijeliš kod salona. Za većinu salona to traje nekoliko minuta.',
         },
         {
-          title: 'Šta je kod salona i kako radi?',
+          title: 'Šta je kod za preporuku i kako radi?',
           answer:
-            'Svaki salon dobija svoj kod, QR kod i link. Klijent ga unese ili skenira u aplikaciji i odmah može rezervisati termin kod vas.',
+            'Svaki salon ima svoj kod i QR, a klijenti ga mogu podijeliti s prijateljima. Ko se registruje s tim kodom, odmah je u tvom salonu — bez traženja.',
         },
         {
           title: 'Šta ako klijent ne dođe?',
           answer:
-            'Chairo bilježi nedolaske za svakog klijenta, a vi možete ograničiti njegove buduće rezervacije.',
+            'Označiš nedolazak jednim dodirom. Kad klijent dođe do granice koju postaviš (npr. 3 nedolaska), više ne može zakazati sam u aplikaciji — mora pozvati salon.',
         },
         {
-          title: 'Koliko Chairo košta?',
-          answer: 'Chairo je trenutno besplatan, i za salone i za klijente.',
+          title: 'Ima li chairo za Android?',
+          answer: 'Da. chairo radi na iPhone i Android telefonima.',
         },
         {
-          title: 'Da li je Chairo dostupan na Androidu?',
-          answer: 'Da. Chairo je dostupan za iPhone i Android telefone.',
-        },
-        {
-          title: 'Kada mogu početi koristiti Chairo?',
+          title: 'Kada mogu početi koristiti chairo?',
           answer:
-            'Ostavite email na dnu stranice i javit ćemo vam se čim aplikacija bude spremna.',
+            'Ostavi email iznad i javit ćemo ti se čim aplikacija bude spremna.',
         },
       ],
-    },
-    calendar: {
-      days: ['Pon', 'Uto', 'Sri', 'Čet', 'Pet'],
-      service: 'Šišanje',
     },
   },
 
@@ -180,114 +183,119 @@ export const landingContent: Record<Locale, LandingContent> = {
         'Chairo is an online booking app for barbershops. Clients book themselves, and you keep your calendar, team and no-shows under control.',
     },
     hero: {
-      eyebrow: 'Booking for barbershops',
-      title: 'Your chair\nalways ==full==.',
-      body: 'Chairo is an appointment booking app for barbershops. Clients book themselves, so you can focus on what you do best.',
-      howItWorks: 'How it works',
+      eyebrow: 'For barbers and salons',
+      title: 'Your chair,\nalways ==full==.',
+      body: 'Clients book themselves, and you see your whole day on one screen — appointments, breaks, no-shows and earnings.',
+      howItWorks: 'See how it works',
+      note: '14 days free · no card needed',
+      imageAlt:
+        "The chairo app: today's salon schedule and a new booking notification",
     },
     features: {
-      profile: {
-        title: 'Shop profile',
-        description:
-          "Your shop's services, prices, opening hours and photos, all in one place.",
-      },
-      calendar: {
-        title: 'Appointment calendar',
-        description:
-          "Every booking lands straight in the shop's and the barber's calendar. No calls, no texts.",
-      },
-      stats: {
-        title: 'Business overview',
-        description: 'Appointments and services per barber, on one screen.',
-      },
-      noShows: {
-        title: 'No-shows under control',
-        description:
-          'Chairo records no-shows, and you can limit future bookings.',
-      },
-    },
-    steps: {
-      title: 'From sign-up to\nfirst booking ==in minutes==.',
-      body: 'Set up your shop, share your code and let clients book themselves.',
-      imageAlt: 'The Chairo app on a phone',
+      eyebrow: 'What you get',
+      title: "Everything a salon needs,\nnothing it doesn't.",
       items: [
         {
-          title: 'Set up your shop',
-          text: 'Add your services, prices and opening hours, and invite your team.',
+          title: 'Your whole day on one screen',
+          description:
+            'Appointments, breaks and open slots — for the whole team.',
+        },
+        {
+          title: 'Clients book themselves',
+          description: 'Barber, service, time — three taps.',
+        },
+        {
+          title: 'Recurring appointments',
+          description: 'Same client, same time — no back-and-forth.',
+        },
+        {
+          title: 'Earnings and no-shows',
+          description: 'By week, by month, by barber.',
+        },
+        {
+          title: 'Team and templates',
+          description: 'One week for the whole team, days off on request.',
+        },
+      ],
+    },
+    steps: {
+      eyebrow: 'How it works',
+      title: 'From sign-up to your first\nbooking in a ==minute==.',
+      body: 'Nothing for clients to install, no training. You set up the salon, clients come on their own.',
+      items: [
+        {
+          title: 'Pay and go',
+          text: 'Set your hours and services. Your booking page is live as soon as you publish.',
+          imageAlt: 'Salon settings: name, tagline, address and phone',
         },
         {
           title: 'Share your code',
-          text: 'Clients join your shop by scanning the QR code, entering the code or opening a link.',
+          text: "Clients enter your salon code or scan the QR on the mirror — and they're in.",
+          imageAlt: 'Salon code and QR code for sharing',
         },
         {
           title: 'Bookings land in your calendar',
-          text: 'Clients pick a barber, service and time, and the booking shows up in your calendar instantly.',
+          text: 'Every new booking shows up in your Schedule right away, and the client gets a reminder.',
+          imageAlt: 'Daily schedule with a new booking notification',
         },
       ],
     },
     pricing: {
-      title: 'One ==price==.\nEverything included.',
-      body: 'Chairo is free for clients. Only the shop pays, once a month.',
-      plan: 'Chairo • Monthly',
-      price: '$29',
+      eyebrow: 'Pricing',
+      title: 'One price.\n==Everything== included.',
+      plan: 'One chair · monthly',
+      price: '29 KM',
       period: '/ month',
       description:
-        'Built for barbershops that want faster bookings, fewer no-shows and a smoother client experience.',
-      cta: 'Start your shop',
-      note: '14 days free • Cancel anytime',
+        'For salons that want faster booking, fewer no-shows and a calmer day.',
+      cta: 'Claim your chair',
+      note: '14 days free · cancel anytime',
+      includedLabel: 'Everything included',
       features: [
         'Online booking 24/7',
-        'In-app appointment notifications',
-        'Team and schedule management',
-        'Client history and no-shows',
-        'QR code and link for your shop',
+        'SMS and email reminders',
+        'Team, templates and days off',
+        'Client history and recurring appointments',
+        'Earnings and no-show overview',
       ],
     },
     cta: {
-      title: 'Interested?\nBe ==among the first==.',
-      body: "Leave your email and we'll let you know as soon as Chairo is ready for your shop.",
-      emailPlaceholder: 'Enter your email',
+      title: 'Focus on clients,\nnot ==scheduling==.',
+      body: "Leave your email and we'll get in touch with access for your salon.",
+      emailPlaceholder: 'your@email.com',
       submit: 'Sign up',
-      success: "Thanks! We'll be in touch as soon as Chairo is ready.",
+      success: "Thanks! We'll be in touch as soon as chairo is ready.",
       error: 'Something went wrong. Please try again.',
     },
     faq: {
-      title: 'Questions, ==answered==.',
-      body: 'Everything you need to know before you start.',
+      eyebrow: 'FAQ',
+      title: 'Questions, answered.',
       items: [
         {
           title: 'How quickly can I start taking bookings?',
           answer:
-            'As soon as you add your services and opening hours and share your shop code. For most shops that takes a few minutes.',
+            'As soon as you add your services and opening hours and share your salon code. For most salons that takes a few minutes.',
         },
         {
-          title: 'What is a shop code, and how does it work?',
+          title: 'What is the referral code, and how does it work?',
           answer:
-            'Every shop gets its own code, QR code and link. Clients enter or scan it in the app and can book with you right away.',
+            'Every salon has its own code and QR, and clients can share it with friends. Anyone who signs up with that code is in your salon straight away — no searching.',
         },
         {
-          title: "What happens if a client doesn't show up?",
+          title: "What if a client doesn't show up?",
           answer:
-            "Chairo records each client's no-shows, and you can limit their future bookings.",
+            "Mark the no-show with one tap. Once a client reaches the limit you set (say, 3 no-shows), they can't book in the app on their own anymore — they have to call the salon.",
         },
         {
-          title: 'How much does Chairo cost?',
-          answer: 'Chairo is currently free, for shops and clients alike.',
+          title: 'Is chairo available on Android?',
+          answer: 'Yes. chairo works on iPhone and Android phones.',
         },
         {
-          title: 'Is Chairo available on Android?',
-          answer: 'Yes. Chairo is available for iPhone and Android phones.',
-        },
-        {
-          title: 'When can I start using Chairo?',
+          title: 'When can I start using chairo?',
           answer:
-            "Leave your email at the bottom of the page and we'll let you know as soon as the app is ready.",
+            "Leave your email above and we'll let you know as soon as the app is ready.",
         },
       ],
-    },
-    calendar: {
-      days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-      service: 'Haircut',
     },
   },
 }

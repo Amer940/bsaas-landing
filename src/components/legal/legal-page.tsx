@@ -28,7 +28,7 @@ const INLINE_PATTERN =
   /(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|[\w.+-]+@chairo\.app)/g
 
 const linkClass =
-  'text-foreground underline underline-offset-2 hover:text-primary transition-colors duration-250'
+  'text-foreground underline underline-offset-2 hover:text-foreground/70 transition-colors duration-250'
 
 function renderInline(text: string): ReactNode {
   return text.split(INLINE_PATTERN).map((part, i) => {

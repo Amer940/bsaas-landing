@@ -28,7 +28,7 @@ function EmailInput({
     <form
       onSubmit={handleSubmit}
       className={cn(
-        'flex items-center h-10 md:w-99 w-full rounded-full bg-white pr-1 py-1 pl-5',
+        'flex items-center gap-2 w-full max-w-105 rounded-full bg-white/8 p-1.5 pl-5 focus-within:ring-2 focus-within:ring-foreground/30',
         className,
       )}
     >
@@ -41,8 +41,7 @@ function EmailInput({
         placeholder={placeholder}
         className={cn(
           'flex-1 min-w-0 bg-transparent outline-none border-none',
-          'font-sans text-[0.75rem] font-medium tracking-[-0.015em]',
-          'text-foreground placeholder:text-muted-fg',
+          'font-sans text-[0.9375rem] text-foreground placeholder:text-foreground/45',
         )}
       />
       <Button variant="submit" type="submit" disabled={disabled}>

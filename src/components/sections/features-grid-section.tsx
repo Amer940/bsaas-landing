@@ -1,91 +1,68 @@
-import { FeatureCard } from '../ui/features-card'
+import { RichText } from '../rich-text'
+import { SectionHeading } from '../section-heading'
+import { cn } from '#/lib/utils.ts'
 import { useLocale } from '#/i18n/locale-context'
 import { landingContent } from '#/content/landing'
+import scheduleImg from '#/images/landing/feature-schedule.webp'
+import bookingImg from '#/images/landing/feature-booking.webp'
+import recurringImg from '#/images/landing/feature-recurring.webp'
+import analyticsImg from '#/images/landing/feature-analytics.webp'
+import teamImg from '#/images/landing/feature-team.webp'
 
-function FeaturesGridSection({ className }: { className?: string }) {
+/** Screenshots in the same order as `features.items` in the landing copy. */
+const FEATURE_IMAGES = [
+  { src: scheduleImg, width: 370, height: 380 },
+  { src: bookingImg, width: 333, height: 250 },
+  { src: recurringImg, width: 333, height: 174 },
+  { src: analyticsImg, width: 333, height: 250 },
+  { src: teamImg, width: 333, height: 162 },
+]
+
+function FeaturesGridSection() {
   const { locale } = useLocale()
   const c = landingContent[locale].features
 
   return (
-    <div className={`w-full md:px-4 px-2 ${className ?? ''}`}>
-      <div className="site-container site-border md:py-20">
-        <div className="border border-y border-x-0 -mx-2 md:mx-0">
-          <div className="grid md:grid-cols-[1fr_2.93fr] flex-col flex ">
-            <FeatureCard
-              title={c.profile.title}
-              description={c.profile.description}
-              textPosition="bottom"
-              media={
-                <div className="rounded-sm overflow-hidden min-h-103.5 bg-[#111]" />
-              }
-              className="md:flex hidden border-0"
-            />
-            <FeatureCard
-              title={c.profile.title}
-              description={c.profile.description}
-              textPosition="top"
-              media={
-                <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#111]" />
-              }
-              className="md:hidden flex border-0 border-b"
-            />
+    <section className="mx-auto max-w-300 px-5 pt-10 pb-10 md:pt-17.5 xl:px-0">
+      <SectionHeading eyebrow={c.eyebrow} className="mb-8 md:mb-11">
+        <RichText text={c.title} />
+      </SectionHeading>
 
-            <div className="flex-col w-full">
-              <div className="grid md:grid-cols-[2fr_1fr] grid-cols-1">
-                <FeatureCard
-                  title={c.calendar.title}
-                  description={c.calendar.description}
-                  textPosition="top"
-                  media={
-                    <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#1a1a1a]" />
-                  }
-                  className="border-0 md:border-l border-b md:border-b-0"
-                />
-
-                <FeatureCard
-                  title={c.stats.title}
-                  description={c.stats.description}
-                  textPosition="top"
-                  media={
-                    <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#1a1a1a]" />
-                  }
-                  className="justify-between border-0 md:border-l"
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr] lg:grid-rows-[330px_330px]">
+        {c.items.map((item, i) => {
+          const image = FEATURE_IMAGES[i]
+          return (
+            <article
+              key={item.title}
+              className={cn(
+                'glass flex flex-col overflow-hidden rounded-[28px]',
+                i === 0 && 'md:row-span-2',
+              )}
+            >
+              <div className="px-6.5 pt-6.5 pb-4.5">
+                <h3 className="m-0 text-[1.3125rem] font-bold tracking-[-0.02em]">
+                  {item.title}
+                </h3>
+                <p className="m-0 mt-1.5 text-[0.9375rem] leading-[1.45] text-foreground/60">
+                  {item.description}
+                </p>
+              </div>
+              <div className="px-5.5">
+                <img
+                  src={image.src}
+                  alt=""
+                  width={image.width}
+                  height={image.height}
+                  loading="lazy"
+                  className="mx-auto block h-auto w-full"
+                  style={{ maxWidth: image.width }}
                 />
               </div>
-
-              <div className="grid md:grid-cols-[1fr_2.3fr]">
-                <FeatureCard
-                  title={c.noShows.title}
-                  description={c.noShows.description}
-                  textPosition="bottom"
-                  media={
-                    <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#1a1a1a]" />
-                  }
-                  className="md:flex hidden border-b-0"
-                />
-
-                <FeatureCard
-                  title={c.noShows.title}
-                  description={c.noShows.description}
-                  textPosition="top"
-                  media={
-                    <div className="rounded-sm overflow-hidden md:h-40 h-37.5 bg-[#1a1a1a]" />
-                  }
-                  className="md:hidden flex border-0 border-t"
-                />
-
-                <FeatureCard
-                  media={
-                    <div className="rounded-sm absolute top-2 left-2 right-2 bottom-2 bg-[#1a1a1a]" />
-                  }
-                  className="md:block hidden border-0 border-t"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+            </article>
+          )
+        })}
       </div>
-    </div>
+    </section>
   )
 }
 
