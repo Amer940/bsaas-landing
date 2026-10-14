@@ -7,10 +7,13 @@ import { LanguageSwitcher } from './language-switcher'
 import { useLocale } from '#/i18n/locale-context'
 import { LocalizedLink } from '#/i18n/localized-link'
 import type { TranslationKey } from '#/i18n/translations'
+import { SHOW_PRICING } from '#/lib/features'
 
 const NAV_LINKS: Array<{ labelKey: TranslationKey; hash: string }> = [
   { labelKey: 'nav.howItWorks', hash: 'kako-radi' },
-  { labelKey: 'nav.pricing', hash: 'cijena' },
+  ...(SHOW_PRICING
+    ? [{ labelKey: 'nav.pricing' as const, hash: 'cijena' }]
+    : []),
   { labelKey: 'nav.faq', hash: 'pitanja' },
 ]
 
