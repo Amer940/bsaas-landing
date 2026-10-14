@@ -4,17 +4,14 @@ import { SectionHeading } from '../section-heading'
 import { cn } from '#/lib/utils.ts'
 import { useLocale } from '#/i18n/locale-context'
 import { landingContent } from '#/content/landing'
-import step1Img from '#/images/landing/step-1.webp'
-import step2Img from '#/images/landing/step-2.webp'
-import step3Img from '#/images/landing/step-3.webp'
-
-const STEP_IMAGES = [step1Img, step2Img, step3Img]
+import { CodeScreen, NewBookingScreen, SettingsScreen } from '../step-demos'
+import { featureDemos, stepDemos } from '#/content/feature-demos'
 
 /** How long each step stays active; keep in sync with the progress bar animation. */
 const STEP_DURATION_MS = 8000
 
 const glowClass =
-  'pointer-events-none absolute -inset-x-[10%] top-52.5 h-225 rounded-[50%] bg-[radial-gradient(60%_40%_at_50%_10%,rgba(255,255,255,.10),rgba(255,255,255,.03)_60%,transparent)]'
+  'pointer-events-none absolute -inset-x-[10%] top-24 bottom-0 rounded-[50%] bg-[radial-gradient(60%_50%_at_50%_20%,rgba(255,255,255,.09),rgba(255,255,255,.02)_60%,transparent)]'
 
 const StepsSection = () => {
   const { locale } = useLocale()
@@ -30,17 +27,28 @@ const StepsSection = () => {
     return () => clearTimeout(timer)
   }, [active, c.items.length])
 
+  const screens = stepDemos[locale]
+  // Same order as `steps.items` in the landing copy.
+  const visuals = [
+    <SettingsScreen data={screens.settings} />,
+    <CodeScreen data={screens.code} />,
+    <NewBookingScreen
+      data={screens.booking}
+      schedule={featureDemos[locale].schedule}
+    />,
+  ]
+
   const items = c.items.map((item, i) => ({
     ...item,
     id: String(i + 1).padStart(2, '0'),
-    img: STEP_IMAGES[i],
+    visual: visuals[i],
   }))
   const activeItem = items[active]
 
   return (
     <section
       id="kako-radi"
-      className="mx-auto max-w-300 scroll-mt-24 px-5 pt-14 md:pt-27.5 xl:px-0"
+      className="mx-auto max-w-300 scroll-mt-24 px-5 pt-14 pb-6 md:pt-27.5 md:pb-10 xl:px-0"
     >
       <SectionHeading eyebrow={c.eyebrow}>
         <RichText text={c.title} />
@@ -50,7 +58,7 @@ const StepsSection = () => {
       </p>
 
       {/* Mobile */}
-      <div className="md:hidden mt-8">
+      <div className="mx-auto mt-8 max-w-md lg:hidden">
         <div className="grid grid-cols-3 rounded-full bg-white/8 p-1">
           {items.map((item, i) => (
             <button
@@ -69,34 +77,30 @@ const StepsSection = () => {
             </button>
           ))}
         </div>
-        <h3 className="m-0 mt-4 text-xl font-bold tracking-[-0.02em]">
+        <h3 className="m-0 mt-4 text-xl font-bold tracking-[-0.02em] md:text-center">
           {activeItem.title}
         </h3>
-        <p className="m-0 mt-1.5 text-[0.9375rem] leading-normal text-foreground/60">
+        <p className="m-0 mt-1.5 text-[0.9375rem] leading-normal text-foreground/60 md:text-center">
           {activeItem.text}
         </p>
-        <div className="relative mt-6 h-117.5 overflow-hidden">
-          <div className={glowClass} style={{ top: 160 }} />
+        <div aria-hidden="true" className="relative mt-6 grid select-none">
+          <div className={glowClass} />
           {items.map((item, i) => (
-            <img
+            <div
               key={item.id}
-              src={item.img}
-              alt={item.imageAlt}
-              width={304}
-              height={658}
-              loading="lazy"
-              aria-hidden={active !== i}
               className={cn(
-                'absolute left-1/2 top-0 w-67.5 max-w-none -translate-x-1/2 transition-opacity duration-500',
-                active === i ? 'opacity-100' : 'opacity-0',
+                'relative col-start-1 row-start-1 mx-auto w-full max-w-80 transition-opacity duration-500',
+                active === i ? 'opacity-100' : 'pointer-events-none opacity-0',
               )}
-            />
+            >
+              {item.visual}
+            </div>
           ))}
         </div>
       </div>
 
       {/* Desktop */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <div className="mt-14 flex items-start gap-10">
           {items.map((item, i) => {
             const isActive = active === i
@@ -145,29 +149,24 @@ const StepsSection = () => {
           })}
         </div>
 
-        <div className="relative mt-14 h-150 overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="relative mt-12 grid select-none grid-cols-3 items-start gap-10"
+        >
           <div className={glowClass} />
-          <div className="absolute inset-0 flex items-start justify-around px-10">
-            {items.map((item, i) => {
-              const isActive = active === i
-              return (
-                <img
-                  key={item.id}
-                  src={item.img}
-                  alt={item.imageAlt}
-                  width={304}
-                  height={658}
-                  loading="lazy"
-                  className={cn(
-                    'h-auto shrink-0 transition-all duration-500 ease-out',
-                    isActive
-                      ? 'mt-0 w-76 opacity-100'
-                      : 'mt-30 w-64.25 opacity-50',
-                  )}
-                />
-              )
-            })}
-          </div>
+          {items.map((item, i) => (
+            <div
+              key={item.id}
+              className={cn(
+                'relative mx-auto w-full max-w-80 transition-all duration-500 ease-out',
+                active === i
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-8 scale-[.96] opacity-40',
+              )}
+            >
+              {item.visual}
+            </div>
+          ))}
         </div>
       </div>
     </section>

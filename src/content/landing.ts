@@ -24,7 +24,7 @@ interface LandingContent {
     eyebrow: string
     title: string
     body: string
-    items: Array<{ title: string; text: string; imageAlt: string }>
+    items: Array<{ title: string; text: string }>
   }
   pricing: {
     eyebrow: string
@@ -103,17 +103,14 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'Plati i kreni',
           text: 'Postavi radno vrijeme i usluge. Stranica za zakazivanje je online čim objaviš.',
-          imageAlt: 'Postavke salona: naziv, slogan, adresa i telefon',
         },
         {
           title: 'Podijeli kod',
           text: 'Klijenti upišu kod salona ili skeniraju QR na ogledalu — i već su kod tebe.',
-          imageAlt: 'Kod salona i QR kod za dijeljenje',
         },
         {
           title: 'Termin stiže u kalendar',
           text: 'Svaki novi termin odmah vidiš u Rasporedu, a klijent dobija podsjetnik.',
-          imageAlt: 'Dnevni raspored s obaviješću o novom terminu',
         },
       ],
     },
@@ -226,17 +223,14 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'Pay and go',
           text: 'Set your hours and services. Your booking page is live as soon as you publish.',
-          imageAlt: 'Salon settings: name, tagline, address and phone',
         },
         {
           title: 'Share your code',
           text: "Clients enter your salon code or scan the QR on the mirror — and they're in.",
-          imageAlt: 'Salon code and QR code for sharing',
         },
         {
           title: 'Bookings land in your calendar',
           text: 'Every new booking shows up in your Schedule right away, and the client gets a reminder.',
-          imageAlt: 'Daily schedule with a new booking notification',
         },
       ],
     },

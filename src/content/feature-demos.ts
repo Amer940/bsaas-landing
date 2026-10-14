@@ -320,3 +320,97 @@ export const featureDemos: Record<Locale, FeatureDemos> = {
 }
 
 export type { FeatureDemos }
+
+/** Sample app screens for the three "How it works" steps. */
+interface StepDemos {
+  settings: {
+    header: string
+    save: string
+    title: string
+    cover: string
+    fields: Array<{ label: string; value: string }>
+    rows: Array<{ label: string; value: string }>
+  }
+  code: {
+    title: string
+    body: string
+    codeLabel: string
+    code: string
+    copy: string
+    share: string
+    qrTitle: string
+    qrBody: string
+  }
+  booking: {
+    toastTitle: string
+    toastBody: string
+    newBadge: string
+  }
+}
+
+export const stepDemos: Record<Locale, StepDemos> = {
+  bs: {
+    settings: {
+      header: 'Postavke salona',
+      save: 'Sačuvaj',
+      title: 'Profil salona',
+      cover: 'Naslovna',
+      fields: [
+        { label: 'Naziv', value: 'Brko Barber' },
+        { label: 'Adresa', value: 'Ferhadija 12, Sarajevo' },
+      ],
+      rows: [
+        { label: 'Radno vrijeme', value: 'Pon–Sub · 9–19' },
+        { label: 'Usluge i cijene', value: '6 usluga' },
+      ],
+    },
+    code: {
+      title: 'Kod salona',
+      body: 'Klijenti ga upišu ili skeniraju QR — i već su kod tebe.',
+      codeLabel: 'Tvoj kod',
+      code: 'K7M2QX',
+      copy: 'Kopiraj',
+      share: 'Podijeli',
+      qrTitle: 'QR za ogledalo',
+      qrBody: 'Odštampaj i stavi na pult.',
+    },
+    booking: {
+      toastTitle: 'Novi termin',
+      toastBody: 'Dino · Fade + brada · danas 17:30',
+      newBadge: 'novo',
+    },
+  },
+  en: {
+    settings: {
+      header: 'Salon settings',
+      save: 'Save',
+      title: 'Salon profile',
+      cover: 'Cover',
+      fields: [
+        { label: 'Name', value: 'Brko Barber' },
+        { label: 'Address', value: 'Ferhadija 12, Sarajevo' },
+      ],
+      rows: [
+        { label: 'Opening hours', value: 'Mon–Sat · 9–19' },
+        { label: 'Services and prices', value: '6 services' },
+      ],
+    },
+    code: {
+      title: 'Salon code',
+      body: "Clients type it in or scan the QR — and they're in.",
+      codeLabel: 'Your code',
+      code: 'K7M2QX',
+      copy: 'Copy',
+      share: 'Share',
+      qrTitle: 'QR for the mirror',
+      qrBody: 'Print it and put it on the counter.',
+    },
+    booking: {
+      toastTitle: 'New booking',
+      toastBody: 'Dino · Fade + beard · today 17:30',
+      newBadge: 'new',
+    },
+  },
+}
+
+export type { StepDemos }
