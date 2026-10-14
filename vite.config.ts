@@ -15,7 +15,14 @@ import {
 import type { Locale } from './src/i18n/translations'
 
 /** Unlocalized paths of the `{-$locale}` routes. */
-const PAGES = ['/', '/privacy', '/terms', '/support', '/delete-account']
+const PAGES = [
+  '/',
+  '/privacy',
+  '/terms',
+  '/support',
+  '/delete-account',
+  '/reset-password',
+]
 
 const OG_LOCALE: Record<Locale, string> = { bs: 'bs_BA', en: 'en_US' }
 

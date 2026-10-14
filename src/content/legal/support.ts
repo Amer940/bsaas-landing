@@ -16,7 +16,7 @@ export const supportContent: LocalizedLegalDoc = {
       { type: 'h2', text: 'Česta pitanja' },
       {
         type: 'p',
-        text: '**Zaboravio/la sam lozinku.** Na ekranu za prijavu dodirnite "Zaboravili ste lozinku?" i unesite email. Poslat ćemo vam link za novu lozinku. Ako email ne stiže, provjerite spam.',
+        text: '**Zaboravio/la sam lozinku.** Na ekranu za prijavu dodirnite „Zaboravljena lozinka?“ i unesite email. Poslat ćemo vam kod za aplikaciju i link za novu lozinku. Ako email ne stiže, provjerite spam.',
       },
       {
         type: 'p',
@@ -52,7 +52,7 @@ export const supportContent: LocalizedLegalDoc = {
       { type: 'h2', text: 'Frequently asked questions' },
       {
         type: 'p',
-        text: '**I forgot my password.** On the sign-in screen, tap "Forgot password?" and enter your email. We\'ll send you a link to set a new password. If it doesn\'t arrive, check your spam folder.',
+        text: '**I forgot my password.** On the sign-in screen, tap "Forgot password?" and enter your email. We\'ll send you a code for the app and a link to set a new password. If it doesn\'t arrive, check your spam folder.',
       },
       {
         type: 'p',
