@@ -2,13 +2,16 @@ import { useId, useState } from 'react'
 import { Plus } from 'lucide-react'
 
 import { cn } from '#/lib/utils.ts'
+import { useHashTarget } from '#/lib/use-hash-target'
 
 function FAQItem({
+  id,
   title,
   answer,
   isOpen,
   onToggle,
 }: {
+  id?: string
   title: string
   answer: string
   isOpen: boolean
@@ -17,7 +20,11 @@ function FAQItem({
   const answerId = useId()
 
   return (
-    <div data-slot="faq-item" className="border-t border-border py-5.5">
+    <div
+      id={id}
+      data-slot="faq-item"
+      className="scroll-mt-24 border-t border-border py-5.5"
+    >
       <h3 className="m-0">
         <button
           type="button"
@@ -31,7 +38,7 @@ function FAQItem({
             <Plus
               aria-hidden="true"
               className={cn(
-                'size-3.5 transition-transform duration-300',
+                'size-3.5 transition-transform duration-400 ease-smooth',
                 isOpen && 'rotate-45',
               )}
               strokeWidth={2.5}
@@ -42,10 +49,15 @@ function FAQItem({
 
       <div
         id={answerId}
-        className="grid transition-[grid-template-rows] duration-300 ease-in-out"
+        className="grid transition-[grid-template-rows] duration-400 ease-smooth"
         style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
       >
-        <div className="overflow-hidden">
+        <div
+          className={cn(
+            'overflow-hidden transition-opacity duration-400 ease-smooth',
+            isOpen ? 'opacity-100' : 'opacity-0',
+          )}
+        >
           <p className="m-0 mt-2.5 max-w-160 text-[0.9375rem] leading-[1.55] text-foreground/65">
             {answer}
           </p>
@@ -59,10 +71,15 @@ function FAQAccordion({
   items,
   className,
 }: {
-  items: { title: string; answer: string }[]
+  items: { id?: string; title: string; answer: string }[]
   className?: string
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+
+  useHashTarget((hash) => {
+    const index = items.findIndex((item) => item.id === hash)
+    if (index !== -1) setOpenIndex(index)
+  })
 
   return (
     <div
@@ -74,6 +91,7 @@ function FAQAccordion({
       {items.map((item, index) => (
         <FAQItem
           key={item.title}
+          id={item.id}
           title={item.title}
           answer={item.answer}
           isOpen={openIndex === index}

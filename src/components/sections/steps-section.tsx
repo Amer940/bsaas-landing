@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { RichText } from '../rich-text'
 import { SectionHeading } from '../section-heading'
 import { cn } from '#/lib/utils.ts'
+import { useHashTarget } from '#/lib/use-hash-target'
 import { useLocale } from '#/i18n/locale-context'
 import { landingContent } from '#/content/landing'
 import { CodeScreen, NewBookingScreen, SettingsScreen } from '../step-demos'
@@ -11,12 +12,18 @@ import { featureDemos, stepDemos } from '#/content/feature-demos'
 const STEP_DURATION_MS = 8000
 
 const glowClass =
-  'pointer-events-none absolute -inset-x-[10%] top-24 bottom-0 rounded-[50%] bg-[radial-gradient(60%_50%_at_50%_20%,rgba(255,255,255,.09),rgba(255,255,255,.02)_60%,transparent)]'
+  'pointer-events-none absolute inset-x-0 lg:-inset-x-[10%] top-24 bottom-0 rounded-[50%] bg-[radial-gradient(60%_50%_at_50%_20%,rgba(255,255,255,.09),rgba(255,255,255,.02)_60%,transparent)]'
 
 const StepsSection = () => {
   const { locale } = useLocale()
   const c = landingContent[locale].steps
   const [active, setActive] = useState(0)
+
+  // Feature cards link to `#korak-N` to open a specific step.
+  useHashTarget((hash) => {
+    const step = Number(/^korak-(\d)$/.exec(hash)?.[1])
+    if (step >= 1 && step <= c.items.length) setActive(step - 1)
+  })
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -48,8 +55,15 @@ const StepsSection = () => {
   return (
     <section
       id="kako-radi"
-      className="mx-auto max-w-300 scroll-mt-24 px-5 pt-14 pb-6 md:pt-27.5 md:pb-10 xl:px-0"
+      className="relative mx-auto max-w-300 scroll-mt-24 px-5 pt-14 pb-6 md:pt-27.5 md:pb-10 xl:px-0"
     >
+      {items.map((item) => (
+        <span
+          key={item.id}
+          id={`korak-${Number(item.id)}`}
+          className="absolute top-0 scroll-mt-24"
+        />
+      ))}
       <SectionHeading eyebrow={c.eyebrow}>
         <RichText text={c.title} />
       </SectionHeading>
@@ -59,7 +73,12 @@ const StepsSection = () => {
 
       {/* Mobile */}
       <div className="mx-auto mt-8 max-w-md lg:hidden">
-        <div className="grid grid-cols-3 rounded-full bg-white/8 p-1">
+        <div className="relative grid grid-cols-3 rounded-full bg-white/8 p-1">
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-1 left-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-foreground transition-transform duration-500 ease-smooth"
+            style={{ transform: `translateX(${active * 100}%)` }}
+          />
           {items.map((item, i) => (
             <button
               key={item.id}
@@ -67,30 +86,35 @@ const StepsSection = () => {
               onClick={() => setActive(i)}
               aria-pressed={active === i}
               className={cn(
-                'h-10 rounded-full text-[0.9375rem] font-bold tabular-nums transition-colors duration-300',
-                active === i
-                  ? 'bg-foreground text-background'
-                  : 'text-foreground/60',
+                'relative h-10 rounded-full text-[0.9375rem] font-bold tabular-nums transition-colors duration-500 ease-smooth',
+                active === i ? 'text-background' : 'text-foreground/60',
               )}
             >
               {item.id}
             </button>
           ))}
         </div>
-        <h3 className="m-0 mt-4 text-xl font-bold tracking-[-0.02em] md:text-center">
-          {activeItem.title}
-        </h3>
-        <p className="m-0 mt-1.5 text-[0.9375rem] leading-normal text-foreground/60 md:text-center">
-          {activeItem.text}
-        </p>
-        <div aria-hidden="true" className="relative mt-6 grid select-none">
+        <div key={active} className="animate-fade-up">
+          <h3 className="m-0 mt-4 text-xl font-bold tracking-[-0.02em] md:text-center">
+            {activeItem.title}
+          </h3>
+          <p className="m-0 mt-1.5 text-[0.9375rem] leading-normal text-foreground/60 md:text-center">
+            {activeItem.text}
+          </p>
+        </div>
+        <div
+          aria-hidden="true"
+          className="relative mt-6 grid grid-cols-1 select-none"
+        >
           <div className={glowClass} />
           {items.map((item, i) => (
             <div
               key={item.id}
               className={cn(
-                'relative col-start-1 row-start-1 mx-auto w-full max-w-80 transition-opacity duration-500',
-                active === i ? 'opacity-100' : 'pointer-events-none opacity-0',
+                'relative col-start-1 row-start-1 mx-auto w-full max-w-80 transition-[opacity,transform] duration-500 ease-smooth',
+                active === i
+                  ? 'opacity-100'
+                  : 'pointer-events-none translate-y-3 opacity-0',
               )}
             >
               {item.visual}
@@ -158,7 +182,7 @@ const StepsSection = () => {
             <div
               key={item.id}
               className={cn(
-                'relative mx-auto w-full max-w-80 transition-all duration-500 ease-out',
+                'relative mx-auto w-full max-w-80 transition-all duration-700 ease-smooth',
                 active === i
                   ? 'translate-y-0 opacity-100'
                   : 'translate-y-8 scale-[.96] opacity-40',

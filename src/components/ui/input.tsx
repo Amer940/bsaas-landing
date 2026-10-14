@@ -41,7 +41,7 @@ function EmailInput({
         placeholder={placeholder}
         className={cn(
           'flex-1 min-w-0 bg-transparent outline-none border-none',
-          'font-sans text-[0.9375rem] text-foreground placeholder:text-foreground/45',
+          'font-sans text-base md:text-[0.9375rem] text-foreground placeholder:text-foreground/45',
         )}
       />
       <Button variant="submit" type="submit" disabled={disabled}>

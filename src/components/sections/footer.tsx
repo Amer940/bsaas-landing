@@ -6,6 +6,7 @@ import { linkedInIcon } from '../ui/linkedIn-icon'
 import { xIcon } from '../ui/x-icon'
 import { useLocale } from '#/i18n/locale-context'
 import { LocalizedLink } from '#/i18n/localized-link'
+import { SHOW_SOCIAL_LINKS } from '#/lib/features'
 
 const SOCIAL_LINKS = [
   { icon: facebookIcon, href: '#', label: 'Facebook' },
@@ -48,18 +49,20 @@ function Footer() {
               </li>
             ))}
           </ul>
-          <div className="flex items-center gap-2">
-            {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                aria-label={label}
-                className="flex size-9 items-center justify-center rounded-full bg-white/8 text-foreground transition-colors duration-250 hover:bg-white/14"
-              >
-                <Icon />
-              </a>
-            ))}
-          </div>
+          {SHOW_SOCIAL_LINKS && (
+            <div className="flex items-center gap-2">
+              {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="flex size-9 items-center justify-center rounded-full bg-white/8 text-foreground transition-colors duration-250 hover:bg-white/14"
+                >
+                  <Icon />
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="mt-6.5 flex flex-wrap items-center gap-x-4.5 gap-y-2 border-t border-border pt-5.5 text-xs text-foreground/55">

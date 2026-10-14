@@ -26,7 +26,14 @@ type LocalizedLinkProps = Omit<
   children?: React.ReactNode
 }
 
-/** A link to a page in the current locale (`/privacy` → `/en/privacy`). */
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+/**
+ * A link to a page in the current locale (`/privacy` → `/en/privacy`).
+ * Links to a section on the page glide there instead of jumping.
+ */
 function LocalizedLink({ to, hash, ...props }: LocalizedLinkProps) {
   const { locale } = useLocale()
 
@@ -35,6 +42,11 @@ function LocalizedLink({ to, hash, ...props }: LocalizedLinkProps) {
       to={LOCALIZED_ROUTES[to]}
       params={{ locale: localeParam(locale) }}
       hash={hash}
+      hashScrollIntoView={
+        hash && !prefersReducedMotion()
+          ? { behavior: 'smooth', block: 'start' }
+          : true
+      }
       {...props}
     />
   )
