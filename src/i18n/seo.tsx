@@ -40,7 +40,10 @@ function Seo({ title, description }: SeoProps) {
     setMeta('property', 'og:locale', OG_LOCALE[locale])
     setMeta('property', 'og:url', url)
     setMeta('property', 'og:title', title)
-    if (description) setMeta('property', 'og:description', description)
+    if (description) {
+      setMeta('name', 'description', description)
+      setMeta('property', 'og:description', description)
+    }
     setMeta('property', 'og:image', image)
     setMeta('name', 'twitter:image', image)
   }, [locale, url, title, description])
@@ -48,7 +51,6 @@ function Seo({ title, description }: SeoProps) {
   return (
     <>
       <title>{title}</title>
-      {description && <meta name="description" content={description} />}
       <link rel="canonical" href={url} />
       {LOCALES.map((l) => (
         <link

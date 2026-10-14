@@ -59,7 +59,7 @@ export const landingContent: Record<Locale, LandingContent> = {
     meta: {
       title: 'Chairo | Aplikacija za frizere i barbere',
       description:
-        'Chairo je aplikacija koju frizeri i barberi koriste da uštede vrijeme. Online zakazivanje 0-24, bez poruka i poziva, manje nedolazaka i stolica uvijek puna.',
+        'Chairo je aplikacija za zakazivanje termina za frizere i barbere. Klijenti rezervišu 0-24, bez poziva i poruka. Manje propuštenih termina, pun raspored.',
     },
     hero: {
       eyebrow: 'Za frizere i salone',
