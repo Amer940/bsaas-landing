@@ -5,6 +5,7 @@ import { CTASection } from '#/components/sections/CTA-section'
 import { FAQSection } from '#/components/sections/faq-sections'
 import StepsSection from '#/components/sections/steps-section'
 import Hero from '#/components/sections/hero-section'
+import { PricingSection } from '#/components/sections/pricing-section'
 import { Footer } from '#/components/sections/footer'
 import { Seo } from '#/i18n/seo'
 import { useLocale } from '#/i18n/locale-context'
@@ -22,11 +23,14 @@ function Home() {
     <>
       <Seo title={meta.title} description={meta.description} />
       <Navbar />
-      <Hero />
-      <FeaturesGridSection />
-      <StepsSection />
-      <CTASection />
-      <FAQSection />
+      <main>
+        <Hero />
+        <FeaturesGridSection />
+        <StepsSection />
+        <PricingSection />
+        <CTASection />
+        <FAQSection />
+      </main>
       <Footer />
     </>
   )

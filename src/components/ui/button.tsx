@@ -6,26 +6,17 @@ import { Slot } from 'radix-ui'
 import { cn } from '#/lib/utils.ts'
 
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex shrink-0 items-center justify-center gap-2 rounded-full font-bold whitespace-nowrap no-underline transition-[background-color,opacity] duration-250 outline-none focus-visible:ring-2 focus-visible:ring-foreground/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default:
-          'bg-black text-white min-w-[9.625rem] h-8 px-3 gap-[0.625rem] font-[family-name:var(--font-sans)] rounded-full text-[0.875rem]',
-        outline:
-          'bg-transparent text-black min-w-[9.625rem] h-8 px-3 gap-[0.625rem] font-[family-name:var(--font-sans)] rounded-full border border-black text-[0.875rem]',
-        submit:
-          'bg-black text-white px-5 gap-[0.625rem] font-[family-name:var(--font-sans)] rounded-full text-[0.75rem] uppercase max-h-[2rem]',
+        default: 'bg-primary text-primary-foreground hover:bg-[#5e5e5e]',
+        outline: 'bg-white/8 text-foreground hover:bg-white/12',
+        submit: 'bg-primary text-primary-foreground hover:bg-[#5e5e5e]',
       },
       size: {
-        default: 'h-9 px-4 py-2 has-[>svg]:px-3',
-        xs: "h-6 gap-1 rounded-md px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: 'h-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5',
-        lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
-        icon: 'size-9',
-        'icon-xs': "size-6 rounded-md [&_svg:not([class*='size-'])]:size-3",
-        'icon-sm': 'size-8',
-        'icon-lg': 'size-10',
+        default: 'h-11 px-6 text-[0.9375rem]',
+        lg: 'h-13 px-6 text-base',
       },
     },
     defaultVariants: {

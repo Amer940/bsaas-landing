@@ -1,51 +1,60 @@
+import { ArrowRight } from 'lucide-react'
 import { Button } from '../ui/button'
-import { CalendarAnimation } from '../calendar-animation'
 import { RichText } from '../rich-text'
 import { useLocale } from '#/i18n/locale-context'
 import { landingContent } from '#/content/landing'
 import { LocalizedLink } from '#/i18n/localized-link'
+import heroPhones from '#/images/landing/hero-phones.webp'
+import avatars from '#/images/landing/avatars.webp'
 
 const Hero = () => {
   const { locale, t } = useLocale()
   const c = landingContent[locale].hero
 
   return (
-    <div className="md:px-4 px-2">
-      <div className="w-full bg-white">
-        <div className="site-container site-border ">
-          <div className="-mx-2 md:mx-0 flex flex-col md:grid md:grid-cols-2 md:border-b border-t md:border-t-0">
-            <div className="bg-[#F7F5F0] gap-4 px-8 py-8 md:py-[160px] flex flex-col items-start justify-start md:border-r ">
-              <div className="md:block hidden text-[14px] text-[#000000]/50 font-medium leading-[100%] font-sans">
-                {c.eyebrow}
-              </div>
-              <div className="flex flex-col gap-8 w-full items-center md:items-start">
-                <h1 className="text-[36px] text-center md:text-left md:text-[64px] font-medium text-black leading-[100%] font-sans">
-                  <RichText text={c.title} />
-                </h1>
-                <div className="text-[14px] text-muted-foreground font-sans max-w-[400px] leading-[150%] md:text-left text-center">
-                  {c.body}
-                </div>
-                <div className="flex flex-col md:flex-row w-full md:w-auto items-stretch md:items-center gap-2 md:gap-4">
-                  <Button variant="default" asChild>
-                    <LocalizedLink to="/" hash="prijava">
-                      {t('nav.cta')}
-                    </LocalizedLink>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <LocalizedLink to="/" hash="kako-radi">
-                      {c.howItWorks}
-                    </LocalizedLink>
-                  </Button>
-                </div>
-              </div>
-            </div>
-            <div className="md:py-12 px-2 pb-8 pt-4 md:px-8 flex items-center">
-              <CalendarAnimation />
-            </div>
-          </div>
+    <section className="mx-auto grid max-w-300 items-center gap-10 px-5 pt-8 pb-10 md:pt-17.5 lg:grid-cols-[1fr_540px] xl:px-0">
+      <div className="flex flex-col gap-5.5">
+        <p className="eyebrow m-0">{c.eyebrow}</p>
+        <h1 className="m-0 text-[2.75rem] font-bold leading-[1.05] tracking-[-0.035em] md:text-[4.75rem]">
+          <RichText text={c.title} />
+        </h1>
+        <p className="m-0 max-w-117.5 text-[1.0625rem] leading-normal text-foreground/65 md:text-[1.1875rem]">
+          {c.body}
+        </p>
+        <div className="mt-1.5 flex flex-col gap-2.5 sm:flex-row">
+          <Button size="lg" asChild>
+            <LocalizedLink to="/" hash="prijava">
+              {t('nav.cta')}
+              <ArrowRight aria-hidden="true" strokeWidth={2.3} />
+            </LocalizedLink>
+          </Button>
+          <Button variant="outline" size="lg" asChild>
+            <LocalizedLink to="/" hash="kako-radi">
+              {c.howItWorks}
+            </LocalizedLink>
+          </Button>
+        </div>
+        <div className="flex items-center justify-center gap-2.5 text-sm text-foreground/55 sm:justify-start">
+          <img
+            src={avatars}
+            alt=""
+            width={92}
+            height={32}
+            className="-m-0.5 hidden sm:block"
+          />
+          {c.note}
         </div>
       </div>
-    </div>
+
+      <img
+        src={heroPhones}
+        alt={c.imageAlt}
+        width={590}
+        height={680}
+        fetchPriority="high"
+        className="mx-auto h-auto w-full max-w-[590px] lg:mr-[-20px] lg:ml-[-30px] lg:w-[590px] lg:max-w-none"
+      />
+    </section>
   )
 }
 

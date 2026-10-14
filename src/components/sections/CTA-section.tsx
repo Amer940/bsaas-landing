@@ -23,43 +23,39 @@ export function CTASection() {
   }
 
   return (
-    <div id="prijava" className="md:px-4 px-2 scroll-mt-24">
-      <div className="site-container site-border bg-white md:py-20 py-10 md:px-10">
-        <div className="bg-black rounded-2xl md:px-10 px-5 md:py-20 py-12">
-          <div className="w-full flex flex-col items-center">
-            <div className="flex flex-col items-center text-center mx-auto md:mb-8 mb-6">
-              <h2 className="md:text-[50px] text-[36px] leading-[110%] tracking-[-0.015em] font-medium text-white">
-                <RichText text={c.title} />
-              </h2>
-              <p className="md:text-[18px] text-[14px] font-normal text-white/70 mt-4 md:max-w-165 max-w-66.25">
-                {c.body}
-              </p>
-            </div>
-            {status === 'success' ? (
-              <p
-                role="status"
-                className="md:text-[18px] text-[14px] font-medium text-white text-center"
-              >
-                {c.success}
-              </p>
-            ) : (
-              <>
-                <EmailInput
-                  placeholder={c.emailPlaceholder}
-                  buttonLabel={c.submit}
-                  onSubmit={handleSubmit}
-                  disabled={status === 'pending'}
-                />
-                {status === 'error' && (
-                  <p role="alert" className="text-[14px] text-white mt-3">
-                    {c.error}
-                  </p>
-                )}
-              </>
-            )}
-          </div>
+    <section
+      id="prijava"
+      className="mx-auto max-w-300 scroll-mt-24 px-5 py-10 md:py-17.5 xl:px-0"
+    >
+      <div className="flex flex-col items-center rounded-[28px] bg-[#181818] bg-[radial-gradient(70%_120%_at_50%_0%,rgba(255,255,255,.12),rgba(255,255,255,.02)_60%)] px-6 py-12 text-center shadow-[inset_0_0_0_1px_rgba(255,255,255,.08)] md:rounded-[36px] md:px-10 md:py-18">
+        <h2 className="m-0 text-[2rem] leading-[1.05] font-bold tracking-[-0.035em] md:text-5xl">
+          <RichText text={c.title} />
+        </h2>
+        <p className="m-0 mt-3.5 max-w-115 text-base leading-normal text-foreground/65 md:text-[1.0625rem]">
+          {c.body}
+        </p>
+        <div className="mt-7 flex w-full flex-col items-center">
+          {status === 'success' ? (
+            <p role="status" className="m-0 text-base font-semibold">
+              {c.success}
+            </p>
+          ) : (
+            <>
+              <EmailInput
+                placeholder={c.emailPlaceholder}
+                buttonLabel={c.submit}
+                onSubmit={handleSubmit}
+                disabled={status === 'pending'}
+              />
+              {status === 'error' && (
+                <p role="alert" className="m-0 mt-3 text-sm">
+                  {c.error}
+                </p>
+              )}
+            </>
+          )}
         </div>
       </div>
-    </div>
+    </section>
   )
 }

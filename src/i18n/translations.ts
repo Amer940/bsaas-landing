@@ -41,8 +41,9 @@ export function unlocalizePath(pathname: string): string {
 export const translations = {
   bs: {
     'nav.howItWorks': 'Kako radi',
+    'nav.pricing': 'Cijena',
     'nav.faq': 'Pitanja',
-    'nav.cta': 'Rani pristup',
+    'nav.cta': 'Počni danas',
     'nav.home': 'Početna',
     'nav.openMenu': 'Otvori meni',
     'nav.closeMenu': 'Zatvori meni',
@@ -56,8 +57,9 @@ export const translations = {
   },
   en: {
     'nav.howItWorks': 'How it works',
+    'nav.pricing': 'Pricing',
     'nav.faq': 'FAQ',
-    'nav.cta': 'Early access',
+    'nav.cta': 'Get started',
     'nav.home': 'Home',
     'nav.openMenu': 'Open menu',
     'nav.closeMenu': 'Close menu',

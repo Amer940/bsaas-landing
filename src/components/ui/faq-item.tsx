@@ -1,93 +1,54 @@
-import { useState } from 'react'
-import { cva } from 'class-variance-authority'
-import type { VariantProps } from 'class-variance-authority'
+import { useId, useState } from 'react'
+import { Plus } from 'lucide-react'
 
 import { cn } from '#/lib/utils.ts'
 
-const faqVariants = cva(
-  'flex flex-col border-t border-border cursor-pointer select-none',
-  {
-    variants: {
-      variant: {
-        default: 'bg-white',
-      },
-      size: {
-        default: 'w-full',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-      size: 'default',
-    },
-  },
-)
-
 function FAQItem({
-  className,
-  variant = 'default',
-  size = 'default',
   title,
   answer,
   isOpen,
-  onClick,
-  ...props
-}: React.ComponentProps<'div'> &
-  VariantProps<typeof faqVariants> & {
-    title: string
-    answer: string
-    isOpen: boolean
-    onClick: () => void
-  }) {
+  onToggle,
+}: {
+  title: string
+  answer: string
+  isOpen: boolean
+  onToggle: () => void
+}) {
+  const answerId = useId()
+
   return (
-    <div
-      data-slot="faq-item"
-      data-variant={variant}
-      data-size={size}
-      className={cn(faqVariants({ variant, size, className }))}
-      onClick={onClick}
-      {...props}
-    >
-      <div className="flex justify-between items-center py-4 md:py-6 ">
-        <span className="text-[14px] md:text-[18px] font-medium text-black">
+    <div data-slot="faq-item" className="border-t border-border py-5.5">
+      <h3 className="m-0">
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-controls={answerId}
+          className="flex w-full items-center justify-between gap-4 text-left text-base font-bold md:text-[1.0625rem]"
+        >
           {title}
-        </span>
-        <div className="relative w-3.5 h-3.5 md:w-4.25 md:h-4.25 shrink-0 ml-4">
-          <svg
-            className="absolute inset-0 w-full h-full"
-            viewBox="0 0 17 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M15.25 8.5H1.75"
-              stroke="#4C4C4C"
-              strokeWidth="2"
-              strokeLinecap="round"
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/8">
+            <Plus
+              aria-hidden="true"
+              className={cn(
+                'size-3.5 transition-transform duration-300',
+                isOpen && 'rotate-45',
+              )}
+              strokeWidth={2.5}
             />
-            <path
-              d="M8.5 1.75V15.25"
-              stroke="#4C4C4C"
-              strokeWidth="2"
-              strokeLinecap="round"
-              style={{
-                transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                opacity: isOpen ? 0 : 1,
-                transition: 'transform 300ms ease, opacity 300ms ease',
-                transformOrigin: 'center',
-              }}
-            />
-          </svg>
-        </div>
-      </div>
+          </span>
+        </button>
+      </h3>
 
       <div
+        id={answerId}
         className="grid transition-[grid-template-rows] duration-300 ease-in-out"
         style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
       >
-        <div className="pl-2 md:pr-12 overflow-hidden">
-          <span className="block pb-4 md:pb-6 text-[12px] md:text-[16px] font-medium text-muted-foreground">
+        <div className="overflow-hidden">
+          <p className="m-0 mt-2.5 max-w-160 text-[0.9375rem] leading-[1.55] text-foreground/65">
             {answer}
-          </span>
+          </p>
         </div>
       </div>
     </div>
@@ -104,21 +65,25 @@ function FAQAccordion({
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <div className={cn('flex flex-col w-full', className)}>
-      <div className="max-w-202 w-full mx-auto lg:px-0 md:px-6 px-1">
-        {items.map((item, index) => (
-          <FAQItem
-            key={index}
-            title={item.title}
-            answer={item.answer}
-            isOpen={openIndex === index}
-            onClick={() => setOpenIndex(index)}
-            className={index == items.length - 1 ? 'border-y' : ''}
-          />
-        ))}
-      </div>
+    <div
+      className={cn(
+        'mx-auto w-full max-w-205 border-b border-border',
+        className,
+      )}
+    >
+      {items.map((item, index) => (
+        <FAQItem
+          key={item.title}
+          title={item.title}
+          answer={item.answer}
+          isOpen={openIndex === index}
+          onToggle={() =>
+            setOpenIndex((open) => (open === index ? null : index))
+          }
+        />
+      ))}
     </div>
   )
 }
 
-export { FAQItem, FAQAccordion, faqVariants }
+export { FAQItem, FAQAccordion }

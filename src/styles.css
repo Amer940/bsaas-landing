@@ -6,29 +6,16 @@
 :root {
   --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
-  --primary: #e6c53e;
-  --primary-fg: #000000;
-  --background: #ffffff;
-  --foreground: #000000;
-  --secondary: #f7f5f0;
-  --secondary-fg: #000000;
-  --muted-foreground: #6b6e76;
-  --border: rgba(107, 110, 118, 0.2);
-}
-
-.dark {
-  --primary: #e6c53e;
-  --primary-fg: #000000;
-
-  --background: #000000;
-  --foreground: #ffffff;
-
-  --secondary: #111110;
-  --secondary-fg: #ffffff;
-
-  --muted-fg: #9a9da6;
-
-  --border: rgba(107, 110, 118, 0.24);
+  --primary: #515151;
+  --primary-fg: #ffffff;
+  --background: #141414;
+  --background-end: #0b0b0b;
+  --foreground: #f2efe6;
+  --secondary: rgba(255, 255, 255, 0.06);
+  --secondary-fg: #f2efe6;
+  --muted-foreground: #a6a39c;
+  --border: rgba(255, 255, 255, 0.08);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -71,10 +58,19 @@
     @apply border-border;
   }
 
+  html {
+    background-color: var(--background-end);
+  }
+
   body {
     margin: 0;
+    min-height: 100vh;
     font-family: var(--font-sans);
-    background-color: var(--background);
+    background: linear-gradient(
+      180deg,
+      var(--background),
+      var(--background-end)
+    );
     color: var(--foreground);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -175,36 +171,32 @@
   }
 }
 
-@layer utilities {
-  .feature-border {
-    background-image: repeating-linear-gradient(
-      90deg,
-      #d1d5db 0,
-      #d1d5db 6px,
-      transparent 6px,
-      transparent 18px
-    );
-    background-size: 100% 2px;
-    background-position: top left;
-    background-repeat: no-repeat;
-    padding-top: 2rem;
-    gap: 1.5rem;
-  }
+/* Translucent card with a hairline top highlight. */
+@utility glass {
+  background: var(--secondary);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+/* Small uppercase label above section headings. */
+@utility eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.075em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 50%, transparent);
+}
+
+@utility section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  text-wrap: balance;
 
   @media (min-width: 768px) {
-    .feature-border {
-      background-image: repeating-linear-gradient(
-        180deg,
-        #d1d5db 0,
-        #d1d5db 6px,
-        transparent 6px,
-        transparent 18px
-      );
-      background-size: 2px 100%;
-      background-position: left top;
-      padding-left: 10%;
-      padding-top: 0;
-      gap: 2.5rem;
-    }
+    font-size: 3.25rem;
   }
 }
