@@ -3,10 +3,9 @@ import type { FormEvent } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { Eye, EyeOff } from 'lucide-react'
 import { Button } from '#/components/ui/button'
-import { Logo } from '#/components/logo'
+import { AuthCard } from '#/components/auth-card'
 import { useLocale } from '#/i18n/locale-context'
 import { LocalizedLink } from '#/i18n/localized-link'
-import { Seo } from '#/i18n/seo'
 import {
   PASSWORD_MIN_LENGTH,
   resetPasswordContent,
@@ -92,81 +91,71 @@ function ResetPasswordPage() {
   }
 
   return (
-    <>
-      <Seo title={c.metaTitle} />
-      <meta name="robots" content="noindex" />
-      <main className="flex min-h-svh flex-col items-center px-4 py-10 md:py-16">
-        <LocalizedLink to="/" aria-label={c.home}>
-          <Logo />
-        </LocalizedLink>
-
-        <div className="mt-10 w-full max-w-110 rounded-[28px] bg-[#181818] bg-[radial-gradient(70%_120%_at_50%_0%,rgba(255,255,255,.10),rgba(255,255,255,.02)_60%)] px-6 py-10 shadow-[inset_0_0_0_1px_rgba(255,255,255,.08)] md:px-9 md:py-12">
-          {status === 'done' || status === 'expired' ? (
-            <div role="status" className="animate-fade-up">
-              <h1 className="m-0 text-[1.75rem] leading-[1.1] font-bold tracking-[-0.03em]">
-                {status === 'done' ? c.doneTitle : c.expiredTitle}
-              </h1>
-              <p className="m-0 mt-3 text-base leading-normal text-foreground/65">
-                {status === 'done' ? c.doneBody : c.expiredBody}
-              </p>
-              <Button asChild variant="outline" className="mt-7">
-                <LocalizedLink to="/">{c.home}</LocalizedLink>
-              </Button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} noValidate>
-              <h1 className="m-0 text-[1.75rem] leading-[1.1] font-bold tracking-[-0.03em]">
-                {c.title}
-              </h1>
-              <p className="m-0 mt-3 text-base leading-normal text-foreground/65">
-                {c.subtitle}
-              </p>
-
-              <div className="mt-7 flex flex-col gap-3">
-                <PasswordField
-                  label={c.newPassword}
-                  value={password}
-                  onChange={(value) => {
-                    setPassword(value)
-                    if (errors.password) setErrors({})
-                  }}
-                  error={errors.password}
-                  showLabel={c.show}
-                  hideLabel={c.hide}
-                  autoFocus
-                />
-                <PasswordField
-                  label={c.repeatPassword}
-                  value={confirm}
-                  onChange={(value) => {
-                    setConfirm(value)
-                    if (errors.confirm) setErrors({})
-                  }}
-                  error={errors.confirm}
-                  showLabel={c.show}
-                  hideLabel={c.hide}
-                />
-              </div>
-
-              {errors.form && (
-                <p role="alert" className="m-0 mt-4 text-sm text-[#ff8a7e]">
-                  {errors.form}
-                </p>
-              )}
-
-              <Button
-                type="submit"
-                size="lg"
-                className="mt-7 w-full"
-                disabled={status === 'saving'}
-              >
-                {status === 'saving' ? c.submitting : c.submit}
-              </Button>
-            </form>
-          )}
+    <AuthCard metaTitle={c.metaTitle} homeLabel={c.home}>
+      {status === 'done' || status === 'expired' ? (
+        <div role="status" className="animate-fade-up">
+          <h1 className="m-0 text-[1.75rem] leading-[1.1] font-bold tracking-[-0.03em]">
+            {status === 'done' ? c.doneTitle : c.expiredTitle}
+          </h1>
+          <p className="m-0 mt-3 text-base leading-normal text-foreground/65">
+            {status === 'done' ? c.doneBody : c.expiredBody}
+          </p>
+          <Button asChild variant="outline" className="mt-7">
+            <LocalizedLink to="/">{c.home}</LocalizedLink>
+          </Button>
         </div>
-      </main>
-    </>
+      ) : (
+        <form onSubmit={handleSubmit} noValidate>
+          <h1 className="m-0 text-[1.75rem] leading-[1.1] font-bold tracking-[-0.03em]">
+            {c.title}
+          </h1>
+          <p className="m-0 mt-3 text-base leading-normal text-foreground/65">
+            {c.subtitle}
+          </p>
+
+          <div className="mt-7 flex flex-col gap-3">
+            <PasswordField
+              label={c.newPassword}
+              value={password}
+              onChange={(value) => {
+                setPassword(value)
+                if (errors.password) setErrors({})
+              }}
+              error={errors.password}
+              showLabel={c.show}
+              hideLabel={c.hide}
+              autoFocus
+            />
+            <PasswordField
+              label={c.repeatPassword}
+              value={confirm}
+              onChange={(value) => {
+                setConfirm(value)
+                if (errors.confirm) setErrors({})
+              }}
+              error={errors.confirm}
+              showLabel={c.show}
+              hideLabel={c.hide}
+            />
+          </div>
+
+          {errors.form && (
+            <p role="alert" className="m-0 mt-4 text-sm text-[#ff8a7e]">
+              {errors.form}
+            </p>
+          )}
+
+          <Button
+            type="submit"
+            size="lg"
+            className="mt-7 w-full"
+            disabled={status === 'saving'}
+          >
+            {status === 'saving' ? c.submitting : c.submit}
+          </Button>
+        </form>
+      )}
+    </AuthCard>
   )
 }
 
