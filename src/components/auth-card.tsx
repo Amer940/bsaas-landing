@@ -10,8 +10,8 @@ interface AuthCardProps {
 }
 
 /**
- * The page an auth email's button opens (reset password, confirm email): the
- * wordmark over one dark card, kept out of search results.
+ * The page an auth email's button opens (reset password): the wordmark over
+ * one dark card, kept out of search results.
  */
 function AuthCard({ metaTitle, homeLabel, children }: AuthCardProps) {
   return (

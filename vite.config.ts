@@ -22,7 +22,6 @@ const PAGES = [
   '/support',
   '/delete-account',
   '/reset-password',
-  '/confirm-email',
 ]
 
 const OG_LOCALE: Record<Locale, string> = { bs: 'bs_BA', en: 'en_US' }
