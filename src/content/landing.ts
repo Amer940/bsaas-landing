@@ -57,14 +57,14 @@ interface LandingContent {
 export const landingContent: Record<Locale, LandingContent> = {
   bs: {
     meta: {
-      title: 'Chairo | Zakazivanje termina za frizerske salone',
+      title: 'Chairo | Aplikacija za frizere i barbere',
       description:
-        'Chairo je aplikacija za online zakazivanje termina u frizerskim salonima. Klijenti rezervišu sami, a vi imate kalendar, tim i nedolaske pod kontrolom.',
+        'Chairo je aplikacija koju frizeri i barberi koriste da uštede vrijeme. Online zakazivanje 0-24, bez poruka i poziva, manje nedolazaka i stolica uvijek puna.',
     },
     hero: {
       eyebrow: 'Za frizere i salone',
-      title: 'Tvoja stolica,\nuvijek ==puna==.',
-      body: 'Klijenti zakazuju sami, ti vidiš cijeli dan na jednom ekranu — termine, pauze, nedolaske i zaradu.',
+      title: 'Klijenti zakazuju online.\nTi samo ==šišaš==.',
+      body: 'Nema više poruka i poziva za termine. Cijeli dan vidiš na jednom ekranu: termine, pauze, nedolaske i zaradu.',
       howItWorks: 'Pogledaj kako radi',
       note: 'Besplatno tokom ranog pristupa',
       imageAlt:
@@ -177,14 +177,14 @@ export const landingContent: Record<Locale, LandingContent> = {
 
   en: {
     meta: {
-      title: 'Chairo | Appointment booking for barbershops',
+      title: 'Chairo | The app for barbers',
       description:
-        'Chairo is an online booking app for barbershops. Clients book themselves, and you keep your calendar, team and no-shows under control.',
+        'Chairo is the booking app barbers use to save time. 24/7 online booking, no more DMs and calls, fewer no-shows and a fully booked chair.',
     },
     hero: {
       eyebrow: 'For barbers and salons',
-      title: 'Your chair,\nalways ==full==.',
-      body: 'Clients book themselves, and you see your whole day on one screen — appointments, breaks, no-shows and earnings.',
+      title: 'Clients book online.\nYou just ==cut==.',
+      body: 'No more DMs and calls to set up appointments. See your whole day on one screen: bookings, breaks, no-shows and earnings.',
       howItWorks: 'See how it works',
       note: 'Free during early access',
       imageAlt:
