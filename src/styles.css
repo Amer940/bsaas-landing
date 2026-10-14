@@ -34,6 +34,8 @@
   --color-muted-foreground: var(--muted-foreground);
 
   --color-border: var(--border);
+
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes progress-fill {
@@ -42,6 +44,26 @@
   }
   to {
     width: 100%;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Soft entrance for content that swaps in place (e.g. the active step). */
+@utility animate-fade-up {
+  animation: fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
@@ -60,6 +82,11 @@
 
   html {
     background-color: var(--background-end);
+    /* `clip`, unlike `hidden`, also stops iOS Safari from panning sideways
+       and keeps the sticky header working. */
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -74,7 +101,7 @@
     color: var(--foreground);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 

@@ -49,7 +49,8 @@ interface LandingContent {
   faq: {
     eyebrow: string
     title: string
-    items: Array<{ title: string; answer: string }>
+    /** `id` makes the item linkable as `#id`, opening it. */
+    items: Array<{ id?: string; title: string; answer: string }>
   }
 }
 
@@ -65,7 +66,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       title: 'Tvoja stolica,\nuvijek ==puna==.',
       body: 'Klijenti zakazuju sami, ti vidiš cijeli dan na jednom ekranu — termine, pauze, nedolaske i zaradu.',
       howItWorks: 'Pogledaj kako radi',
-      note: '14 dana besplatno · bez kartice',
+      note: 'Besplatno tokom ranog pristupa',
       imageAlt:
         'chairo aplikacija: današnji raspored salona i obavijest o novom terminu',
     },
@@ -101,7 +102,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       body: 'Bez instalacije kod klijenta, bez obuke. Ti postaviš salon, klijenti dođu sami.',
       items: [
         {
-          title: 'Plati i kreni',
+          title: 'Prijavi se i kreni',
           text: 'Postavi radno vrijeme i usluge. Stranica za zakazivanje je online čim objaviš.',
         },
         {
@@ -156,6 +157,7 @@ export const landingContent: Record<Locale, LandingContent> = {
             'Svaki salon ima svoj kod i QR, a klijenti ga mogu podijeliti s prijateljima. Ko se registruje s tim kodom, odmah je u tvom salonu — bez traženja.',
         },
         {
+          id: 'nedolasci',
           title: 'Šta ako klijent ne dođe?',
           answer:
             'Označiš nedolazak jednim dodirom. Kad klijent dođe do granice koju postaviš (npr. 3 nedolaska), više ne može zakazati sam u aplikaciji — mora pozvati salon.',
@@ -184,7 +186,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       title: 'Your chair,\nalways ==full==.',
       body: 'Clients book themselves, and you see your whole day on one screen — appointments, breaks, no-shows and earnings.',
       howItWorks: 'See how it works',
-      note: '14 days free · no card needed',
+      note: 'Free during early access',
       imageAlt:
         "The chairo app: today's salon schedule and a new booking notification",
     },
@@ -221,7 +223,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       body: 'Nothing for clients to install, no training. You set up the salon, clients come on their own.',
       items: [
         {
-          title: 'Pay and go',
+          title: 'Sign up and go',
           text: 'Set your hours and services. Your booking page is live as soon as you publish.',
         },
         {
@@ -276,6 +278,7 @@ export const landingContent: Record<Locale, LandingContent> = {
             'Every salon has its own code and QR, and clients can share it with friends. Anyone who signs up with that code is in your salon straight away — no searching.',
         },
         {
+          id: 'nedolasci',
           title: "What if a client doesn't show up?",
           answer:
             "Mark the no-show with one tap. Once a client reaches the limit you set (say, 3 no-shows), they can't book in the app on their own anymore — they have to call the salon.",
