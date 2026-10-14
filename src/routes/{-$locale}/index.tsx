@@ -10,6 +10,7 @@ import { Footer } from '#/components/sections/footer'
 import { Seo } from '#/i18n/seo'
 import { useLocale } from '#/i18n/locale-context'
 import { landingContent } from '#/content/landing'
+import { SHOW_PRICING } from '#/lib/features'
 
 export const Route = createFileRoute('/{-$locale}/')({
   component: Home,
@@ -27,7 +28,7 @@ function Home() {
         <Hero />
         <FeaturesGridSection />
         <StepsSection />
-        <PricingSection />
+        {SHOW_PRICING && <PricingSection />}
         <CTASection />
         <FAQSection />
       </main>
