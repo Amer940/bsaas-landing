@@ -12,5 +12,3 @@ dist-ssr
 __unconfig*
 todos.json
 routeTree.gen.ts
-# Supabase migrations are kept locally, not in this repo
-supabase/
