@@ -6,6 +6,7 @@ interface EmailInputProps {
   placeholder?: string
   buttonLabel?: string
   onSubmit?: (email: string) => void
+  disabled?: boolean
   className?: string
 }
 
@@ -13,16 +14,19 @@ function EmailInput({
   placeholder = 'Enter Email',
   buttonLabel = 'Sign Up',
   onSubmit,
+  disabled,
   className,
 }: EmailInputProps) {
   const [value, setValue] = React.useState('')
 
-  const handleSubmit = () => {
-    onSubmit?.(value)
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    onSubmit?.(value.trim())
   }
 
   return (
-    <div
+    <form
+      onSubmit={handleSubmit}
       className={cn(
         'flex items-center h-10 md:w-99 w-full rounded-full bg-white pr-1 py-1 pl-5',
         className,
@@ -30,6 +34,8 @@ function EmailInput({
     >
       <input
         type="email"
+        required
+        aria-label={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
@@ -39,10 +45,10 @@ function EmailInput({
           'text-foreground placeholder:text-muted-fg',
         )}
       />
-      <Button variant="submit" onClick={handleSubmit}>
+      <Button variant="submit" type="submit" disabled={disabled}>
         {buttonLabel}
       </Button>
-    </div>
+    </form>
   )
 }
 

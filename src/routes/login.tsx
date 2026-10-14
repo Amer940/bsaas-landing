@@ -25,7 +25,7 @@ function RouteComponent() {
       }
       console.log('Uspjesan login')
       // redirect to login or dashboard
-      navigate({ to: '/' })
+      navigate({ to: '/{-$locale}', params: { locale: undefined } })
     },
   })
 

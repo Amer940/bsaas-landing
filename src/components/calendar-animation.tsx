@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react'
+import { useLocale } from '#/i18n/locale-context'
+import { landingContent } from '#/content/landing'
 
-const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
 const times = ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00']
 
 const appointments = [
-  { name: 'Diego', service: 'Fade', day: 1, time: 0 },
-  { name: 'Kai', service: 'Fade', day: 2, time: 0 },
-  { name: 'Marcus', service: 'Fade', day: 0, time: 1 },
-  { name: 'Yusuf', service: 'Fade', day: 3, time: 1 },
-  { name: 'Andre', service: 'Fade', day: 2, time: 2 },
-  { name: 'Noah', service: 'Fade', day: 4, time: 2 },
-  { name: 'Theo', service: 'Fade', day: 1, time: 3 },
-  { name: 'Jules', service: 'Fade', day: 0, time: 4 },
-  { name: 'Alex', service: 'Fade', day: 3, time: 5 },
+  { name: 'Diego', day: 1, time: 0 },
+  { name: 'Kai', day: 2, time: 0 },
+  { name: 'Marcus', day: 0, time: 1 },
+  { name: 'Yusuf', day: 3, time: 1 },
+  { name: 'Andre', day: 2, time: 2 },
+  { name: 'Noah', day: 4, time: 2 },
+  { name: 'Theo', day: 1, time: 3 },
+  { name: 'Jules', day: 0, time: 4 },
+  { name: 'Alex', day: 3, time: 5 },
 ]
 
 const TOTAL = appointments.length
@@ -22,6 +23,8 @@ const FADE_MS = 900
 const RESET_MS = 800
 
 export const CalendarAnimation = () => {
+  const { locale } = useLocale()
+  const { days, service } = landingContent[locale].calendar
   const [visibleCount, setVisibleCount] = useState(0)
   const [isFading, setIsFading] = useState(false)
 
@@ -119,7 +122,7 @@ export const CalendarAnimation = () => {
                     {apt.name}
                   </div>
                   <div className="text-[9px] font-medium text-primary-foreground/60 leading-tight mt-0.5">
-                    {apt.service}
+                    {service}
                   </div>
                 </div>
               </div>

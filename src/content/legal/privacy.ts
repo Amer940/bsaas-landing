@@ -88,6 +88,7 @@ export const privacyContent: LocalizedLegalDoc = {
         items: [
           'Za registraciju i prijavu: ime, email i lozinka. To je isti račun kao u aplikaciji.',
           'Naš hosting (Cloudflare) bilježi IP adrese posjetilaca u tehničkim zapisima.',
+          'Ako se prijavite za rani pristup: vaš email i jezik stranice.',
           'Ne koristimo analitiku, reklame ni kolačiće za praćenje. Preglednik čuva samo ono što je potrebno za prijavu.',
         ],
       },
@@ -123,6 +124,7 @@ export const privacyContent: LocalizedLegalDoc = {
             'Samo uz vaš pristanak',
           ],
           ['Odgovori na zahtjeve u vezi s privatnošću', 'Zakonska obaveza'],
+          ['Obavijest o pokretanju aplikacije (rani pristup)', 'Vaš pristanak'],
           ['Naplata pretplate vlasnicima salona', 'Izvršenje ugovora'],
         ],
       },
@@ -200,6 +202,10 @@ export const privacyContent: LocalizedLegalDoc = {
           [
             'Zahtjevi u vezi s privatnošću',
             '3 godine. Tekst poruke briše se kada obrišete račun.',
+          ],
+          [
+            'Email za rani pristup',
+            'Dok vas ne obavijestimo o pokretanju aplikacije, ili dok ne zatražite brisanje',
           ],
           [
             'Termini osoba bez korisničkog računa',
@@ -352,6 +358,7 @@ export const privacyContent: LocalizedLegalDoc = {
         items: [
           "To sign up and sign in: name, email and password. It's the same account as in the app.",
           "Our host (Cloudflare) records visitors' IP addresses in technical logs.",
+          'If you sign up for early access: your email and the site language.',
           "We use no analytics, ads or tracking cookies. Your browser keeps only what's needed to stay signed in.",
         ],
       },
@@ -396,6 +403,7 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           ['Email, push or SMS news', 'Only with your consent'],
           ['Answering privacy requests', 'Legal obligation'],
+          ['Telling you when the app launches (early access)', 'Your consent'],
           ['Charging shop owners a subscription', 'Performance of a contract'],
         ],
       },
@@ -473,6 +481,10 @@ export const privacyContent: LocalizedLegalDoc = {
           [
             'Privacy requests',
             '3 years. The message text is erased when you delete your account.',
+          ],
+          [
+            'Early access email',
+            'Until we tell you the app has launched, or until you ask us to delete it',
           ],
           [
             'Appointments of people without an account',

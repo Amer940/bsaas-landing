@@ -1,51 +1,26 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { createContext, useCallback, useContext, useEffect } from 'react'
 import type { ReactNode } from 'react'
-import { DEFAULT_LOCALE, LOCALES, translations } from './translations'
+import { translations } from './translations'
 import type { Locale, TranslationKey } from './translations'
-
-const STORAGE_KEY = 'locale'
 
 interface LocaleContextValue {
   locale: Locale
-  setLocale: (locale: Locale) => void
   t: (key: TranslationKey) => string
 }
 
 const LocaleContext = createContext<LocaleContextValue | null>(null)
 
-function getInitialLocale(): Locale {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored && (LOCALES as ReadonlyArray<string>).includes(stored)) {
-      return stored as Locale
-    }
-  } catch {
-    // localStorage unavailable (private mode etc.)
-  }
-  return DEFAULT_LOCALE
-}
-
-function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(getInitialLocale)
-
+/** Provides the locale taken from the URL (see `routes/{-$locale}/route.tsx`). */
+function LocaleProvider({
+  locale,
+  children,
+}: {
+  locale: Locale
+  children: ReactNode
+}) {
   useEffect(() => {
     document.documentElement.lang = locale
   }, [locale])
-
-  const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next)
-    try {
-      localStorage.setItem(STORAGE_KEY, next)
-    } catch {
-      // ignore
-    }
-  }, [])
 
   const t = useCallback(
     (key: TranslationKey) => translations[locale][key],
@@ -53,7 +28,7 @@ function LocaleProvider({ children }: { children: ReactNode }) {
   )
 
   return (
-    <LocaleContext.Provider value={{ locale, setLocale, t }}>
+    <LocaleContext.Provider value={{ locale, t }}>
       {children}
     </LocaleContext.Provider>
   )

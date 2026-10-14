@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { LegalPage } from '#/components/legal/legal-page'
 import { termsContent } from '#/content/legal/terms'
 
-export const Route = createFileRoute('/terms')({
+export const Route = createFileRoute('/{-$locale}/terms')({
   component: TermsPage,
 })
 

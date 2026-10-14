@@ -4,12 +4,12 @@ import { cn } from '#/lib/utils.ts'
 import Logo from '../images/brat..svg'
 import { LanguageSwitcher } from './language-switcher'
 import { useLocale } from '#/i18n/locale-context'
+import { LocalizedLink } from '#/i18n/localized-link'
 import type { TranslationKey } from '#/i18n/translations'
 
-const NAV_LINKS: Array<{ labelKey: TranslationKey; href: string }> = [
-  { labelKey: 'nav.howItWorks', href: '/#kako-radi' },
-  { labelKey: 'nav.faq', href: '/#pitanja' },
-  { labelKey: 'nav.buy', href: '/#kupi' },
+const NAV_LINKS: Array<{ labelKey: TranslationKey; hash: string }> = [
+  { labelKey: 'nav.howItWorks', hash: 'kako-radi' },
+  { labelKey: 'nav.faq', hash: 'pitanja' },
 ]
 
 interface NavbarProps {
@@ -31,21 +31,22 @@ function Navbar({ className }: NavbarProps) {
       <div className="md:border-b border-border">
         <div className="site-container">
           <div className="flex items-center justify-between py-6">
-            <a href="/" aria-label={t('nav.home')}>
-              <img src={Logo} />
-            </a>
+            <LocalizedLink to="/" aria-label={t('nav.home')}>
+              <img src={Logo} alt="Chairo" />
+            </LocalizedLink>
 
             {/* Desktop nav */}
             <div className="hidden md:flex items-center">
               <ul className="flex items-center gap-4 list-none m-0 p-0">
                 {NAV_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
+                  <li key={link.hash}>
+                    <LocalizedLink
+                      to="/"
+                      hash={link.hash}
                       className="text-14-medium text-muted-foreground no-underline hover:text-primary transition-colors duration-250"
                     >
                       {t(link.labelKey)}
-                    </a>
+                    </LocalizedLink>
                   </li>
                 ))}
               </ul>
@@ -53,7 +54,11 @@ function Navbar({ className }: NavbarProps) {
               <LanguageSwitcher className="ml-6" />
 
               <div className="pl-4">
-                <Button variant="default">{t('nav.cta')}</Button>
+                <Button variant="default" asChild>
+                  <LocalizedLink to="/" hash="prijava">
+                    {t('nav.cta')}
+                  </LocalizedLink>
+                </Button>
               </div>
             </div>
 
@@ -101,20 +106,23 @@ function Navbar({ className }: NavbarProps) {
         <nav className="site-container py-6">
           <ul className="flex flex-col gap-5 list-none m-0 p-0">
             {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
+              <li key={link.hash}>
+                <LocalizedLink
+                  to="/"
+                  hash={link.hash}
                   onClick={close}
                   className="text-18-medium text-foreground no-underline hover:text-primary transition-colors duration-250 block"
                 >
                   {t(link.labelKey)}
-                </a>
+                </LocalizedLink>
               </li>
             ))}
           </ul>
           <div className="pt-5">
-            <Button variant="default" className="w-full" onClick={close}>
-              {t('nav.cta')}
+            <Button variant="default" className="w-full" asChild>
+              <LocalizedLink to="/" hash="prijava" onClick={close}>
+                {t('nav.cta')}
+              </LocalizedLink>
             </Button>
           </div>
         </nav>

@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
 import type { ReactNode } from 'react'
-import { Link } from '@tanstack/react-router'
 import { Navbar } from '#/components/navigation'
 import { Footer } from '#/components/sections/footer'
 import { useLocale } from '#/i18n/locale-context'
+import { LocalizedLink, isLocalizedPath } from '#/i18n/localized-link'
+import { Seo } from '#/i18n/seo'
 import type { Locale } from '#/i18n/translations'
 
 /**
@@ -43,10 +43,10 @@ function renderInline(text: string): ReactNode {
     const link = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(part)
     if (link) {
       const [, label, href] = link
-      return href.startsWith('/') ? (
-        <Link key={i} to={href} className={linkClass}>
+      return isLocalizedPath(href) ? (
+        <LocalizedLink key={i} to={href} className={linkClass}>
           {label}
-        </Link>
+        </LocalizedLink>
       ) : (
         <a
           key={i}
@@ -139,6 +139,13 @@ function renderBlock(block: Block, key: number) {
   }
 }
 
+/** First paragraph as plain text, for the meta description. */
+function describe(doc: LegalDoc): string | undefined {
+  const first = doc.blocks.find((block) => block.type === 'p')
+  if (!first) return undefined
+  return first.text.replace(/\*\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+}
+
 interface LegalPageProps {
   content: LocalizedLegalDoc
 }
@@ -147,12 +154,9 @@ function LegalPage({ content }: LegalPageProps) {
   const { locale } = useLocale()
   const doc = content[locale]
 
-  useEffect(() => {
-    document.title = `${doc.title} | Chairo`
-  }, [doc.title])
-
   return (
     <>
+      <Seo title={`${doc.title} | Chairo`} description={describe(doc)} />
       <Navbar />
       <main className="md:px-4 px-2">
         <div className="site-container site-border">
