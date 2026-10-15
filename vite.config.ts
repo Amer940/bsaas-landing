@@ -21,6 +21,7 @@ const PAGES = [
   '/terms',
   '/support',
   '/delete-account',
+  '/delete-account/confirm',
   '/reset-password',
 ]
 

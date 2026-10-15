@@ -9,6 +9,7 @@ const LOCALIZED_ROUTES = {
   '/terms': '/{-$locale}/terms',
   '/support': '/{-$locale}/support',
   '/delete-account': '/{-$locale}/delete-account',
+  '/delete-account/confirm': '/{-$locale}/delete-account/confirm',
 } as const
 
 export type LocalizedPath = keyof typeof LOCALIZED_ROUTES

@@ -12,11 +12,11 @@ export const deleteAccountContent: LocalizedLegalDoc = {
       { type: 'h2', text: 'Kako obrisati račun' },
       {
         type: 'p',
-        text: '**U aplikaciji:** otvorite [Profil → Postavke → Obriši račun] i potvrdite brisanje.',
+        text: '**U aplikaciji:** otvorite Profil → Nalog → Obriši nalog i potvrdite brisanje lozinkom.',
       },
       {
         type: 'p',
-        text: '**Na web stranici:** prijavite se na chairo.app, otvorite [Račun → Obriši račun] i potvrdite brisanje.',
+        text: '**Na web stranici:** [prijavite se i obrišite račun](/delete-account/confirm) emailom i lozinkom.',
       },
       {
         type: 'p',
@@ -24,7 +24,7 @@ export const deleteAccountContent: LocalizedLegalDoc = {
       },
       {
         type: 'p',
-        text: '**Vlasnici salona:** brisanjem računa briše se i vaš salon. Prije brisanja obavezno otkažite pretplatu. Budući termini klijenata bit će otkazani, a klijenti obaviješteni.',
+        text: '**Vlasnici salona:** brisanjem računa zatvara se i briše vaš salon, sa svim terminima, uslugama, rasporedima i fotografijama. Budući termini klijenata se otkazuju, a klijenti s računom i članovi tima dobijaju obavještenje. Salon se ne može prenijeti na drugog vlasnika.',
       },
 
       { type: 'h2', text: 'Šta se briše odmah' },
@@ -96,11 +96,11 @@ export const deleteAccountContent: LocalizedLegalDoc = {
       { type: 'h2', text: 'How to delete your account' },
       {
         type: 'p',
-        text: '**In the app:** open [Profile → Settings → Delete account] and confirm.',
+        text: '**In the app:** open Profile → Account → Delete account and confirm with your password.',
       },
       {
         type: 'p',
-        text: '**On the website:** sign in at chairo.app, open [Account → Delete account] and confirm.',
+        text: '**On the website:** [sign in and delete your account](/delete-account/confirm) with your email and password.',
       },
       {
         type: 'p',
@@ -108,7 +108,7 @@ export const deleteAccountContent: LocalizedLegalDoc = {
       },
       {
         type: 'p',
-        text: "**Shop owners:** deleting your account also deletes your shop. Make sure you cancel your subscription before deleting. Clients' upcoming appointments will be cancelled and the clients notified.",
+        text: "**Shop owners:** deleting your account closes and deletes your shop, with all its appointments, services, schedules and photos. Clients' upcoming appointments are cancelled, and clients with an account and your team are notified. The shop can't be handed over to another owner.",
       },
 
       { type: 'h2', text: 'What is deleted immediately' },
