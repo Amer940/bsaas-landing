@@ -414,3 +414,87 @@ export const stepDemos: Record<Locale, StepDemos> = {
 }
 
 export type { StepDemos }
+
+/**
+ * The hero illustration: the barber's "Today" screen with a client's phone
+ * behind it. Its schedule rows and toast come from `featureDemos` and
+ * `stepDemos`, so the story matches the rest of the page.
+ */
+interface HeroDemo {
+  date: string
+  left: { count: number; title: string; note: string }
+  bookClient: string
+  blockTime: string
+  today: string
+  week: { label: string; count: number; note: string }
+  client: {
+    salon: string
+    greeting: string
+    day: string
+    time: string
+    details: string
+    actions: Array<string>
+    again: { eyebrow: string; title: string; note: string }
+    nextLabel: string
+    home: string
+  }
+}
+
+export const heroDemo: Record<Locale, HeroDemo> = {
+  bs: {
+    date: 'Srijeda, 7. oktobar · 12:07',
+    left: {
+      count: 4,
+      title: 'termina još danas',
+      note: 'zadnji u 17:30 · Dino',
+    },
+    bookClient: 'Zakaži klijentu',
+    blockTime: 'Blokiraj vrijeme',
+    today: 'Danas',
+    week: { label: 'Ova sedmica', count: 31, note: 'termin · 2 nedolaska' },
+    client: {
+      salon: 'Brko Barber',
+      greeting: 'Ćao Dino',
+      day: 'Danas · srijeda',
+      time: '17:30',
+      details: 'Kenan · fade + brada · 20 KM',
+      actions: ['Pomjeri', 'Upute', 'Otkaži'],
+      again: {
+        eyebrow: 'Opet isto?',
+        title: 'Fade kod Kenana',
+        note: 'Prvi slobodan danas u 15:30',
+      },
+      nextLabel: 'Kosa',
+      home: 'Početna',
+    },
+  },
+  en: {
+    date: 'Wednesday, October 7 · 12:07',
+    left: {
+      count: 4,
+      title: 'bookings left today',
+      note: 'last at 17:30 · Dino',
+    },
+    bookClient: 'Book a client',
+    blockTime: 'Block time',
+    today: 'Today',
+    week: { label: 'This week', count: 31, note: 'bookings · 2 no-shows' },
+    client: {
+      salon: 'Brko Barber',
+      greeting: 'Hi Dino',
+      day: 'Today · Wednesday',
+      time: '17:30',
+      details: 'Kenan · fade + beard · 20 KM',
+      actions: ['Reschedule', 'Directions', 'Cancel'],
+      again: {
+        eyebrow: 'Same again?',
+        title: 'Fade with Kenan',
+        note: 'First free slot today at 15:30',
+      },
+      nextLabel: 'Hair',
+      home: 'Home',
+    },
+  },
+}
+
+export type { HeroDemo }

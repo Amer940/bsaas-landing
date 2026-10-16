@@ -20,18 +20,27 @@ function FAQItem({
   const answerId = useId()
 
   return (
+    // A closed item opens from a click anywhere on it; once open, only the
+    // question closes it, so the answer text stays selectable.
     <div
       id={id}
       data-slot="faq-item"
-      className="scroll-mt-24 border-t border-border py-5.5"
+      onClick={isOpen ? undefined : onToggle}
+      className={cn(
+        'scroll-mt-24 border-t border-border py-5.5',
+        !isOpen && 'cursor-pointer',
+      )}
     >
       <h3 className="m-0">
         <button
           type="button"
-          onClick={onToggle}
+          onClick={(e) => {
+            e.stopPropagation()
+            onToggle()
+          }}
           aria-expanded={isOpen}
           aria-controls={answerId}
-          className="flex w-full items-center justify-between gap-4 text-left text-base font-bold md:text-[1.0625rem]"
+          className="flex w-full cursor-pointer items-center justify-between gap-4 text-left text-base font-bold md:text-[1.0625rem]"
         >
           {title}
           <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/8">

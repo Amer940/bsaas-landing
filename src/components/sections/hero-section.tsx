@@ -1,10 +1,10 @@
 import { ArrowRight } from 'lucide-react'
 import { Button } from '../ui/button'
 import { RichText } from '../rich-text'
+import { HeroScene } from '../hero-scene'
 import { useLocale } from '#/i18n/locale-context'
 import { landingContent } from '#/content/landing'
 import { LocalizedLink } from '#/i18n/localized-link'
-import heroPhones from '#/images/landing/hero-phones.webp'
 import avatars from '#/images/landing/avatars.webp'
 
 const Hero = () => {
@@ -46,13 +46,9 @@ const Hero = () => {
         </div>
       </div>
 
-      <img
-        src={heroPhones}
-        alt={c.imageAlt}
-        width={590}
-        height={680}
-        fetchPriority="high"
-        className="mx-auto h-auto w-full max-w-[590px] lg:mr-[-20px] lg:ml-[-30px] lg:w-[590px] lg:max-w-none"
+      <HeroScene
+        label={c.imageAlt}
+        className="mx-auto w-full max-w-[590px] max-lg:translate-x-[6.5%] lg:mr-[-20px] lg:ml-[-30px] lg:w-[590px] lg:max-w-none"
       />
     </section>
   )

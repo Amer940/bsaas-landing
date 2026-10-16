@@ -7,7 +7,7 @@ import {
   User,
   X,
 } from 'lucide-react'
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { cn } from '#/lib/utils.ts'
 import type { FeatureDemos } from '#/content/feature-demos'
 
@@ -16,6 +16,11 @@ import type { FeatureDemos } from '#/content/feature-demos'
  * illustrations: the cards hide them from screen readers and describe the
  * feature in their own heading instead.
  */
+
+/** Entrance order of a `.reveal-item` when its card scrolls in. */
+function order(i: number) {
+  return { '--i': i } as CSSProperties
+}
 
 const AVATAR_TONES = ['#8c7b6b', '#6b7a8c', '#8c6b78', '#7a8c6b', '#8c826b']
 
@@ -38,12 +43,15 @@ function Avatar({ name, className }: { name: string; className?: string }) {
 function Panel({
   children,
   className,
+  style,
 }: {
   children: ReactNode
   className?: string
+  style?: CSSProperties
 }) {
   return (
     <div
+      style={style}
       className={cn(
         'rounded-[20px] bg-white/7 shadow-[inset_0_1px_0_rgba(255,255,255,.1),inset_0_0_0_1px_rgba(255,255,255,.06)]',
         className,
@@ -57,7 +65,7 @@ function Panel({
 function ScheduleDemo({ data }: { data: FeatureDemos['schedule'] }) {
   return (
     <div className="flex flex-col gap-3">
-      <div className="grid grid-cols-6 gap-1.5">
+      <div className="reveal-item grid grid-cols-6 gap-1.5" style={order(0)}>
         {data.days.map((day, i) => (
           <span
             key={day}
@@ -76,14 +84,21 @@ function ScheduleDemo({ data }: { data: FeatureDemos['schedule'] }) {
         ))}
       </div>
 
-      <div className="flex items-baseline justify-between text-[0.8125rem]">
+      <div
+        className="reveal-item flex items-baseline justify-between text-[0.8125rem]"
+        style={order(1)}
+      >
         <span className="font-bold">{data.date}</span>
         <span className="text-foreground/50">{data.summary}</span>
       </div>
 
       <ul className="m-0 flex list-none flex-col gap-1.5 p-0">
-        {data.rows.map((row) => (
-          <li key={row.time} className="flex items-center gap-2.5">
+        {data.rows.map((row, i) => (
+          <li
+            key={row.time}
+            className="reveal-item flex items-center gap-2.5"
+            style={order(i + 2)}
+          >
             <span
               className={cn(
                 'w-10 shrink-0 text-[0.75rem] font-semibold tabular-nums',
@@ -199,8 +214,9 @@ function BookingDemo({ data }: { data: FeatureDemos['booking'] }) {
         {data.barbers.map((barber, i) => (
           <span
             key={barber.name}
+            style={order(i)}
             className={cn(
-              'flex flex-col items-center gap-1.5 rounded-2xl py-3',
+              'reveal-item flex flex-col items-center gap-1.5 rounded-2xl py-3',
               i === 0
                 ? 'bg-white/10 ring-[1.5px] ring-foreground/85'
                 : 'bg-white/5 opacity-60',
@@ -219,7 +235,10 @@ function BookingDemo({ data }: { data: FeatureDemos['booking'] }) {
         ))}
       </div>
 
-      <Panel className="flex items-center justify-between px-4 py-3">
+      <Panel
+        className="reveal-item flex items-center justify-between px-4 py-3"
+        style={order(3)}
+      >
         <span className="leading-tight">
           <span className="block text-[0.9375rem] font-bold">
             {data.service.name}
@@ -231,7 +250,7 @@ function BookingDemo({ data }: { data: FeatureDemos['booking'] }) {
         <span className="text-[0.9375rem] font-bold">{data.service.price}</span>
       </Panel>
 
-      <div className="flex items-center gap-1.5">
+      <div className="reveal-item flex items-center gap-1.5" style={order(4)}>
         <span className="mr-1 text-[0.75rem] font-bold text-foreground/60">
           {data.day}
         </span>
@@ -256,10 +275,11 @@ function BookingDemo({ data }: { data: FeatureDemos['booking'] }) {
 function RecurringDemo({ data }: { data: FeatureDemos['recurring'] }) {
   return (
     <Panel className="px-3.5">
-      {data.rows.map((row) => (
+      {data.rows.map((row, i) => (
         <div
           key={row.name}
-          className="flex items-center gap-3 border-white/8 py-3 not-first:border-t"
+          className="reveal-item flex items-center gap-3 border-white/8 py-3 not-first:border-t"
+          style={order(i)}
         >
           <Avatar name={row.name} />
           <span className="min-w-0 flex-1 leading-tight">
@@ -286,7 +306,7 @@ const hatched = {
 function EarningsDemo({ data }: { data: FeatureDemos['earnings'] }) {
   return (
     <div className="flex flex-col gap-2.5">
-      <Panel className="px-4 pt-3.5 pb-3">
+      <Panel className="reveal-item px-4 pt-3.5 pb-3" style={order(0)}>
         <span className="eyebrow block text-[0.625rem]">{data.label}</span>
         <span className="mt-1 flex items-center gap-2">
           <span className="text-[2rem] leading-none font-bold tracking-[-0.03em] tabular-nums">
@@ -349,7 +369,10 @@ function EarningsDemo({ data }: { data: FeatureDemos['earnings'] }) {
         </div>
       </Panel>
 
-      <Panel className="flex items-center gap-3 px-3.5 py-2.5">
+      <Panel
+        className="reveal-item flex items-center gap-3 px-3.5 py-2.5"
+        style={order(2)}
+      >
         <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/8">
           <X className="size-3.5" strokeWidth={2.5} />
         </span>
@@ -369,7 +392,10 @@ function EarningsDemo({ data }: { data: FeatureDemos['earnings'] }) {
 function TeamDemo({ data }: { data: FeatureDemos['team'] }) {
   return (
     <div className="flex flex-col gap-2.5">
-      <div className="flex items-center gap-3 rounded-[20px] bg-foreground px-3.5 py-3 text-background">
+      <div
+        className="reveal-item flex items-center gap-3 rounded-[20px] bg-foreground px-3.5 py-3 text-background"
+        style={order(0)}
+      >
         <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-background text-[0.8125rem] font-bold text-foreground">
           {data.request.count}
         </span>
@@ -382,10 +408,11 @@ function TeamDemo({ data }: { data: FeatureDemos['team'] }) {
         <ChevronRight className="size-4" strokeWidth={2.5} />
       </div>
       <Panel className="px-3.5">
-        {data.rows.map((row) => (
+        {data.rows.map((row, rowIndex) => (
           <div
             key={row.name}
-            className="flex items-center gap-3 border-white/8 py-3 not-first:border-t"
+            className="reveal-item flex items-center gap-3 border-white/8 py-3 not-first:border-t"
+            style={order(rowIndex + 1)}
           >
             <Avatar name={row.name} />
             <span className="min-w-0 flex-1 truncate text-sm font-bold">

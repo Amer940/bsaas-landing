@@ -67,6 +67,53 @@
   }
 }
 
+/* Hero illustration entrances. They move `translate` and `scale` rather than
+   `transform`, so a tilted element keeps its `rotate`. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    translate: 0 2rem;
+  }
+}
+
+@keyframes hero-drop {
+  from {
+    opacity: 0;
+    translate: 0 -1rem;
+    scale: 0.94;
+  }
+}
+
+@keyframes hero-pop {
+  0% {
+    scale: 0;
+  }
+  60% {
+    scale: 1.25;
+  }
+}
+
+/* Plays the keyframes named in `--enter` once, after `--enter-delay`. */
+@utility animate-enter {
+  animation: var(--enter) var(--enter-duration, 0.9s)
+    cubic-bezier(0.22, 1, 0.36, 1) var(--enter-delay, 0ms) both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Scroll-in entrance for `<Reveal>`: its `.reveal-item`s fade up in the
+   order given by `--i`. */
+[data-reveal='waiting'] .reveal-item {
+  opacity: 0;
+}
+
+[data-reveal='play'] .reveal-item {
+  animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
 @utility scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;

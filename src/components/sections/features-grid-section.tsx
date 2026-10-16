@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import { RichText } from '../rich-text'
 import { SectionHeading } from '../section-heading'
+import { Reveal } from '../reveal'
 import {
   BookingDemo,
   EarningsDemo,
@@ -55,7 +56,7 @@ function FeaturesGridSection() {
                   </p>
                 </div>
                 {hash && (
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white/8 transition-[background-color,transform] duration-300 ease-smooth group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-white/14">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white/8">
                     <ArrowUpRight
                       aria-hidden="true"
                       className="size-4"
@@ -64,9 +65,9 @@ function FeaturesGridSection() {
                   </span>
                 )}
               </div>
-              <div aria-hidden="true" className="mt-auto select-none">
-                {visuals[i]}
-              </div>
+              <Reveal className="mt-auto select-none">
+                <div aria-hidden="true">{visuals[i]}</div>
+              </Reveal>
             </>
           )
 
@@ -77,7 +78,7 @@ function FeaturesGridSection() {
               hash={hash}
               className={cn(
                 className,
-                'group text-inherit no-underline outline-none transition-[background-color,transform,box-shadow] duration-400 ease-smooth hover:-translate-y-1 hover:bg-white/8 focus-visible:ring-2 focus-visible:ring-foreground/60 active:translate-y-0 active:scale-[0.985] active:duration-150 motion-reduce:transform-none',
+                'cursor-pointer text-inherit no-underline outline-none focus-visible:ring-2 focus-visible:ring-foreground/60',
               )}
             >
               {body}

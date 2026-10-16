@@ -86,7 +86,7 @@ const StepsSection = () => {
               onClick={() => setActive(i)}
               aria-pressed={active === i}
               className={cn(
-                'relative h-10 rounded-full text-[0.9375rem] font-bold tabular-nums transition-colors duration-500 ease-smooth',
+                'relative h-10 cursor-pointer rounded-full text-[0.9375rem] font-bold tabular-nums transition-colors duration-500 ease-smooth',
                 active === i ? 'text-background' : 'text-foreground/60',
               )}
             >
@@ -134,7 +134,7 @@ const StepsSection = () => {
                 type="button"
                 onClick={() => setActive(i)}
                 aria-pressed={isActive}
-                className="flex flex-1 flex-col gap-3 text-left"
+                className="flex flex-1 cursor-pointer flex-col gap-3 text-left"
               >
                 <span className="relative block h-0.5 w-full overflow-hidden bg-white/10">
                   {isActive && (
@@ -178,14 +178,16 @@ const StepsSection = () => {
           className="relative mt-12 grid select-none grid-cols-3 items-start gap-10"
         >
           <div className={glowClass} />
+          {/* Clicking a phone opens its step, same as the step buttons above. */}
           {items.map((item, i) => (
             <div
               key={item.id}
+              onClick={() => setActive(i)}
               className={cn(
                 'relative mx-auto w-full max-w-80 transition-all duration-700 ease-smooth',
                 active === i
                   ? 'translate-y-0 opacity-100'
-                  : 'translate-y-8 scale-[.96] opacity-40',
+                  : 'translate-y-8 scale-[.96] cursor-pointer opacity-40',
               )}
             >
               {item.visual}
