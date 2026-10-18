@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.chairo.app",
+      "sha256_cert_fingerprints": [
+        "C4:74:55:4B:99:22:AB:EE:36:71:66:3D:EC:F1:E3:18:05:20:BC:D2:AD:FD:7C:F7:3D:AA:43:50:87:1E:19:1B",
+        "67:18:57:01:F5:01:A0:40:27:24:76:6A:42:4A:88:05:4A:02:86:77:8F:AA:7D:67:C3:1B:3B:E6:32:C6:DF:ED"
+      ]
+    }
+  }
+]
