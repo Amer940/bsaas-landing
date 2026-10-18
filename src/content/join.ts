@@ -11,6 +11,9 @@ interface JoinContent {
   playHint: string
   iosSoon: string
   openApp: string
+  qrTitle: string
+  qrCaption: string
+  qrLabel: string
   home: string
 }
 
@@ -27,6 +30,10 @@ export const joinContent: Record<Locale, JoinContent> = {
       'Preuzmeš li aplikaciju preko ovog dugmeta, kod će već biti upisan.',
     iosSoon: 'Chairo za iPhone stiže uskoro.',
     openApp: 'Već imaš aplikaciju? Otvori je',
+    qrTitle: 'Skeniraj telefonom',
+    qrCaption:
+      'Otvori kameru i usmjeri je na kod. Stranica se otvara na telefonu.',
+    qrLabel: 'QR kod za link salona',
     home: 'Na početnu',
   },
   en: {
@@ -41,6 +48,9 @@ export const joinContent: Record<Locale, JoinContent> = {
       'Install through this button and the code will already be filled in.',
     iosSoon: 'Chairo for iPhone is coming soon.',
     openApp: 'Already have the app? Open it',
+    qrTitle: 'Scan with your phone',
+    qrCaption: 'Point your camera at the code to open this page on your phone.',
+    qrLabel: 'QR code for the shop link',
     home: 'Back to home',
   },
 }
