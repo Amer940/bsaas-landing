@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["8M2A22462Z.com.chairo.app"],
+        "components": [{ "/": "/join/*" }]
+      }
+    ]
+  }
+}
