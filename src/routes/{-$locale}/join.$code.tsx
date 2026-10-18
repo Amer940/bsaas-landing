@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createFileRoute, notFound } from '@tanstack/react-router'
 import { Check, Copy } from 'lucide-react'
+import { QRCodeSVG } from 'qrcode.react'
 import { AuthCard } from '#/components/auth-card'
 import { Button } from '#/components/ui/button'
 import { joinContent } from '#/content/join'
@@ -23,6 +24,11 @@ const PLAY_STORE_URL =
 // TODO: the App Store link once the iOS app is out; until then iPhones get
 // the "coming soon" line instead of a store button.
 const APP_STORE_URL: string | null = null
+
+// What the QR encodes: the same link the app's own QR carries, without a
+// locale, so the phone that scans it lands on the app or this page.
+const SHOP_LINK_BASE = 'https://chairo.app/join/'
+const QR_SIZE = 168
 
 export const Route = createFileRoute('/{-$locale}/join/$code')({
   beforeLoad: ({ params }) => {
@@ -105,6 +111,26 @@ function JoinPage() {
           </Button>
         </div>
       </div>
+
+      {/* Opened on a computer, the phone that should get the app is the one
+          in their hand: a QR hands the link over. */}
+      {platform === 'other' && (
+        <div className="mt-7 flex flex-col items-center text-center">
+          <div className="rounded-2xl bg-white p-3">
+            <QRCodeSVG
+              value={`${SHOP_LINK_BASE}${code}`}
+              size={QR_SIZE}
+              marginSize={0}
+              role="img"
+              aria-label={c.qrLabel}
+            />
+          </div>
+          <p className="m-0 mt-3.5 text-base font-bold">{c.qrTitle}</p>
+          <p className="m-0 mt-1 text-sm leading-normal text-foreground/50">
+            {c.qrCaption}
+          </p>
+        </div>
+      )}
 
       {showIosSoon ? (
         <p className="m-0 mt-7 text-base text-foreground/65">{c.iosSoon}</p>
