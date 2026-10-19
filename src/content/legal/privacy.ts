@@ -3,7 +3,7 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const privacyContent: LocalizedLegalDoc = {
   bs: {
     title: 'Politika privatnosti',
-    updated: 'Posljednja izmjena: 14. oktobar 2026.',
+    updated: 'Posljednja izmjena: 19. oktobar 2026.',
     blocks: [
       {
         type: 'p',
@@ -254,7 +254,7 @@ export const privacyContent: LocalizedLegalDoc = {
       { type: 'h2', text: '11. Djeca' },
       {
         type: 'p',
-        text: 'Chairo nije namijenjen djeci mlađoj od 14 godina.',
+        text: 'Chairo nije namijenjen djeci mlađoj od 13 godina. Korisnici mlađi od 16 godina mogu ga koristiti samo uz pristanak roditelja ili staratelja.',
       },
 
       { type: 'h2', text: '12. Izmjene politike' },
@@ -273,7 +273,7 @@ export const privacyContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Privacy policy',
-    updated: 'Last updated: 14 October 2026',
+    updated: 'Last updated: 19 October 2026',
     blocks: [
       {
         type: 'p',
@@ -533,7 +533,7 @@ export const privacyContent: LocalizedLegalDoc = {
       { type: 'h2', text: '11. Children' },
       {
         type: 'p',
-        text: 'Chairo is not intended for children under 14.',
+        text: "Chairo is not intended for children under 13. Users under 16 may use it only with a parent's or guardian's consent.",
       },
 
       { type: 'h2', text: '12. Changes to this policy' },

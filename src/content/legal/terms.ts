@@ -3,7 +3,7 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const termsContent: LocalizedLegalDoc = {
   bs: {
     title: 'Uslovi korištenja',
-    updated: 'Posljednja izmjena: 14. oktobar 2026.',
+    updated: 'Posljednja izmjena: 19. oktobar 2026.',
     blocks: [
       { type: 'h2', text: '1. O usluzi' },
       {
@@ -21,7 +21,7 @@ export const termsContent: LocalizedLegalDoc = {
         items: [
           'Unesite tačne podatke i čuvajte lozinku za sebe.',
           'Jedna osoba može imati jedan račun.',
-          'Morate imati najmanje 14 godina.',
+          'Morate imati najmanje 13 godina. Ako ste mlađi od 16, potreban vam je pristanak roditelja ili staratelja.',
           'Odgovorni ste za sve što se radi s vašeg računa.',
         ],
       },
@@ -121,7 +121,7 @@ export const termsContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Terms of use',
-    updated: 'Last updated: 14 October 2026',
+    updated: 'Last updated: 19 October 2026',
     blocks: [
       { type: 'h2', text: '1. About the service' },
       {
@@ -139,7 +139,7 @@ export const termsContent: LocalizedLegalDoc = {
         items: [
           'Give accurate details and keep your password to yourself.',
           'One person may have one account.',
-          'You must be at least 14 years old.',
+          "You must be at least 13 years old. If you are under 16, you need a parent's or guardian's consent.",
           'You are responsible for everything done from your account.',
         ],
       },

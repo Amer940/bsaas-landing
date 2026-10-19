@@ -10,7 +10,7 @@ export const supportContent: LocalizedLegalDoc = {
       },
       {
         type: 'p',
-        text: 'Problem možete prijaviti i u aplikaciji: [Profil → Postavke → Prijavi problem]. Ako priložite snimak ekrana, brže ćemo pronaći grešku.',
+        text: 'Problem možete prijaviti i u aplikaciji: **Profil → Postavke → Prijavi problem**. Ako priložite snimak ekrana, brže ćemo pronaći grešku.',
       },
 
       { type: 'h2', text: 'Česta pitanja' },
@@ -24,7 +24,7 @@ export const supportContent: LocalizedLegalDoc = {
       },
       {
         type: 'p',
-        text: '**Kako otkazati termin?** Otvorite termin u aplikaciji i dodirnite [Otkaži]. Ako je prekasno za otkazivanje u aplikaciji, javite se direktno salonu.',
+        text: '**Kako otkazati termin?** Otvorite termin u aplikaciji i dodirnite **Otkaži**. Ako je prekasno za otkazivanje u aplikaciji, javite se direktno salonu.',
       },
       {
         type: 'p',
@@ -46,7 +46,7 @@ export const supportContent: LocalizedLegalDoc = {
       },
       {
         type: 'p',
-        text: 'You can also report a problem in the app: [Profile → Settings → Report a problem]. Attaching a screenshot helps us find the issue faster.',
+        text: 'You can also report a problem in the app: **Profile → Settings → Report a problem**. Attaching a screenshot helps us find the issue faster.',
       },
 
       { type: 'h2', text: 'Frequently asked questions' },
@@ -60,7 +60,7 @@ export const supportContent: LocalizedLegalDoc = {
       },
       {
         type: 'p',
-        text: "**How do I cancel an appointment?** Open the appointment in the app and tap [Cancel]. If it's too late to cancel in the app, contact the shop directly.",
+        text: "**How do I cancel an appointment?** Open the appointment in the app and tap **Cancel**. If it's too late to cancel in the app, contact the shop directly.",
       },
       {
         type: 'p',
