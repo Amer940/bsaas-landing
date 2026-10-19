@@ -44,6 +44,7 @@ export const privacyContent: LocalizedLegalDoc = {
           'Profilna fotografija, ako je dodate.',
           'Vaši izbori za obavijesti i analitiku (email, push, SMS). Svi su isključeni dok ih sami ne uključite. Čuvamo i historiju promjena, da možemo dokazati vaš pristanak.',
           'Obavijesti u aplikaciji i kategorije koje ste utišali.',
+          'Ako dozvolite push obavijesti: push token vašeg uređaja (oznaka preko koje obavijest stiže baš na taj telefon), vrsta uređaja (Android ili iOS), jezik aplikacije i kada je uređaj zadnji put korišten.',
           'Vrijeme neuspjelih pokušaja unosa lozinke, radi zaštite od pogađanja lozinke.',
           'Zahtjevi u vezi s privatnošću koje pošaljete.',
           'Prijave grešaka i povratne informacije: tekst, vrsta prijave, vaša uloga, salon, verzija aplikacije, operativni sistem, model telefona, jezik aplikacije i ekran s kojeg je prijava poslana. Do 3 snimka ekrana, ako ih priložite.',
@@ -116,6 +117,10 @@ export const privacyContent: LocalizedLegalDoc = {
           ['Vaš račun i prijava', 'Izvršenje ugovora (uslova korištenja)'],
           ['Zakazivanje termina i rad salona', 'Izvršenje ugovora'],
           ['Obavijesti u aplikaciji o terminima', 'Izvršenje ugovora'],
+          [
+            'Push obavijesti o vašim terminima (novi, pomjereni i otkazani termini, podsjetnici prije termina)',
+            'Izvršenje ugovora. Isključujete ih u postavkama telefona, ili po grupama u aplikaciji.',
+          ],
           ['Zaštita od zloupotrebe i pogađanja lozinke', 'Legitimni interes'],
           ['Rješavanje prijavljenih grešaka', 'Legitimni interes'],
           ['Evidencija prošlih termina za salon', 'Legitimni interes salona'],
@@ -164,6 +169,18 @@ export const privacyContent: LocalizedLegalDoc = {
             'Apple i Google',
             'Preuzimanje aplikacije, prema njihovim pravilima privatnosti',
           ],
+          [
+            'Expo (650 Industries)',
+            'Prosljeđivanje push obavijesti na vaš uređaj. Prima push token i tekst obavijesti.',
+          ],
+          [
+            'Google (Firebase Cloud Messaging)',
+            'Dostava push obavijesti na Android uređaje',
+          ],
+          [
+            'Apple (Apple Push Notification service)',
+            'Dostava push obavijesti na iPhone',
+          ],
         ],
       },
       {
@@ -174,7 +191,7 @@ export const privacyContent: LocalizedLegalDoc = {
       { type: 'h2', text: '6. Prijenos podataka izvan BiH' },
       {
         type: 'p',
-        text: 'Naša baza podataka nalazi se u Evropskoj uniji. Neki pružaoci usluga (Supabase, Resend, Cloudflare, Google i Lemon Squeezy) su kompanije iz SAD-a i mogu obrađivati podatke izvan BiH i EU. Za takve prijenose oslanjamo se na njihove ugovorne zaštite, kao što su standardne ugovorne klauzule.',
+        text: 'Naša baza podataka nalazi se u Evropskoj uniji. Neki pružaoci usluga (Supabase, Resend, Cloudflare, Google, Apple, Expo i Lemon Squeezy) su kompanije iz SAD-a i mogu obrađivati podatke izvan BiH i EU. Za takve prijenose oslanjamo se na njihove ugovorne zaštite, kao što su standardne ugovorne klauzule.',
       },
 
       { type: 'h2', text: '7. Koliko dugo čuvamo podatke' },
@@ -199,6 +216,10 @@ export const privacyContent: LocalizedLegalDoc = {
             '12 mjeseci nakon rješavanja, ili ranije ako obrišete račun',
           ],
           ['Obavijesti u aplikaciji', '60 dana'],
+          [
+            'Push token uređaja',
+            'Dok ste na tom uređaju prijavljeni. Briše se kada se odjavite, obrišete račun ili kada uređaj prestane primati obavijesti (npr. nakon deinstalacije aplikacije).',
+          ],
           [
             'Zahtjevi u vezi s privatnošću',
             '3 godine. Tekst poruke briše se kada obrišete račun.',
@@ -314,6 +335,7 @@ export const privacyContent: LocalizedLegalDoc = {
           'Profile photo, if you add one.',
           'Your choices for notifications and analytics (email, push, SMS). All are off until you turn them on. We keep a history of changes so we can prove your consent.',
           'In-app notifications and the categories you muted.',
+          "If you allow push notifications: your device's push token (the address a notification uses to reach that phone), the device type (Android or iOS), the app language, and when the device was last used.",
           'Times of failed password attempts, to stop password guessing.',
           'Privacy requests you send us.',
           'Bug reports and feedback: the text, report type, your role, shop, app version, operating system, phone model, app language, and the screen it was sent from. Up to 3 screenshots, if you attach them.',
@@ -395,6 +417,10 @@ export const privacyContent: LocalizedLegalDoc = {
             'In-app notifications about appointments',
             'Performance of a contract',
           ],
+          [
+            'Push notifications about your appointments (new, moved and cancelled bookings, reminders before them)',
+            "Performance of a contract. Turn them off in your phone's settings, or by group in the app.",
+          ],
           ['Preventing abuse and password guessing', 'Legitimate interest'],
           ['Fixing reported problems', 'Legitimate interest'],
           [
@@ -443,6 +469,18 @@ export const privacyContent: LocalizedLegalDoc = {
             'Apple and Google',
             'App downloads, under their own privacy policies',
           ],
+          [
+            'Expo (650 Industries)',
+            'Relaying push notifications to your device. It receives the push token and the notification text.',
+          ],
+          [
+            'Google (Firebase Cloud Messaging)',
+            'Delivering push notifications to Android devices',
+          ],
+          [
+            'Apple (Apple Push Notification service)',
+            'Delivering push notifications to iPhones',
+          ],
         ],
       },
       {
@@ -453,7 +491,7 @@ export const privacyContent: LocalizedLegalDoc = {
       { type: 'h2', text: '6. Transfers outside Bosnia and Herzegovina' },
       {
         type: 'p',
-        text: 'Our database is in the European Union. Some providers (Supabase, Resend, Cloudflare, Google and Lemon Squeezy) are US companies and may process data outside BiH and the EU. For these transfers we rely on their contractual safeguards, such as standard contractual clauses.',
+        text: 'Our database is in the European Union. Some providers (Supabase, Resend, Cloudflare, Google, Apple, Expo and Lemon Squeezy) are US companies and may process data outside BiH and the EU. For these transfers we rely on their contractual safeguards, such as standard contractual clauses.',
       },
 
       { type: 'h2', text: '7. How long we keep data' },
@@ -478,6 +516,10 @@ export const privacyContent: LocalizedLegalDoc = {
             '12 months after being resolved, or sooner if you delete your account',
           ],
           ['In-app notifications', '60 days'],
+          [
+            'Device push token',
+            'While you are signed in on that device. Deleted when you sign out, delete your account, or the device stops receiving notifications (for example after uninstalling the app).',
+          ],
           [
             'Privacy requests',
             '3 years. The message text is erased when you delete your account.',
