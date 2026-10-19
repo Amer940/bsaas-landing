@@ -1,23 +1,7 @@
+import type { CodeLinkContent } from '#/components/code-link-page'
 import type { Locale } from '#/i18n/translations'
 
-interface JoinContent {
-  metaTitle: string
-  title: string
-  body: string
-  codeLabel: string
-  copy: string
-  copied: string
-  googlePlay: string
-  playHint: string
-  iosSoon: string
-  openApp: string
-  qrTitle: string
-  qrCaption: string
-  qrLabel: string
-  home: string
-}
-
-export const joinContent: Record<Locale, JoinContent> = {
+export const joinContent: Record<Locale, CodeLinkContent> = {
   bs: {
     metaTitle: 'Pridruži se salonu | Chairo',
     title: 'Zakazuj u svom salonu preko Chairo',
