@@ -10,7 +10,8 @@ interface AuthCardProps {
 }
 
 /**
- * The page an auth email's button opens (reset password), and the 404: the
+ * The page an auth email's button opens (reset password, email changed), and
+ * the 404: the
  * wordmark over one dark card, kept out of search results.
  */
 function AuthCard({ metaTitle, homeLabel, children }: AuthCardProps) {

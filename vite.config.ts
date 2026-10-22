@@ -23,6 +23,7 @@ const PAGES = [
   '/delete-account',
   '/delete-account/confirm',
   '/reset-password',
+  '/email-changed',
 ]
 
 const OG_LOCALE: Record<Locale, string> = { bs: 'bs_BA', en: 'en_US' }
