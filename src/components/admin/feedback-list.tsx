@@ -1,5 +1,10 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import {
+  ScreenshotStrip,
+  useScreenshotUrls,
+} from '#/components/admin/feedback-screenshots'
+import type { ScreenshotUrls } from '#/components/admin/feedback-screenshots'
 import { Badge } from '#/components/ui/badge'
 import { Button } from '#/components/ui/button'
 import { Card } from '#/components/ui/card'
@@ -66,6 +71,13 @@ function profileName(profile: Row | null): string | null {
   return parts.filter(Boolean).join(' ') || null
 }
 
+/** The entry's storage paths in the feedback-screenshots bucket. */
+function screenshotPaths(entry: Feedback): string[] {
+  return (entry.screenshot_paths ?? []).filter(
+    (path) => typeof path === 'string' && path.trim() !== '',
+  )
+}
+
 function isResolved(entry: Feedback) {
   return entry.status === 'resolved' || entry.resolved_at !== null
 }
@@ -102,6 +114,13 @@ function FeedbackList() {
       return { rows: data, total: count ?? data.length }
     },
   })
+
+  // One batch of signed URLs for every screenshot in the loaded feedback.
+  const screenshots = useScreenshotUrls(
+    feedback.data?.rows.flatMap(screenshotPaths) ?? [],
+  )
+  // A failed batch shows every image as unavailable rather than loading.
+  const screenshotUrls = screenshots.isError ? new Map() : screenshots.data
 
   if (feedback.isPending) {
     return (
@@ -190,7 +209,7 @@ function FeedbackList() {
         <ul className="m-0 flex list-none flex-col gap-3 p-0">
           {shown.map((entry) => (
             <li key={entry.id}>
-              <FeedbackCard entry={entry} />
+              <FeedbackCard entry={entry} screenshotUrls={screenshotUrls} />
             </li>
           ))}
         </ul>
@@ -243,7 +262,14 @@ function FilterGroup<T extends string>({
   )
 }
 
-function FeedbackCard({ entry }: { entry: Feedback }) {
+function FeedbackCard({
+  entry,
+  screenshotUrls,
+}: {
+  entry: Feedback
+  screenshotUrls: ScreenshotUrls | undefined
+}) {
+  const paths = screenshotPaths(entry)
   const profile = one(entry.profile)
   const name = profileName(profile)
   const email = text(profile, 'email')
@@ -254,15 +280,12 @@ function FeedbackCard({ entry }: { entry: Feedback }) {
   const app = entry.app_version
     ? `App ${entry.app_version}${entry.app_build ? ` (${entry.app_build})` : ''}`
     : null
-  const screenshots = entry.screenshot_paths?.length ?? 0
   const details = [
     entry.device_model,
     os,
     app,
     entry.app_language && `Language: ${entry.app_language}`,
     entry.source_route && `From ${entry.source_route}`,
-    screenshots > 0 &&
-      `${screenshots} screenshot${screenshots === 1 ? '' : 's'}`,
   ].filter(Boolean)
 
   return (
@@ -296,6 +319,10 @@ function FeedbackCard({ entry }: { entry: Feedback }) {
         </p>
       ) : (
         <p className="m-0 text-sm text-muted-foreground italic">No message</p>
+      )}
+
+      {paths.length > 0 && (
+        <ScreenshotStrip paths={paths} urls={screenshotUrls} />
       )}
 
       <p className="m-0 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm">
