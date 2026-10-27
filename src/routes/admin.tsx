@@ -93,6 +93,7 @@ function AdminPage() {
     // pill on the landing page, so it is squared off for this page only.
     <div className="[&_[data-slot=button]]:rounded-lg">
       <title>Admin · chairo.</title>
+      <meta name="robots" content="noindex" />
       {session === undefined ? (
         <CenteredCard>
           <Loading />
