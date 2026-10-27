@@ -1,5 +1,12 @@
+import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
+import { Trash2 } from 'lucide-react'
 import { Button } from '#/components/ui/button'
 import {
   Table,
@@ -112,6 +119,7 @@ function OutreachContacts({ search }: { search: string }) {
               the table. Narrow screens still scroll sideways. */}
           <Table className="min-w-2xl table-fixed">
             <colgroup>
+              <col className="w-14" />
               <col className="w-[17%]" />
               <col className="w-[15%]" />
               <col className="w-[20%]" />
@@ -121,6 +129,9 @@ function OutreachContacts({ search }: { search: string }) {
             </colgroup>
             <TableHeader>
               <TableRow>
+                <TableHead>
+                  <span className="sr-only">Actions</span>
+                </TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Instagram</TableHead>
                 <TableHead>Email</TableHead>
@@ -158,7 +169,92 @@ function TruncatedCell({
   )
 }
 
+const smallButton = 'h-8 px-3 text-sm'
+
+/**
+ * One contact. Its delete button turns the row into an inline
+ * "Delete …? Yes, delete / Cancel" bar until confirmed or cancelled.
+ */
 function ContactRow({ contact }: { contact: OutreachContact }) {
+  const queryClient = useQueryClient()
+  const [confirming, setConfirming] = useState(false)
+  const deleteButton = useRef<HTMLButtonElement>(null)
+  const wasConfirming = useRef(false)
+
+  const remove = useMutation({
+    mutationFn: async () => {
+      const { error, count } = await supabase
+        .from('outreach_contacts')
+        .delete({ count: 'exact' })
+        .eq('id', contact.id)
+      if (error) throw error
+      // RLS hides rows it won't let you delete instead of failing.
+      if (count === 0) throw new Error('Nothing was deleted.')
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['outreach_contacts'] }),
+  })
+
+  // Back on the delete button after Cancel, for keyboard users.
+  useEffect(() => {
+    if (wasConfirming.current && !confirming) deleteButton.current?.focus()
+    wasConfirming.current = confirming
+  }, [confirming])
+
+  function cancel() {
+    setConfirming(false)
+    remove.reset()
+  }
+
+  if (confirming) {
+    const label =
+      contact.name ||
+      contact.instagram ||
+      contact.email ||
+      contact.phone ||
+      'this contact'
+
+    return (
+      <TableRow className="bg-[#ff8a7e]/6 hover:bg-[#ff8a7e]/6">
+        <TableCell colSpan={7}>
+          <div
+            role="group"
+            aria-label="Confirm delete"
+            className="flex flex-wrap items-center gap-2"
+            onKeyDown={(e) => {
+              if (e.key === 'Escape' && !remove.isPending) cancel()
+            }}
+          >
+            <span className="min-w-0 truncate text-sm">
+              Delete <strong>{label}</strong>?
+            </span>
+            <Button
+              className={`${smallButton} bg-[#ff8a7e] text-[#141414] hover:bg-[#ff8a7e]/85`}
+              onClick={() => remove.mutate()}
+              disabled={remove.isPending}
+            >
+              {remove.isPending ? 'Deleting…' : 'Yes, delete'}
+            </Button>
+            <Button
+              variant="outline"
+              className={smallButton}
+              onClick={cancel}
+              disabled={remove.isPending}
+              autoFocus
+            >
+              Cancel
+            </Button>
+            {remove.isError && (
+              <span role="alert" className="text-sm text-[#ff8a7e]">
+                {remove.error.message}
+              </span>
+            )}
+          </div>
+        </TableCell>
+      </TableRow>
+    )
+  }
+
   const igUrl = contact.instagram
     ? instagramProfileUrl(contact.instagram)
     : null
@@ -166,6 +262,17 @@ function ContactRow({ contact }: { contact: OutreachContact }) {
 
   return (
     <TableRow>
+      <TableCell>
+        <Button
+          ref={deleteButton}
+          variant="outline"
+          className={`${smallButton} text-foreground/70 hover:text-[#ff8a7e]`}
+          onClick={() => setConfirming(true)}
+          aria-label={`Delete ${contact.name || contact.instagram || contact.email || contact.phone || 'contact'}`}
+        >
+          <Trash2 />
+        </Button>
+      </TableCell>
       <TruncatedCell value={contact.name} />
       <TruncatedCell value={contact.instagram}>
         {igUrl && (
