@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react'
-import type { ComponentProps, FormEvent, KeyboardEvent } from 'react'
+import { useImperativeHandle, useRef, useState } from 'react'
+import type { ComponentProps, FormEvent, KeyboardEvent, Ref } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 import { Button } from '#/components/ui/button'
@@ -59,11 +59,23 @@ function duplicateField(error: unknown) {
   return null
 }
 
-function NewOutreachForm() {
+interface NewOutreachFormHandle {
+  /** Puts `value` in `field` and moves the cursor there. */
+  prefill: (field: Exclude<Field, 'notes'>, value: string) => void
+}
+
+function NewOutreachForm({ ref }: { ref?: Ref<NewOutreachFormHandle> }) {
   const queryClient = useQueryClient()
   const [values, setValues] = useState<Values>(EMPTY)
   const [errors, setErrors] = useState<Errors>({})
   const firstField = useRef<HTMLInputElement>(null)
+
+  useImperativeHandle(ref, () => ({
+    prefill(field, value) {
+      update(field, value)
+      document.getElementById(`outreach-${field}`)?.focus()
+    },
+  }))
 
   const add = useMutation({
     mutationFn: async (contact: Values) => {
@@ -254,3 +266,4 @@ function TextField({
 }
 
 export { NewOutreachForm }
+export type { NewOutreachFormHandle }

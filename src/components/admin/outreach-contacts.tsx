@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { Button } from '#/components/ui/button'
 import {
   Table,
@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '#/components/ui/table'
-import { instagramProfileUrl } from '#/lib/outreach-search'
+import { instagramProfileUrl, searchFilter } from '#/lib/outreach-search'
 import { supabase } from '#/lib/supabase'
 import { cn } from '#/lib/utils.ts'
 
@@ -39,19 +39,32 @@ const fullDate = new Intl.DateTimeFormat('en-GB', {
   timeStyle: 'short',
 })
 
-function OutreachContacts() {
-  const contacts = useQuery({
-    queryKey: ['outreach_contacts'],
+/**
+ * Contacts matching `search` (all of them when it's empty), newest first.
+ * The search status and the table share it: same key, one request.
+ */
+function useOutreachContacts(search: string) {
+  return useQuery({
+    queryKey: ['outreach_contacts', search],
     queryFn: async (): Promise<{ rows: OutreachContact[]; total: number }> => {
-      const { data, error, count } = await supabase
+      let query = supabase
         .from('outreach_contacts')
         .select(COLUMNS, { count: 'exact' })
+      const filter = searchFilter(search)
+      if (filter) query = query.or(filter)
+      const { data, error, count } = await query
         .order('created_at', { ascending: false })
         .limit(LIMIT)
       if (error) throw error
       return { rows: data, total: count ?? data.length }
     },
+    // Keep the last results on screen while the next search loads.
+    placeholderData: keepPreviousData,
   })
+}
+
+function OutreachContacts({ search }: { search: string }) {
+  const contacts = useOutreachContacts(search)
 
   if (contacts.isPending) {
     return (
@@ -83,14 +96,16 @@ function OutreachContacts() {
       <div className="flex items-baseline gap-3">
         <h2 className="m-0 text-base font-bold">Contacts</h2>
         <p className="m-0 text-sm text-muted-foreground">
-          {total.toLocaleString('en-GB')} total
+          {total.toLocaleString('en-GB')} {search ? 'matching' : 'total'}
           {rows.length < total &&
             ` · showing the newest ${rows.length.toLocaleString('en-GB')}`}
         </p>
       </div>
 
       {rows.length === 0 ? (
-        <p className="m-0 text-sm text-muted-foreground">No contacts yet.</p>
+        <p className="m-0 text-sm text-muted-foreground">
+          {search ? 'No contacts match the search.' : 'No contacts yet.'}
+        </p>
       ) : (
         <div className="rounded-lg shadow-[inset_0_0_0_1px_rgba(255,255,255,.08)]">
           {/* Fixed widths so long values are cut off rather than widening
@@ -177,4 +192,4 @@ function ContactRow({ contact }: { contact: OutreachContact }) {
   )
 }
 
-export { OutreachContacts }
+export { OutreachContacts, useOutreachContacts }
