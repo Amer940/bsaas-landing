@@ -20,6 +20,7 @@ import {
 } from '#/components/ui/card'
 import { Input } from '#/components/ui/input'
 import { Label } from '#/components/ui/label'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '#/components/ui/tabs'
 import { supabase } from '#/lib/supabase'
 
 // Internal admin page, English only, outside the {-$locale} routes.
@@ -27,8 +28,22 @@ import { supabase } from '#/lib/supabase'
 // lib/supabase.ts), so the login link's tokens are picked up here by hand.
 
 export const Route = createFileRoute('/admin')({
+  // ?tab=feedback. No param means Outreach, so the default URL stays /admin.
+  validateSearch: (search: Record<string, unknown>): { tab?: 'feedback' } => ({
+    tab: search.tab === 'feedback' ? 'feedback' : undefined,
+  }),
   component: AdminPage,
 })
+
+/** What a login link can put in the query (the hash is all login data). */
+const LOGIN_PARAMS = [
+  'token_hash',
+  'type',
+  'code',
+  'error',
+  'error_code',
+  'error_description',
+]
 
 type Message = { kind: 'error' | 'info'; text: string }
 
@@ -39,10 +54,20 @@ type Message = { kind: 'error' | 'info'; text: string }
 async function consumeLoginLink(): Promise<string | null> {
   const hash = new URLSearchParams(window.location.hash.slice(1))
   const query = new URLSearchParams(window.location.search)
-  if (!hash.toString() && !query.toString()) return null
+  if (!hash.toString() && !LOGIN_PARAMS.some((key) => query.has(key))) {
+    return null
+  }
 
   // Wipe the tokens before using them, so they don't linger in history.
-  window.history.replaceState(null, '', window.location.pathname)
+  // Anything else in the query (like ?tab) stays.
+  const rest = new URLSearchParams(query)
+  for (const key of LOGIN_PARAMS) rest.delete(key)
+  const kept = rest.toString()
+  window.history.replaceState(
+    window.history.state,
+    '',
+    window.location.pathname + (kept ? `?${kept}` : ''),
+  )
 
   // Not the error text from the URL: anyone can put words there, and it
   // would read as a message from this page.
@@ -195,33 +220,71 @@ function AdminGate({ userId, email }: { userId: string; email: string }) {
   return <Dashboard email={email} />
 }
 
+const mainClass =
+  'mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 py-8 md:px-6'
+
+/** The signed-in admin page: Outreach and Feedback tabs, kept in ?tab. */
 function Dashboard({ email }: { email: string }) {
-  const [searchText, setSearchText] = useState('')
-  const search = useDebouncedValue(searchText.trim(), 250)
-  const form = useRef<NewOutreachFormHandle>(null)
+  const { tab = 'outreach' } = Route.useSearch()
+  const navigate = Route.useNavigate()
 
   return (
-    <div className="flex min-h-svh flex-col">
+    <Tabs
+      value={tab}
+      onValueChange={(next) =>
+        navigate({
+          search: { tab: next === 'feedback' ? 'feedback' : undefined },
+        })
+      }
+      className="min-h-svh gap-0"
+    >
       <header className="border-b border-border">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-4 md:px-6">
-          <h1 className="m-0 text-lg font-bold tracking-[-0.02em]">Outreach</h1>
+          <h1 className="sr-only">Admin</h1>
+          <TabsList aria-label="Admin sections">
+            <TabsTrigger value="outreach">Outreach</TabsTrigger>
+            <TabsTrigger value="feedback">Feedback</TabsTrigger>
+          </TabsList>
           <span className="ml-auto min-w-0 truncate text-sm text-muted-foreground">
             {email}
           </span>
           <SignOutButton />
         </div>
       </header>
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 py-8 md:px-6">
-        <OutreachSearch
-          value={searchText}
-          onChange={setSearchText}
-          search={search}
-          onUseText={(text) => form.current?.prefill(guessField(text), text)}
-        />
-        <NewOutreachForm ref={form} />
-        <OutreachContacts search={search} />
-      </main>
-    </div>
+      {/* Kept mounted while hidden, so the search and a half-filled form
+          are still there after a look at another tab. */}
+      <TabsContent
+        value="outreach"
+        forceMount
+        className="data-[state=inactive]:hidden"
+      >
+        <OutreachTab />
+      </TabsContent>
+      <TabsContent value="feedback">
+        <main className={mainClass}>
+          <p className="m-0 text-sm text-muted-foreground">Coming soon</p>
+        </main>
+      </TabsContent>
+    </Tabs>
+  )
+}
+
+function OutreachTab() {
+  const [searchText, setSearchText] = useState('')
+  const search = useDebouncedValue(searchText.trim(), 250)
+  const form = useRef<NewOutreachFormHandle>(null)
+
+  return (
+    <main className={mainClass}>
+      <OutreachSearch
+        value={searchText}
+        onChange={setSearchText}
+        search={search}
+        onUseText={(text) => form.current?.prefill(guessField(text), text)}
+      />
+      <NewOutreachForm ref={form} />
+      <OutreachContacts search={search} />
+    </main>
   )
 }
 
