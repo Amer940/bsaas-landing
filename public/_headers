@@ -2,3 +2,10 @@
 # to say so.
 /.well-known/apple-app-site-association
   Content-Type: application/json
+
+# The admin page: keep it out of search results, also for crawlers that
+# don't run JS (the page sets the same as a meta tag).
+/admin
+  X-Robots-Tag: noindex
+/admin/*
+  X-Robots-Tag: noindex
