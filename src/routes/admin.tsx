@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Session } from '@supabase/supabase-js'
 import { Logo } from '#/components/logo'
+import { FeedbackList } from '#/components/admin/feedback-list'
 import { NewOutreachForm } from '#/components/admin/new-outreach-form'
 import type { NewOutreachFormHandle } from '#/components/admin/new-outreach-form'
 import { OutreachContacts } from '#/components/admin/outreach-contacts'
@@ -262,7 +263,7 @@ function Dashboard({ email }: { email: string }) {
       </TabsContent>
       <TabsContent value="feedback">
         <main className={mainClass}>
-          <p className="m-0 text-sm text-muted-foreground">Coming soon</p>
+          <FeedbackList />
         </main>
       </TabsContent>
     </Tabs>
