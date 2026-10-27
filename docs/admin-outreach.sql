@@ -75,3 +75,20 @@ create policy "admins read all profiles" on public.profiles
   for select to authenticated using (public.is_admin());
 create policy "admins read all businesses" on public.businesses
   for select to authenticated using (public.is_admin());
+
+-- Admin: create business
+--
+-- public.admin_create_business(p_owner_id uuid, p_name text, p_code text)
+--   returns business_id, business_name, invite_code
+--
+-- Used by /admin (Users tab, "Make business") to create a business owned by
+-- an existing profile (p_owner_id), named p_name, with p_code as its invite
+-- (referral) code. It must refuse callers who aren't admins (public.is_admin()).
+-- Its error messages are shown to the admin as-is, e.g.
+-- "Invite code X is already taken". After it succeeds, the owner has to sign
+-- out and sign in again in the app to become the owner.
+--
+-- Status: already applied on DEV (Barber). Must be applied on PROD
+-- (chairo-prod) before "Make business" works there.
+--
+-- TODO: add the function's SQL here.
