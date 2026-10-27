@@ -48,8 +48,9 @@ function localeHtml(): Plugin {
     apply: 'build',
     enforce: 'post',
     generateBundle(_, bundle) {
+      if (!('index.html' in bundle)) return
       const asset = bundle['index.html']
-      if (asset?.type !== 'asset') return
+      if (asset.type !== 'asset') return
       const template = String(asset.source)
 
       for (const locale of LOCALES) {
