@@ -2,6 +2,19 @@ import * as React from 'react'
 import { Button } from './button'
 import { cn } from '#/lib/utils.ts'
 
+function Input({ className, ...props }: React.ComponentProps<'input'>) {
+  return (
+    <input
+      data-slot="input"
+      className={cn(
+        'h-11 w-full min-w-0 rounded-lg border-none bg-white/8 px-4 text-base text-foreground outline-none transition-shadow duration-250 placeholder:text-foreground/45 focus-visible:ring-2 focus-visible:ring-foreground/30 disabled:opacity-50 aria-invalid:ring-2 aria-invalid:ring-[#ff8a7e]/70',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 interface EmailInputProps {
   placeholder?: string
   buttonLabel?: string
@@ -51,4 +64,4 @@ function EmailInput({
   )
 }
 
-export { EmailInput }
+export { Input, EmailInput }
