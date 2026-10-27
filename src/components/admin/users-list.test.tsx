@@ -18,13 +18,26 @@ interface Call {
   limit?: number
 }
 
+interface RpcResult {
+  data: unknown
+  error: { message: string } | null
+}
+
 interface FakeDb {
   calls: Call[]
+  rpcs: Array<{ fn: string; args: Record<string, unknown> }>
+  rpcResult: RpcResult
 }
 
 // A stand-in for the Supabase client that records each query and returns
 // two profiles, one of them owning two businesses.
-const db = vi.hoisted((): FakeDb => ({ calls: [] }))
+const db = vi.hoisted(
+  (): FakeDb => ({
+    calls: [],
+    rpcs: [],
+    rpcResult: { data: null, error: null },
+  }),
+)
 
 vi.mock('#/lib/supabase', () => {
   const profiles = [
@@ -72,7 +85,12 @@ vi.mock('#/lib/supabase', () => {
     return builder
   }
 
-  return { supabase: { from: chain } }
+  function rpc(fn: string, args: Record<string, unknown>) {
+    db.rpcs.push({ fn, args })
+    return Promise.resolve(db.rpcResult)
+  }
+
+  return { supabase: { from: chain, rpc } }
 })
 
 function renderList() {
@@ -88,9 +106,104 @@ function renderList() {
 
 beforeEach(() => {
   db.calls = []
+  db.rpcs = []
+  db.rpcResult = {
+    data: [
+      {
+        business_id: 9,
+        business_name: 'Marko Cuts',
+        invite_code: 'MARKO-CUTS',
+      },
+    ],
+    error: null,
+  }
 })
 
 afterEach(cleanup)
+
+/** Opens Marko's "Make business" form; returns its name and code inputs. */
+async function openMakeBusiness() {
+  renderList()
+  const marko = (await screen.findByText('Marko M')).closest('tr')!
+  fireEvent.click(within(marko).getByRole('button', { name: 'Make business' }))
+  return {
+    name: screen.getByLabelText('Business name'),
+    code: screen.getByLabelText('Invite code'),
+    submit: () =>
+      fireEvent.click(screen.getByRole('button', { name: 'Create business' })),
+  }
+}
+
+describe('Make business', () => {
+  test('is offered on every row, also to owners', async () => {
+    renderList()
+    await screen.findByText('Ana Anić')
+    expect(
+      screen.getAllByRole('button', { name: 'Make business' }),
+    ).toHaveLength(2)
+  })
+
+  test('the code follows the name until edited by hand', async () => {
+    const { name, code } = await openMakeBusiness()
+    fireEvent.change(name, { target: { value: 'Brijačnica Đuro' } })
+    expect((code as HTMLInputElement).value).toBe('BRIJACNICA-DURO')
+
+    fireEvent.change(code, { target: { value: 'duro1' } })
+    fireEvent.change(name, { target: { value: 'Brijačnica Đuro 2' } })
+    expect((code as HTMLInputElement).value).toBe('DURO1')
+  })
+
+  test('blocks a missing name or a bad code without calling the DB', async () => {
+    const { name, code, submit } = await openMakeBusiness()
+    submit()
+    expect(screen.getByText('Enter a business name.')).toBeTruthy()
+
+    fireEvent.change(name, { target: { value: 'Marko Cuts' } })
+    fireEvent.change(code, { target: { value: 'AB' } })
+    submit()
+    expect(screen.getByText(/Use 4–20 characters/)).toBeTruthy()
+    expect(db.rpcs).toHaveLength(0)
+  })
+
+  test('creates through the RPC, says what to do next, refreshes the row', async () => {
+    const { name, submit } = await openMakeBusiness()
+    fireEvent.change(name, { target: { value: '  Marko Cuts ' } })
+    const profileQueries = db.calls.filter((c) => c.table === 'profiles').length
+    submit()
+
+    const status = await screen.findByRole('status')
+    expect(db.rpcs).toEqual([
+      {
+        fn: 'admin_create_business',
+        args: { p_owner_id: 'u2', p_name: 'Marko Cuts', p_code: 'MARKO-CUTS' },
+      },
+    ])
+    expect(status.textContent).toBe(
+      'Business Marko Cuts created with code MARKO-CUTS. The user must sign out and sign in again in the app to become the owner.',
+    )
+    expect(screen.queryByLabelText('Business name')).toBeNull()
+    await waitFor(() =>
+      expect(db.calls.filter((c) => c.table === 'profiles').length).toBe(
+        profileQueries + 1,
+      ),
+    )
+  })
+
+  test('shows the DB error as-is and keeps the form open', async () => {
+    db.rpcResult = {
+      data: null,
+      error: { message: 'Invite code MARKO-CUTS is already taken' },
+    }
+    const { name, submit } = await openMakeBusiness()
+    fireEvent.change(name, { target: { value: 'Marko Cuts' } })
+    submit()
+
+    expect((await screen.findByRole('alert')).textContent).toBe(
+      'Invite code MARKO-CUTS is already taken',
+    )
+    expect(screen.getByLabelText('Business name')).toBeTruthy()
+  })
+})
 
 describe('UsersList', () => {
   test('shows the newest 50 without a filter, with owned businesses', async () => {

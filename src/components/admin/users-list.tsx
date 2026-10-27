@@ -1,9 +1,15 @@
 import { useState } from 'react'
-import type { ReactNode } from 'react'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { Search } from 'lucide-react'
+import type { FormEvent, ReactNode } from 'react'
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
+import { Plus, Search } from 'lucide-react'
 import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
+import { Label } from '#/components/ui/label'
 import {
   Table,
   TableBody,
@@ -13,6 +19,11 @@ import {
   TableRow,
 } from '#/components/ui/table'
 import { useDebouncedValue } from '#/hooks/use-debounced-value'
+import {
+  INVITE_CODE_FORMAT,
+  INVITE_CODE_MAX,
+  inviteCodeFromName,
+} from '#/lib/invite-code'
 import { profileSearchFilter } from '#/lib/outreach-search'
 import { supabase } from '#/lib/supabase'
 import { cn } from '#/lib/utils.ts'
@@ -247,52 +258,287 @@ function Cell({
   )
 }
 
+interface CreatedBusiness {
+  name: string
+  code: string
+}
+
 function UserTableRow({ user }: { user: UserRow }) {
   const name = displayName(user)
   const joined = user.created_at ? new Date(user.created_at) : null
+  const [formOpen, setFormOpen] = useState(false)
+  const [created, setCreated] = useState<CreatedBusiness | null>(null)
 
   return (
-    <TableRow>
-      <Cell value={name}>
-        {name ?? <span className="text-muted-foreground">No name</span>}
-      </Cell>
-      <Cell value={user.username} />
-      <Cell value={user.email} />
-      <Cell value={user.phone} className="tabular-nums" />
-      <Cell
-        value={joined && fullDate.format(joined)}
-        className="text-muted-foreground tabular-nums"
-      >
-        {joined && dateFormat.format(joined)}
-      </Cell>
-      <TableCell className="align-top whitespace-normal">
-        {user.businesses.length === 0 ? (
-          <span className="text-muted-foreground">No business</span>
-        ) : (
-          <ul className="m-0 flex list-none flex-col gap-1 p-0">
-            {user.businesses.map((business) => (
-              <li
-                key={business.id}
-                className="flex min-w-0 items-baseline gap-2"
+    <>
+      <TableRow>
+        <Cell value={name}>
+          {name ?? <span className="text-muted-foreground">No name</span>}
+        </Cell>
+        <Cell value={user.username} />
+        <Cell value={user.email} />
+        <Cell value={user.phone} className="tabular-nums" />
+        <Cell
+          value={joined && fullDate.format(joined)}
+          className="text-muted-foreground tabular-nums"
+        >
+          {joined && dateFormat.format(joined)}
+        </Cell>
+        <TableCell className="align-top whitespace-normal">
+          <div className="flex flex-col items-start gap-2">
+            {user.businesses.length === 0 ? (
+              <span className="text-muted-foreground">No business</span>
+            ) : (
+              <ul className="m-0 flex w-full list-none flex-col gap-1 p-0">
+                {user.businesses.map((business) => (
+                  <li
+                    key={business.id}
+                    className="flex min-w-0 items-baseline gap-2"
+                  >
+                    <span
+                      className="min-w-0 truncate"
+                      title={business.name ?? undefined}
+                    >
+                      {business.name ?? 'Unnamed business'}
+                    </span>
+                    {business.referral_code && (
+                      <code className="shrink-0 rounded-md bg-white/8 px-1.5 py-0.5 font-mono text-xs text-foreground/80">
+                        {business.referral_code}
+                      </code>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {/* Always offered: a profile may own several businesses. */}
+            {!formOpen && (
+              <Button
+                variant="outline"
+                className="h-8 px-3 text-sm"
+                onClick={() => {
+                  setCreated(null)
+                  setFormOpen(true)
+                }}
               >
-                <span
-                  className="min-w-0 truncate"
-                  title={business.name ?? undefined}
-                >
-                  {business.name ?? 'Unnamed business'}
-                </span>
-                {business.referral_code && (
-                  <code className="shrink-0 rounded-md bg-white/8 px-1.5 py-0.5 font-mono text-xs text-foreground/80">
-                    {business.referral_code}
-                  </code>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </TableCell>
-    </TableRow>
+                <Plus />
+                Make business
+              </Button>
+            )}
+          </div>
+        </TableCell>
+      </TableRow>
+
+      {formOpen && (
+        <TableRow className="bg-white/[.02] hover:bg-white/[.02]">
+          <TableCell colSpan={6} className="whitespace-normal">
+            <MakeBusinessForm
+              ownerId={user.id}
+              ownerName={name ?? user.email ?? user.username ?? 'this user'}
+              onCancel={() => setFormOpen(false)}
+              onCreated={(business) => {
+                setFormOpen(false)
+                setCreated(business)
+              }}
+            />
+          </TableCell>
+        </TableRow>
+      )}
+
+      {created && (
+        <TableRow className="bg-[#6fdc9a]/6 hover:bg-[#6fdc9a]/6">
+          <TableCell colSpan={6} className="whitespace-normal">
+            <div className="flex items-start justify-between gap-3">
+              <p role="status" className="m-0 text-sm text-[#6fdc9a]">
+                Business <strong>{created.name}</strong> created with code{' '}
+                <strong className="font-mono">{created.code}</strong>. The user
+                must sign out and sign in again in the app to become the owner.
+              </p>
+              <Button
+                variant="outline"
+                className="h-8 shrink-0 px-3 text-sm"
+                onClick={() => setCreated(null)}
+              >
+                Dismiss
+              </Button>
+            </div>
+          </TableCell>
+        </TableRow>
+      )}
+    </>
   )
+}
+
+const NAME_MAX = 80
+
+interface MakeBusinessFormProps {
+  ownerId: string
+  ownerName: string
+  onCancel: () => void
+  onCreated: (business: CreatedBusiness) => void
+}
+
+type FormErrors = { name?: string; code?: string; form?: string }
+
+/**
+ * Inline form under a profile row: business name plus an invite code that
+ * follows the name until it's edited by hand. Creates the business through
+ * the admin_create_business RPC.
+ */
+function MakeBusinessForm({
+  ownerId,
+  ownerName,
+  onCancel,
+  onCreated,
+}: MakeBusinessFormProps) {
+  const queryClient = useQueryClient()
+  const [businessName, setBusinessName] = useState('')
+  const [code, setCode] = useState('')
+  const [codeEdited, setCodeEdited] = useState(false)
+  const [errors, setErrors] = useState<FormErrors>({})
+
+  const create = useMutation({
+    mutationFn: async (input: { name: string; code: string }) => {
+      const { data, error } = await supabase.rpc('admin_create_business', {
+        p_owner_id: ownerId,
+        p_name: input.name,
+        p_code: input.code,
+      })
+      if (error) throw error
+      // A function returning a table comes back as a list of rows.
+      const row: CreatedRow | undefined = Array.isArray(data) ? data[0] : data
+      return {
+        name: row?.business_name ?? input.name,
+        code: row?.invite_code ?? input.code,
+      }
+    },
+    onSuccess: (business) => {
+      onCreated(business)
+      return queryClient.invalidateQueries({ queryKey: ['admin_users'] })
+    },
+    // The DB's own words, e.g. "Invite code X is already taken".
+    onError: (error) => setErrors({ form: error.message }),
+  })
+
+  function handleNameChange(value: string) {
+    setBusinessName(value)
+    if (!codeEdited) setCode(inviteCodeFromName(value))
+    setErrors((e) => ({ ...e, name: undefined, form: undefined }))
+  }
+
+  function handleCodeChange(value: string) {
+    const next = value.toUpperCase()
+    setCode(next)
+    // Emptied by hand: go back to following the name.
+    setCodeEdited(next !== '')
+    setErrors((e) => ({ ...e, code: undefined, form: undefined }))
+  }
+
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault()
+    if (create.isPending) return
+
+    const name = businessName.trim()
+    const next: FormErrors = {}
+    if (!name) next.name = 'Enter a business name.'
+    else if (name.length > NAME_MAX) {
+      next.name = `Use at most ${NAME_MAX} characters.`
+    }
+    if (!INVITE_CODE_FORMAT.test(code)) {
+      next.code = 'Use 4–20 characters: A–Z, 0–9 and "-".'
+    }
+    setErrors(next)
+    if (next.name || next.code) return
+
+    create.mutate({ name, code })
+  }
+
+  const nameId = `business-name-${ownerId}`
+  const codeId = `business-code-${ownerId}`
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape' && !create.isPending) onCancel()
+      }}
+      noValidate
+      className="flex flex-col gap-3 py-1"
+    >
+      <p className="m-0 text-sm font-bold">New business for {ownerName}</p>
+      <div className="flex flex-wrap items-start gap-3">
+        <div className="flex min-w-56 flex-1 flex-col gap-1.5">
+          <Label htmlFor={nameId}>Business name</Label>
+          <Input
+            id={nameId}
+            autoFocus
+            autoComplete="off"
+            maxLength={NAME_MAX}
+            value={businessName}
+            onChange={(e) => handleNameChange(e.target.value)}
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? `${nameId}-error` : undefined}
+          />
+          {errors.name && (
+            <span
+              id={`${nameId}-error`}
+              role="alert"
+              className="text-sm text-[#ff8a7e]"
+            >
+              {errors.name}
+            </span>
+          )}
+        </div>
+        <div className="flex w-56 flex-col gap-1.5">
+          <Label htmlFor={codeId}>Invite code</Label>
+          <Input
+            id={codeId}
+            autoComplete="off"
+            spellCheck={false}
+            maxLength={INVITE_CODE_MAX}
+            value={code}
+            onChange={(e) => handleCodeChange(e.target.value)}
+            aria-invalid={!!errors.code}
+            aria-describedby={errors.code ? `${codeId}-error` : undefined}
+            className="font-mono uppercase"
+          />
+          {errors.code && (
+            <span
+              id={`${codeId}-error`}
+              role="alert"
+              className="text-sm text-[#ff8a7e]"
+            >
+              {errors.code}
+            </span>
+          )}
+        </div>
+        <div className="flex gap-2 pt-6">
+          <Button type="submit" disabled={create.isPending}>
+            {create.isPending ? 'Creating…' : 'Create business'}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={create.isPending}
+          >
+            Cancel
+          </Button>
+        </div>
+      </div>
+      {errors.form && (
+        <p role="alert" className="m-0 text-sm text-[#ff8a7e]">
+          {errors.form}
+        </p>
+      )}
+    </form>
+  )
+}
+
+/** What admin_create_business returns. */
+interface CreatedRow {
+  business_id?: string | number
+  business_name?: string
+  invite_code?: string
 }
 
 export { UsersList }
