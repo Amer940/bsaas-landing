@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import {
+  useMutation,
+  useMutationState,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
+import { Check, RotateCcw } from 'lucide-react'
 import {
   ScreenshotStrip,
   useScreenshotUrls,
@@ -97,10 +103,104 @@ function humanize(value: string) {
 type FeedbackData = { rows: Feedback[]; total: number }
 
 const FEEDBACK_KEY = ['feedback']
+const SET_RESOLVED_KEY = ['feedback', 'set_resolved']
+
+interface StatusChange {
+  id: Feedback['id']
+  resolved: boolean
+  /** When it was resolved, set once so the screen and the DB agree. */
+  resolvedAt: string | null
+}
+
+/**
+ * Marks feedback resolved or new again. The card changes at once and goes
+ * back if the DB says no; the list is refetched when the last change is in.
+ */
+function useSetResolved(onError: (message: string) => void) {
+  const queryClient = useQueryClient()
+
+  function patch(
+    id: Feedback['id'],
+    values: Pick<Feedback, 'status' | 'resolved_at'>,
+  ) {
+    queryClient.setQueryData<FeedbackData>(
+      FEEDBACK_KEY,
+      (old) =>
+        old && {
+          ...old,
+          rows: old.rows.map((row) =>
+            row.id === id ? { ...row, ...values } : row,
+          ),
+        },
+    )
+  }
+
+  return useMutation({
+    mutationKey: SET_RESOLVED_KEY,
+    mutationFn: async ({ id, resolved, resolvedAt }: StatusChange) => {
+      // Only these two columns: admins can't update anything else.
+      const { data, error } = await supabase
+        .from('feedback')
+        .update({
+          status: resolved ? 'resolved' : 'new',
+          resolved_at: resolvedAt,
+        })
+        .eq('id', id)
+        .select('id')
+      if (error) throw error
+      // RLS skips rows it won't let you change instead of failing.
+      if (data.length === 0) throw new Error('Nothing was updated.')
+    },
+    onMutate: async ({ id, resolved, resolvedAt }) => {
+      await queryClient.cancelQueries({ queryKey: FEEDBACK_KEY, exact: true })
+      const previous = queryClient
+        .getQueryData<FeedbackData>(FEEDBACK_KEY)
+        ?.rows.find((row) => row.id === id)
+      patch(id, {
+        status: resolved ? 'resolved' : 'new',
+        resolved_at: resolvedAt,
+      })
+      return { previous }
+    },
+    onError: (error, { id }, context) => {
+      if (context?.previous) {
+        const { status, resolved_at } = context.previous
+        patch(id, { status, resolved_at })
+      }
+      onError(error.message)
+    },
+    onSettled: () => {
+      // Exact key: the screenshot links under ['feedback', …] stay as they are.
+      if (queryClient.isMutating({ mutationKey: SET_RESOLVED_KEY }) === 1) {
+        return queryClient.invalidateQueries({
+          queryKey: FEEDBACK_KEY,
+          exact: true,
+        })
+      }
+    },
+  })
+}
 
 function FeedbackList() {
   const [status, setStatus] = useState<StatusFilter>('all')
   const [type, setType] = useState<string>('all')
+  const [statusError, setStatusError] = useState<string | null>(null)
+
+  const setResolved = useSetResolved(setStatusError)
+  const saving = useMutationState({
+    filters: { mutationKey: SET_RESOLVED_KEY, status: 'pending' },
+    select: (mutation) => (mutation.state.variables as StatusChange).id,
+  })
+
+  function toggle(entry: Feedback) {
+    const resolved = !isResolved(entry)
+    setStatusError(null)
+    setResolved.mutate({
+      id: entry.id,
+      resolved,
+      resolvedAt: resolved ? new Date().toISOString() : null,
+    })
+  }
 
   const feedback = useQuery({
     queryKey: FEEDBACK_KEY,
@@ -201,6 +301,13 @@ function FeedbackList() {
         )}
       </div>
 
+      {/* Up here, not on the card: under a filter the card may be gone. */}
+      {statusError && (
+        <p role="alert" className="m-0 text-sm text-[#ff8a7e]">
+          Couldn't update the feedback: {statusError}
+        </p>
+      )}
+
       {shown.length === 0 ? (
         <p className="m-0 text-sm text-muted-foreground">
           {filtered ? 'No feedback matches these filters.' : 'No feedback yet.'}
@@ -209,7 +316,12 @@ function FeedbackList() {
         <ul className="m-0 flex list-none flex-col gap-3 p-0">
           {shown.map((entry) => (
             <li key={entry.id}>
-              <FeedbackCard entry={entry} screenshotUrls={screenshotUrls} />
+              <FeedbackCard
+                entry={entry}
+                screenshotUrls={screenshotUrls}
+                saving={saving.includes(entry.id)}
+                onToggleResolved={() => toggle(entry)}
+              />
             </li>
           ))}
         </ul>
@@ -262,13 +374,21 @@ function FilterGroup<T extends string>({
   )
 }
 
+interface FeedbackCardProps {
+  entry: Feedback
+  screenshotUrls: ScreenshotUrls | undefined
+  /** A status change for this entry is on its way to the DB. */
+  saving: boolean
+  onToggleResolved: () => void
+}
+
 function FeedbackCard({
   entry,
   screenshotUrls,
-}: {
-  entry: Feedback
-  screenshotUrls: ScreenshotUrls | undefined
-}) {
+  saving,
+  onToggleResolved,
+}: FeedbackCardProps) {
+  const resolved = isResolved(entry)
   const paths = screenshotPaths(entry)
   const profile = one(entry.profile)
   const name = profileName(profile)
@@ -341,11 +461,20 @@ function FeedbackCard({
         {business && <span className="text-foreground/75">· {business}</span>}
       </p>
 
-      {details.length > 0 && (
-        <p className="m-0 text-xs text-muted-foreground">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <p className="m-0 min-w-0 flex-1 text-xs text-muted-foreground">
           {details.join(' · ')}
         </p>
-      )}
+        <Button
+          variant="outline"
+          className="h-8 px-3 text-sm"
+          onClick={onToggleResolved}
+          disabled={saving}
+        >
+          {resolved ? <RotateCcw /> : <Check />}
+          {resolved ? 'Reopen' : 'Mark resolved'}
+        </Button>
+      </div>
     </Card>
   )
 }
