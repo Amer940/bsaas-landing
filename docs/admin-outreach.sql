@@ -62,3 +62,16 @@ grant execute on function public.is_admin() to authenticated;
 insert into public.admins (user_id)
 select id from auth.users
 where email in ('rahmanovicbenjamin07@gmail.com', 'aamer.talo@gmail.com');
+
+-- Feedback access for admins
+create policy "admins read all feedback" on public.feedback
+  for select to authenticated using (public.is_admin());
+create policy "feedback-screenshots: admins read all" on storage.objects
+  for select to authenticated using (bucket_id = 'feedback-screenshots' and public.is_admin());
+grant update (status, resolved_at) on public.feedback to authenticated;
+create policy "admins update feedback status" on public.feedback
+  for update to authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "admins read all profiles" on public.profiles
+  for select to authenticated using (public.is_admin());
+create policy "admins read all businesses" on public.businesses
+  for select to authenticated using (public.is_admin());
