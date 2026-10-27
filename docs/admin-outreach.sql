@@ -76,19 +76,41 @@ create policy "admins read all profiles" on public.profiles
 create policy "admins read all businesses" on public.businesses
   for select to authenticated using (public.is_admin());
 
--- Admin: create business
---
--- public.admin_create_business(p_owner_id uuid, p_name text, p_code text)
---   returns business_id, business_name, invite_code
---
--- Used by /admin (Users tab, "Make business") to create a business owned by
--- an existing profile (p_owner_id), named p_name, with p_code as its invite
--- (referral) code. It must refuse callers who aren't admins (public.is_admin()).
--- Its error messages are shown to the admin as-is, e.g.
--- "Invite code X is already taken". After it succeeds, the owner has to sign
--- out and sign in again in the app to become the owner.
---
--- Status: already applied on DEV (Barber). Must be applied on PROD
--- (chairo-prod) before "Make business" works there.
---
--- TODO: add the function's SQL here.
+-- ===== Admin: create business for a user (applied on DEV and PROD) =====
+create or replace function public.admin_create_business(p_owner_id uuid, p_name text, p_code text)
+returns table (business_id uuid, business_name text, invite_code text)
+language plpgsql security definer set search_path = ''
+as $$
+#variable_conflict use_column
+declare
+  v_name text := nullif(btrim(coalesce(p_name, '')), '');
+  v_code text := public.normalize_shop_code(p_code);
+  v_id uuid;
+begin
+  if not public.is_admin() then
+    raise exception 'Only admins can create businesses' using errcode = '42501';
+  end if;
+  if v_name is null then
+    raise exception 'Business name is required' using errcode = '22023';
+  end if;
+  if char_length(v_name) > 80 then
+    raise exception 'Business name is too long (max 80 characters)' using errcode = '22023';
+  end if;
+  if v_code !~ '^[A-Z0-9-]{4,20}$' then
+    raise exception 'Invite code must be 4-20 characters: letters, numbers or -' using errcode = '22023';
+  end if;
+  if not exists (select 1 from public.profiles p where p.id = p_owner_id) then
+    raise exception 'Profile not found' using errcode = '22023';
+  end if;
+  if exists (select 1 from public.businesses b where b.referral_code = v_code)
+     or exists (select 1 from public.friend_invites f where upper(f.code) = v_code) then
+    raise exception 'Invite code % is already taken', v_code using errcode = '23505';
+  end if;
+  insert into public.businesses (owner_id, name, referral_code)
+  values (p_owner_id, v_name, v_code) returning id into v_id;
+  update public.profiles set active_business_id = v_id where id = p_owner_id;
+  return query select v_id, v_name, v_code;
+end $$;
+
+revoke execute on function public.admin_create_business(uuid, text, text) from public, anon;
+grant execute on function public.admin_create_business(uuid, text, text) to authenticated;
