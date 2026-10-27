@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Session } from '@supabase/supabase-js'
 import { Logo } from '#/components/logo'
+import { OutreachContacts } from '#/components/admin/outreach-contacts'
 import { Button } from '#/components/ui/button'
 import {
   Card,
@@ -200,7 +201,9 @@ function Dashboard({ email }: { email: string }) {
           <SignOutButton />
         </div>
       </header>
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 py-8 md:px-6" />
+      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 py-8 md:px-6">
+        <OutreachContacts />
+      </main>
     </div>
   )
 }
