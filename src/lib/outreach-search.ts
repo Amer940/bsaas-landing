@@ -77,6 +77,26 @@ export function searchFilter(search: string): string | null {
   return filters.join(',')
 }
 
+const PROFILE_SEARCH_COLUMNS = [
+  'first_name',
+  'last_name',
+  'full_name',
+  'username',
+  'email',
+]
+
+/**
+ * The `.or()` filter for the admin Users search over public.profiles, or
+ * null for blank text. Same escaping as the contact search.
+ */
+export function profileSearchFilter(search: string): string | null {
+  const text = search.trim()
+  if (!text) return null
+  return PROFILE_SEARCH_COLUMNS.map((column) => ilikeFilter(column, text)).join(
+    ',',
+  )
+}
+
 /**
  * A Postgres regex (for PostgREST `imatch`, case-insensitive) matching a
  * name exactly, ignoring spaces around it and how many are between words:

@@ -5,6 +5,7 @@ import {
   instagramProfileUrl,
   normalizeInstagram,
   normalizePhone,
+  profileSearchFilter,
   sameNamePattern,
   searchFilter,
 } from './outreach-search'
@@ -89,6 +90,30 @@ describe('searchFilter', () => {
     expect(searchFilter('https://www.instagram.com/Chairo/?hl=en')).toContain(
       'instagram_norm.ilike."%chairo%"',
     )
+  })
+})
+
+describe('profileSearchFilter', () => {
+  test('is null for blank text', () => {
+    expect(profileSearchFilter('  ')).toBeNull()
+  })
+
+  test('matches every profile name column and email, trimmed', () => {
+    expect(profileSearchFilter(' ana ')).toBe(
+      [
+        'first_name.ilike."%ana%"',
+        'last_name.ilike."%ana%"',
+        'full_name.ilike."%ana%"',
+        'username.ilike."%ana%"',
+        'email.ilike."%ana%"',
+      ].join(','),
+    )
+  })
+
+  test('escapes PostgREST syntax and LIKE wildcards', () => {
+    const filter = profileSearchFilter('a,b) or (x"%_')
+    expect(filter).toContain('first_name.ilike."%a,b) or (x\\"\\\\%\\\\_%"')
+    expect(filter?.split('",').length).toBe(5)
   })
 })
 
