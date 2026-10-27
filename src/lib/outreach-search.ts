@@ -77,6 +77,19 @@ export function searchFilter(search: string): string | null {
   return filters.join(',')
 }
 
+/**
+ * A Postgres regex (for PostgREST `imatch`, case-insensitive) matching a
+ * name exactly, ignoring spaces around it and how many are between words:
+ * "Ana  Studio " finds "ana studio". Regex characters in the name match
+ * literally. Null for a blank name.
+ */
+export function sameNamePattern(name: string): string | null {
+  const words = name.trim().split(/\s+/).filter(Boolean)
+  if (words.length === 0) return null
+  const escaped = words.map((w) => w.replace(/[\\^$.|?*+()[\]{}]/g, '\\$&'))
+  return `^\\s*${escaped.join('\\s+')}\\s*$`
+}
+
 /** Which form field a search text most likely belongs in. */
 export function guessField(search: string): ContactField {
   const text = search.trim()

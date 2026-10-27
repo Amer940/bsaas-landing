@@ -2,6 +2,7 @@ import { useImperativeHandle, useRef, useState } from 'react'
 import type { ComponentProps, FormEvent, KeyboardEvent, Ref } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
+import { SameNameWarning } from '#/components/admin/same-name-warning'
 import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
 import { Label } from '#/components/ui/label'
@@ -20,6 +21,10 @@ const EMPTY: Values = {
   notes: '',
 }
 
+// The DB's outreach_has_contact check enforces the same rule.
+const CONTACT_REQUIRED =
+  'Add an Instagram, email or phone number. A name alone is not enough.'
+
 const text = z.string().trim()
 
 const schema = z
@@ -30,8 +35,8 @@ const schema = z
     phone: text,
     notes: text,
   })
-  .refine((v) => v.name || v.email || v.instagram || v.phone, {
-    message: 'Fill in at least one of name, email, Instagram or phone.',
+  .refine((v) => v.email || v.instagram || v.phone, {
+    message: CONTACT_REQUIRED,
   })
 
 /** Which field each unique index guards, for Postgres duplicate errors. */
@@ -57,6 +62,16 @@ function duplicateField(error: unknown) {
     if (haystack.includes(index)) return field
   }
   return null
+}
+
+/** Whether the DB turned the row down for having no contact method (23514). */
+function isMissingContact(error: unknown) {
+  if (typeof error !== 'object' || error === null) return false
+  const { code, message, details } = error as Record<string, unknown>
+  return (
+    code === '23514' &&
+    `${String(message)} ${String(details)}`.includes('outreach_has_contact')
+  )
 }
 
 interface NewOutreachFormHandle {
@@ -97,13 +112,15 @@ function NewOutreachForm({ ref }: { ref?: Ref<NewOutreachFormHandle> }) {
     },
     onError: (error) => {
       const field = duplicateField(error)
-      setErrors(
-        field
-          ? {
-              [field]: `A contact with this ${DUPLICATE_LABEL[field]} already exists.`,
-            }
-          : { form: `Couldn't add the contact: ${error.message}` },
-      )
+      if (field) {
+        setErrors({
+          [field]: `A contact with this ${DUPLICATE_LABEL[field]} already exists.`,
+        })
+      } else if (isMissingContact(error)) {
+        setErrors({ form: CONTACT_REQUIRED })
+      } else {
+        setErrors({ form: `Couldn't add the contact: ${error.message}` })
+      }
     },
   })
 
@@ -191,6 +208,8 @@ function NewOutreachForm({ ref }: { ref?: Ref<NewOutreachFormHandle> }) {
             onChange={update}
           />
         </div>
+
+        <SameNameWarning name={values.name} />
 
         <div className="flex flex-col gap-2">
           <Label htmlFor="outreach-notes">Notes</Label>

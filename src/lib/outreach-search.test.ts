@@ -5,6 +5,7 @@ import {
   instagramProfileUrl,
   normalizeInstagram,
   normalizePhone,
+  sameNamePattern,
   searchFilter,
 } from './outreach-search'
 
@@ -88,6 +89,32 @@ describe('searchFilter', () => {
     expect(searchFilter('https://www.instagram.com/Chairo/?hl=en')).toContain(
       'instagram_norm.ilike."%chairo%"',
     )
+  })
+})
+
+describe('sameNamePattern', () => {
+  // Postgres ~* and JS RegExp agree on everything these patterns use.
+  const matches = (name: string, stored: string) =>
+    new RegExp(sameNamePattern(name) ?? '(?!)', 'i').test(stored)
+
+  test('ignores case, outer spaces and repeated inner spaces', () => {
+    expect(matches(' Ana  Studio ', 'ana studio')).toBe(true)
+    expect(matches('ana studio', '  ANA   Studio')).toBe(true)
+  })
+
+  test('matches the whole name only', () => {
+    expect(matches('Ana', 'Ana Studio')).toBe(false)
+    expect(matches('Ana Studio', 'Ana')).toBe(false)
+  })
+
+  test('treats regex characters literally', () => {
+    expect(sameNamePattern('A.B (1)+')).toBe('^\\s*A\\.B\\s+\\(1\\)\\+\\s*$')
+    expect(matches('A.B', 'AxB')).toBe(false)
+    expect(matches('Cuts & Co.', 'cuts & co.')).toBe(true)
+  })
+
+  test('is null for a blank name', () => {
+    expect(sameNamePattern('   ')).toBeNull()
   })
 })
 

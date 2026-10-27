@@ -22,9 +22,10 @@ create table public.outreach_contacts (
       '^(@|https?://(www\.)?instagram\.com/)', '', 'i'), '[/?].*$', '')), '')
   ) stored,
   phone_norm text generated always as (nullif(regexp_replace(phone, '\D', '', 'g'), '')) stored,
+  -- A name alone is not enough: at least one way to reach the shop.
   constraint outreach_has_contact check (
-    coalesce(nullif(trim(name), ''), nullif(trim(email), ''),
-             nullif(trim(instagram), ''), nullif(trim(phone), '')) is not null
+    coalesce(nullif(trim(email), ''), nullif(trim(instagram), ''),
+             nullif(trim(phone), '')) is not null
   )
 );
 
