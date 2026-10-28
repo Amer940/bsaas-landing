@@ -42,9 +42,12 @@ export const Route = createFileRoute('/admin')({
 function AdminPage() {
   // undefined until Supabase reports the first auth state.
   const [session, setSession] = useState<Session | null | undefined>()
+  // Shown on the sign-in form after a non-admin account is signed out.
+  const [notice, setNotice] = useState<string | null>(null)
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((_event, next) => {
+    const { data } = supabase.auth.onAuthStateChange((event, next) => {
+      if (event === 'SIGNED_IN') setNotice(null)
       setSession(next)
     })
     return () => data.subscription.unsubscribe()
@@ -64,10 +67,11 @@ function AdminPage() {
         <AdminGate
           userId={session.user.id}
           email={session.user.email ?? session.user.id}
+          onNoAccess={setNotice}
         />
       ) : (
         <CenteredCard>
-          <SignInForm />
+          <SignInForm initialError={notice} />
         </CenteredCard>
       )}
     </div>
@@ -98,7 +102,17 @@ function Loading() {
  * Asks the database whether the signed-in user is an admin. This only picks
  * what to show; the data itself must be guarded by RLS.
  */
-function AdminGate({ userId, email }: { userId: string; email: string }) {
+function AdminGate({
+  userId,
+  email,
+  onNoAccess,
+}: {
+  userId: string
+  email: string
+  onNoAccess: (message: string) => void
+}) {
+  const queryClient = useQueryClient()
+  const [signOutError, setSignOutError] = useState<string | null>(null)
   const isAdmin = useQuery({
     // Keyed by user, so a different account never sees a cached answer.
     queryKey: ['is_admin', userId],
@@ -110,7 +124,46 @@ function AdminGate({ userId, email }: { userId: string; email: string }) {
     staleTime: Infinity,
   })
 
-  if (isAdmin.isPending) {
+  const noAccess = isAdmin.data === false
+
+  // A non-admin account is signed out here and sent back to the form.
+  useEffect(() => {
+    if (!noAccess) return
+    let cancelled = false
+    onNoAccess('This account has no admin access.')
+    // Only this browser: keep the same account signed in on the app.
+    supabase.auth.signOut({ scope: 'local' }).then(({ error }) => {
+      if (cancelled) return
+      if (error) {
+        setSignOutError(error.message)
+        return
+      }
+      queryClient.clear()
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [noAccess, onNoAccess, queryClient])
+
+  if (noAccess && signOutError) {
+    return (
+      <CenteredCard>
+        <CardHeader>
+          <CardTitle className="text-xl">
+            This account has no admin access.
+          </CardTitle>
+          <CardDescription>
+            Signing out failed: {signOutError}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <SignOutButton />
+        </CardContent>
+      </CenteredCard>
+    )
+  }
+
+  if (isAdmin.isPending || noAccess) {
     return (
       <CenteredCard>
         <Loading />
@@ -132,22 +185,6 @@ function AdminGate({ userId, email }: { userId: string; email: string }) {
           >
             {isAdmin.isFetching ? 'Retrying…' : 'Try again'}
           </Button>
-          <SignOutButton />
-        </CardContent>
-      </CenteredCard>
-    )
-  }
-
-  if (!isAdmin.data) {
-    return (
-      <CenteredCard>
-        <CardHeader>
-          <CardTitle className="text-xl">You don't have access</CardTitle>
-          <CardDescription>
-            Signed in as <span className="text-foreground">{email}</span>
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
           <SignOutButton />
         </CardContent>
       </CenteredCard>
@@ -254,11 +291,11 @@ function SignOutButton() {
   )
 }
 
-function SignInForm() {
+function SignInForm({ initialError }: { initialError: string | null }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState(initialError)
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
