@@ -26,8 +26,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '#/components/ui/tabs'
 import { supabase } from '#/lib/supabase'
 
 // Internal admin page, English only, outside the {-$locale} routes.
-// The shared Supabase client doesn't read sessions from the URL (see
-// lib/supabase.ts), so the login link's tokens are picked up here by hand.
 
 /** Tabs other than Outreach, which has no ?tab so the default URL is /admin. */
 const OTHER_TABS = ['feedback', 'users'] as const
@@ -41,80 +39,13 @@ export const Route = createFileRoute('/admin')({
   component: AdminPage,
 })
 
-/** What a login link can put in the query (the hash is all login data). */
-const LOGIN_PARAMS = [
-  'token_hash',
-  'type',
-  'code',
-  'error',
-  'error_code',
-  'error_description',
-]
-
-type Message = { kind: 'error' | 'info'; text: string }
-
-/**
- * Signs in with whatever the login link left in the address bar: a session
- * in the hash, or a token_hash in the query. Returns an error message, if any.
- */
-async function consumeLoginLink(): Promise<string | null> {
-  const hash = new URLSearchParams(window.location.hash.slice(1))
-  const query = new URLSearchParams(window.location.search)
-  if (!hash.toString() && !LOGIN_PARAMS.some((key) => query.has(key))) {
-    return null
-  }
-
-  // Wipe the tokens before using them, so they don't linger in history.
-  // Anything else in the query (like ?tab) stays.
-  const rest = new URLSearchParams(query)
-  for (const key of LOGIN_PARAMS) rest.delete(key)
-  const kept = rest.toString()
-  window.history.replaceState(
-    window.history.state,
-    '',
-    window.location.pathname + (kept ? `?${kept}` : ''),
-  )
-
-  // Not the error text from the URL: anyone can put words there, and it
-  // would read as a message from this page.
-  if (hash.has('error') || query.has('error')) {
-    return 'That login link is invalid or has expired. Request a new one.'
-  }
-
-  const accessToken = hash.get('access_token')
-  const refreshToken = hash.get('refresh_token')
-  if (accessToken && refreshToken) {
-    const { error } = await supabase.auth.setSession({
-      access_token: accessToken,
-      refresh_token: refreshToken,
-    })
-    return error?.message ?? null
-  }
-
-  const tokenHash = query.get('token_hash')
-  if (tokenHash) {
-    const { error } = await supabase.auth.verifyOtp({
-      token_hash: tokenHash,
-      // 'email' covers login links (it replaced the older 'magiclink').
-      type: 'email',
-    })
-    return error?.message ?? null
-  }
-
-  return null
-}
-
 function AdminPage() {
   // undefined until Supabase reports the first auth state.
   const [session, setSession] = useState<Session | null | undefined>()
-  const [linkError, setLinkError] = useState<string | null>(null)
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((_event, next) => {
       setSession(next)
-    })
-    consumeLoginLink().then((error) => {
-      if (error) setLinkError(error)
     })
     return () => data.subscription.unsubscribe()
   }, [])
@@ -136,7 +67,7 @@ function AdminPage() {
         />
       ) : (
         <CenteredCard>
-          <SignInForm initialError={linkError} />
+          <SignInForm />
         </CenteredCard>
       )}
     </div>
@@ -323,58 +254,29 @@ function SignOutButton() {
   )
 }
 
-function SignInForm({ initialError }: { initialError: string | null }) {
+function SignInForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [busy, setBusy] = useState<'password' | 'link' | null>(null)
-  const [message, setMessage] = useState<Message | null>(null)
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  // A bad login link is reported once its check finishes.
-  useEffect(() => {
-    if (initialError) setMessage({ kind: 'error', text: initialError })
-  }, [initialError])
-
-  async function handlePasswordSignIn(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault()
     if (busy) return
     if (!email.trim() || !password) {
-      setMessage({ kind: 'error', text: 'Enter your email and password.' })
+      setError('Enter your email and password.')
       return
     }
 
-    setBusy('password')
-    setMessage(null)
-    const { error } = await supabase.auth.signInWithPassword({
+    setBusy(true)
+    setError(null)
+    const { error: signInError } = await supabase.auth.signInWithPassword({
       email: email.trim(),
       password,
     })
-    setBusy(null)
+    setBusy(false)
     // On success onAuthStateChange swaps this form out.
-    if (error) setMessage({ kind: 'error', text: error.message })
-  }
-
-  async function handleSendLink() {
-    if (busy) return
-    if (!email.trim()) {
-      setMessage({ kind: 'error', text: 'Enter your email first.' })
-      return
-    }
-
-    setBusy('link')
-    setMessage(null)
-    const { error } = await supabase.auth.signInWithOtp({
-      email: email.trim(),
-      options: {
-        emailRedirectTo: window.location.origin + '/admin',
-        shouldCreateUser: false,
-      },
-    })
-    setBusy(null)
-    setMessage(
-      error
-        ? { kind: 'error', text: error.message }
-        : { kind: 'info', text: 'Check your email for a login link.' },
-    )
+    if (signInError) setError(signInError.message)
   }
 
   return (
@@ -387,7 +289,7 @@ function SignInForm({ initialError }: { initialError: string | null }) {
       </CardHeader>
       <CardContent>
         <form
-          onSubmit={handlePasswordSignIn}
+          onSubmit={handleSubmit}
           noValidate
           className="flex flex-col gap-4"
         >
@@ -413,30 +315,14 @@ function SignInForm({ initialError }: { initialError: string | null }) {
             />
           </div>
 
-          {message && (
-            <p
-              role={message.kind === 'error' ? 'alert' : 'status'}
-              className={
-                message.kind === 'error'
-                  ? 'm-0 text-sm text-[#ff8a7e]'
-                  : 'm-0 text-sm text-foreground/75'
-              }
-            >
-              {message.text}
+          {error && (
+            <p role="alert" className="m-0 text-sm text-[#ff8a7e]">
+              {error}
             </p>
           )}
 
-          <Button type="submit" className="mt-2 w-full" disabled={!!busy}>
-            {busy === 'password' ? 'Signing in…' : 'Sign in'}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full"
-            onClick={handleSendLink}
-            disabled={!!busy}
-          >
-            {busy === 'link' ? 'Sending…' : 'Email me a login link'}
+          <Button type="submit" className="mt-2 w-full" disabled={busy}>
+            {busy ? 'Signing in…' : 'Sign in'}
           </Button>
         </form>
       </CardContent>
