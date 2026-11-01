@@ -163,7 +163,10 @@ export const privacyContent: LocalizedLegalDoc = {
             'Cloudflare',
             'Hosting web stranice i prosljeđivanje emailova poslanih na support@ i privacy@',
           ],
-          ['Google (Gmail)', 'Prijem emailova koje nam pošaljete i naših internih upozorenja'],
+          [
+            'Google (Gmail)',
+            'Prijem emailova koje nam pošaljete i naših internih upozorenja',
+          ],
           [
             'Lemon Squeezy',
             'Naplata pretplate vlasnicima salona. Podatke o kartici obrađuje Lemon Squeezy; mi ih ne vidimo.',
@@ -466,7 +469,10 @@ export const privacyContent: LocalizedLegalDoc = {
             'Cloudflare',
             'Hosting the website and forwarding email sent to support@ and privacy@',
           ],
-          ['Google (Gmail)', 'Receiving the emails you send us and our internal alerts'],
+          [
+            'Google (Gmail)',
+            'Receiving the emails you send us and our internal alerts',
+          ],
           [
             'Lemon Squeezy',
             'Charging shop owners a subscription. Lemon Squeezy handles card details; we never see them.',
