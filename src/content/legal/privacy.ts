@@ -3,7 +3,7 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const privacyContent: LocalizedLegalDoc = {
   bs: {
     title: 'Politika privatnosti',
-    updated: 'Posljednja izmjena: 19. oktobar 2026.',
+    updated: 'Posljednja izmjena: 1. novembar 2026.',
     blocks: [
       {
         type: 'p',
@@ -118,8 +118,8 @@ export const privacyContent: LocalizedLegalDoc = {
           ['Zakazivanje termina i rad salona', 'Izvršenje ugovora'],
           ['Obavijesti u aplikaciji o terminima', 'Izvršenje ugovora'],
           [
-            'Push obavijesti o vašim terminima (novi, pomjereni i otkazani termini, podsjetnici prije termina)',
-            'Izvršenje ugovora. Isključujete ih u postavkama telefona, ili po grupama u aplikaciji.',
+            'Push obavijesti o vašim terminima i računu (novi, pomjereni i otkazani termini, podsjetnici prije termina, ponude i izmjene stalnih termina i odgovori na njih, propušteni termini, uklanjanje iz tima, zatvaranje salona)',
+            'Izvršenje ugovora. Postavke obavijesti u aplikaciji isključuju grupe poruka, ali neke poruke stižu i tada jer traže odgovor ili se tiču termina ili računa: otkazani termini, završetak stalnog termina, predložena izmjena termina, propušteni termini, uklanjanje iz tima i zatvaranje salona. Push obavijesti uvijek možete potpuno isključiti u postavkama telefona.',
           ],
           ['Zaštita od zloupotrebe i pogađanja lozinke', 'Legitimni interes'],
           ['Rješavanje prijavljenih grešaka', 'Legitimni interes'],
@@ -155,7 +155,10 @@ export const privacyContent: LocalizedLegalDoc = {
             'Supabase',
             'Baza podataka, prijava i pohrana datoteka. Podaci su smješteni u Evropskoj uniji.',
           ],
-          ['Resend', 'Slanje emailova za potvrdu računa i resetovanje lozinke'],
+          [
+            'Resend',
+            'Slanje emailova u vezi s računom (potvrda računa, resetovanje lozinke, obavijesti o promjeni emaila ili lozinke) i emaila dobrodošlice osobama koje se prijave za rani pristup. Šalje i interna upozorenja: na privacy@chairo.app kada podnesete zahtjev u vezi s privatnošću (vrsta zahtjeva, poruka, datum podnošenja, email vašeg računa i ID korisnika) i na support@chairo.app kada iz aplikacije pošaljete prijavu greške ili povratnu informaciju (tekst i vrsta prijave, ID korisnika, uloga, ID salona, verzija aplikacije, operativni sistem, model telefona, jezik aplikacije i ekran s kojeg je prijava poslana). Email vašeg računa je u tom upozorenju samo ako ste dozvolili da vas kontaktiramo. Snimci ekrana se ne šalju emailom; upozorenje navodi samo njihov broj.',
+          ],
           [
             'Cloudflare',
             'Hosting web stranice i prosljeđivanje emailova poslanih na support@ i privacy@',
@@ -294,7 +297,7 @@ export const privacyContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Privacy policy',
-    updated: 'Last updated: 19 October 2026',
+    updated: 'Last updated: 1 November 2026',
     blocks: [
       {
         type: 'p',
@@ -418,8 +421,8 @@ export const privacyContent: LocalizedLegalDoc = {
             'Performance of a contract',
           ],
           [
-            'Push notifications about your appointments (new, moved and cancelled bookings, reminders before them)',
-            "Performance of a contract. Turn them off in your phone's settings, or by group in the app.",
+            'Push notifications about your appointments and account (new, moved and cancelled bookings, reminders before them, repeat appointment offers and changes and the answers to them, missed appointments, removal from a team, a shop closing)',
+            "Performance of a contract. Notification settings in the app turn groups of messages off, but some messages are still sent because they need an answer or affect an appointment or the account: cancelled appointments, a repeat appointment ending, a proposed appointment change, missed appointments, removal from a team, and a shop closing. Push can always be turned off entirely in your phone's settings.",
           ],
           ['Preventing abuse and password guessing', 'Legitimate interest'],
           ['Fixing reported problems', 'Legitimate interest'],
@@ -455,7 +458,10 @@ export const privacyContent: LocalizedLegalDoc = {
             'Supabase',
             'Database, sign-in and file storage. Data is stored in the European Union.',
           ],
-          ['Resend', 'Sending account confirmation and password reset emails'],
+          [
+            'Resend',
+            'Sending account emails (account confirmation, password reset, notices of an email or password change) and the welcome email to people who sign up for early access. It also sends internal alerts: to privacy@chairo.app when you file a privacy request (request type, message, date filed, your account email and user ID), and to support@chairo.app when you send a bug report or feedback from the app (report text and type, user ID, role, shop ID, app version, operating system, phone model, app language, and the screen it was sent from). Your account email is in that alert only if you allowed us to contact you. Screenshots are not sent by email; the alert only says how many there are.',
+          ],
           [
             'Cloudflare',
             'Hosting the website and forwarding email sent to support@ and privacy@',
