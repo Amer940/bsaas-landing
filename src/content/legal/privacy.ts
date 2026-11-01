@@ -157,7 +157,7 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           [
             'Resend',
-            'Slanje emailova u vezi s računom i emaila dobrodošlice za rani pristup, te internih upozorenja nama kada pošaljete zahtjev u vezi s privatnošću ili prijavu greške. Upozorenje sadrži tekst i podatke o zahtjevu ili prijavi, ali ne i snimke ekrana. Email vašeg računa je u upozorenju o prijavi samo ako ste dozvolili da vas kontaktiramo.',
+            'Slanje emailova u vezi s računom i emaila dobrodošlice za rani pristup, te internih upozorenja nama. Upozorenje o prijavi greške samo javlja da je stigla nova prijava i njenu vrstu, bez ličnih podataka. Upozorenje o zahtjevu u vezi s privatnošću sadrži tekst zahtjeva, email vašeg računa i ID korisnika.',
           ],
           [
             'Cloudflare',
@@ -239,8 +239,8 @@ export const privacyContent: LocalizedLegalDoc = {
             'Dok salon koristi Chairo, ili dok ne zatražite brisanje',
           ],
           [
-            'Emailovi poslani na support@ i privacy@, i interna upozorenja',
-            'Čuvaju se u našem email sandučetu. Brišemo ih na vaš zahtjev. Upozorenja o vašim zahtjevima i prijavama brišemo i kada obrišete račun.',
+            'Emailovi poslani na support@ i privacy@, i upozorenja o zahtjevima u vezi s privatnošću',
+            'Čuvaju se u našem email sandučetu. Brišemo ih na vaš zahtjev. Upozorenja o vašim zahtjevima brišemo i kada obrišete račun.',
           ],
         ],
       },
@@ -463,7 +463,7 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           [
             'Resend',
-            'Sending account emails and the early access welcome email, plus internal alerts to us when you send a privacy request or a bug report. An alert contains the text and details of the request or report, but not screenshots. Your account email is in a bug report alert only if you allowed us to contact you.',
+            'Sending account emails and the early access welcome email, plus internal alerts to us. A bug report alert only says that a new report arrived and its type, with no personal data. A privacy request alert contains the request text, your account email and user ID.',
           ],
           [
             'Cloudflare',
@@ -545,8 +545,8 @@ export const privacyContent: LocalizedLegalDoc = {
             'While the shop uses Chairo, or until you ask us to delete them',
           ],
           [
-            'Emails sent to support@ and privacy@, and internal alerts',
-            'Kept in our mailbox. We delete them on request. Alerts about your requests and reports are also deleted when you delete your account.',
+            'Emails sent to support@ and privacy@, and privacy request alerts',
+            'Kept in our mailbox. We delete them on request. Alerts about your requests are also deleted when you delete your account.',
           ],
         ],
       },
