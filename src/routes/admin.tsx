@@ -9,6 +9,7 @@ import { NewOutreachForm } from '#/components/admin/new-outreach-form'
 import type { NewOutreachFormHandle } from '#/components/admin/new-outreach-form'
 import { OutreachContacts } from '#/components/admin/outreach-contacts'
 import { OutreachSearch } from '#/components/admin/outreach-search'
+import { PrivacyRequestsList } from '#/components/admin/privacy-requests-list'
 import { UsersList } from '#/components/admin/users-list'
 import { useDebouncedValue } from '#/hooks/use-debounced-value'
 import { guessField } from '#/lib/outreach-search'
@@ -28,11 +29,11 @@ import { supabase } from '#/lib/supabase'
 // Internal admin page, English only, outside the {-$locale} routes.
 
 /** Tabs other than Outreach, which has no ?tab so the default URL is /admin. */
-const OTHER_TABS = ['feedback', 'users'] as const
+const OTHER_TABS = ['feedback', 'privacy', 'users'] as const
 type OtherTab = (typeof OTHER_TABS)[number]
 
 export const Route = createFileRoute('/admin')({
-  // ?tab=feedback or ?tab=users; anything else means Outreach.
+  // ?tab=feedback, ?tab=privacy or ?tab=users; anything else means Outreach.
   validateSearch: (search: Record<string, unknown>): { tab?: OtherTab } => ({
     tab: OTHER_TABS.find((tab) => tab === search.tab),
   }),
@@ -152,9 +153,7 @@ function AdminGate({
           <CardTitle className="text-xl">
             This account has no admin access.
           </CardTitle>
-          <CardDescription>
-            Signing out failed: {signOutError}
-          </CardDescription>
+          <CardDescription>Signing out failed: {signOutError}</CardDescription>
         </CardHeader>
         <CardContent>
           <SignOutButton />
@@ -218,6 +217,7 @@ function Dashboard({ email }: { email: string }) {
           <TabsList aria-label="Admin sections">
             <TabsTrigger value="outreach">Outreach</TabsTrigger>
             <TabsTrigger value="feedback">Feedback</TabsTrigger>
+            <TabsTrigger value="privacy">Privacy</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
           </TabsList>
           <span className="ml-auto min-w-0 truncate text-sm text-muted-foreground">
@@ -238,6 +238,11 @@ function Dashboard({ email }: { email: string }) {
       <TabsContent value="feedback">
         <main className={mainClass}>
           <FeedbackList />
+        </main>
+      </TabsContent>
+      <TabsContent value="privacy">
+        <main className={mainClass}>
+          <PrivacyRequestsList />
         </main>
       </TabsContent>
       <TabsContent value="users">
