@@ -119,7 +119,7 @@ export const privacyContent: LocalizedLegalDoc = {
           ['Obavijesti u aplikaciji o terminima', 'Izvršenje ugovora'],
           [
             'Push obavijesti o vašim terminima i računu (novi, pomjereni i otkazani termini, podsjetnici prije termina, ponude i izmjene stalnih termina i odgovori na njih, propušteni termini, uklanjanje iz tima, zatvaranje salona)',
-            'Izvršenje ugovora. Postavke obavijesti u aplikaciji isključuju grupe poruka, ali neke poruke stižu i tada jer traže odgovor ili se tiču termina ili računa: otkazani termini, završetak stalnog termina, predložena izmjena termina, propušteni termini, uklanjanje iz tima i zatvaranje salona. Push obavijesti uvijek možete potpuno isključiti u postavkama telefona.',
+            'Izvršenje ugovora. Postavke obavijesti u aplikaciji isključuju grupe poruka, ali neke poruke stižu i tada jer traže odgovor ili se tiču termina ili računa: otkazani termini i završetak stalnog termina (za klijente), predložena izmjena termina, propušteni termini, uklanjanje iz tima i zatvaranje salona. Push obavijesti uvijek možete potpuno isključiti u postavkama telefona.',
           ],
           ['Zaštita od zloupotrebe i pogađanja lozinke', 'Legitimni interes'],
           ['Rješavanje prijavljenih grešaka', 'Legitimni interes'],
@@ -157,13 +157,13 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           [
             'Resend',
-            'Slanje emailova u vezi s računom (potvrda računa, resetovanje lozinke, obavijesti o promjeni emaila ili lozinke) i emaila dobrodošlice osobama koje se prijave za rani pristup. Šalje i interna upozorenja: na privacy@chairo.app kada podnesete zahtjev u vezi s privatnošću (vrsta zahtjeva, poruka, datum podnošenja, email vašeg računa i ID korisnika) i na support@chairo.app kada iz aplikacije pošaljete prijavu greške ili povratnu informaciju (tekst i vrsta prijave, ID korisnika, uloga, ID salona, verzija aplikacije, operativni sistem, model telefona, jezik aplikacije i ekran s kojeg je prijava poslana). Email vašeg računa je u tom upozorenju samo ako ste dozvolili da vas kontaktiramo. Snimci ekrana se ne šalju emailom; upozorenje navodi samo njihov broj.',
+            'Slanje emailova u vezi s računom i emaila dobrodošlice za rani pristup, te internih upozorenja nama kada pošaljete zahtjev u vezi s privatnošću ili prijavu greške. Upozorenje sadrži tekst i podatke o zahtjevu ili prijavi, ali ne i snimke ekrana. Email vašeg računa je u upozorenju o prijavi samo ako ste dozvolili da vas kontaktiramo.',
           ],
           [
             'Cloudflare',
             'Hosting web stranice i prosljeđivanje emailova poslanih na support@ i privacy@',
           ],
-          ['Google (Gmail)', 'Prijem emailova koje nam pošaljete'],
+          ['Google (Gmail)', 'Prijem emailova koje nam pošaljete i naših internih upozorenja'],
           [
             'Lemon Squeezy',
             'Naplata pretplate vlasnicima salona. Podatke o kartici obrađuje Lemon Squeezy; mi ih ne vidimo.',
@@ -236,8 +236,8 @@ export const privacyContent: LocalizedLegalDoc = {
             'Dok salon koristi Chairo, ili dok ne zatražite brisanje',
           ],
           [
-            'Emailovi poslani na support@ i privacy@',
-            'Čuvaju se u našem email sandučetu. Na vaš zahtjev ih brišemo.',
+            'Emailovi poslani na support@ i privacy@, i interna upozorenja',
+            'Čuvaju se u našem email sandučetu. Brišemo ih na vaš zahtjev. Upozorenja o vašim zahtjevima i prijavama brišemo i kada obrišete račun.',
           ],
         ],
       },
@@ -422,7 +422,7 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           [
             'Push notifications about your appointments and account (new, moved and cancelled bookings, reminders before them, repeat appointment offers and changes and the answers to them, missed appointments, removal from a team, a shop closing)',
-            "Performance of a contract. Notification settings in the app turn groups of messages off, but some messages are still sent because they need an answer or affect an appointment or the account: cancelled appointments, a repeat appointment ending, a proposed appointment change, missed appointments, removal from a team, and a shop closing. Push can always be turned off entirely in your phone's settings.",
+            "Performance of a contract. Notification settings in the app turn groups of messages off, but some messages are still sent because they need an answer or affect an appointment or the account: cancelled appointments and a repeat appointment ending (for clients), a proposed appointment change, missed appointments, removal from a team, and a shop closing. Push can always be turned off entirely in your phone's settings.",
           ],
           ['Preventing abuse and password guessing', 'Legitimate interest'],
           ['Fixing reported problems', 'Legitimate interest'],
@@ -460,13 +460,13 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           [
             'Resend',
-            'Sending account emails (account confirmation, password reset, notices of an email or password change) and the welcome email to people who sign up for early access. It also sends internal alerts: to privacy@chairo.app when you file a privacy request (request type, message, date filed, your account email and user ID), and to support@chairo.app when you send a bug report or feedback from the app (report text and type, user ID, role, shop ID, app version, operating system, phone model, app language, and the screen it was sent from). Your account email is in that alert only if you allowed us to contact you. Screenshots are not sent by email; the alert only says how many there are.',
+            'Sending account emails and the early access welcome email, plus internal alerts to us when you send a privacy request or a bug report. An alert contains the text and details of the request or report, but not screenshots. Your account email is in a bug report alert only if you allowed us to contact you.',
           ],
           [
             'Cloudflare',
             'Hosting the website and forwarding email sent to support@ and privacy@',
           ],
-          ['Google (Gmail)', 'Receiving the emails you send us'],
+          ['Google (Gmail)', 'Receiving the emails you send us and our internal alerts'],
           [
             'Lemon Squeezy',
             'Charging shop owners a subscription. Lemon Squeezy handles card details; we never see them.',
@@ -539,8 +539,8 @@ export const privacyContent: LocalizedLegalDoc = {
             'While the shop uses Chairo, or until you ask us to delete them',
           ],
           [
-            'Emails sent to support@ and privacy@',
-            'Kept in our mailbox. We delete them on request.',
+            'Emails sent to support@ and privacy@, and internal alerts',
+            'Kept in our mailbox. We delete them on request. Alerts about your requests and reports are also deleted when you delete your account.',
           ],
         ],
       },
