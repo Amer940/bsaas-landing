@@ -13,3 +13,9 @@ dist-server
 __unconfig*
 todos.json
 routeTree.gen.ts
+
+# SEO audit reports (local only)
+chairo.app-audit/
+
+# Supabase CLI local state
+supabase/.temp/
