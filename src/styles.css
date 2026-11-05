@@ -274,3 +274,27 @@
     font-size: 3.25rem;
   }
 }
+
+/* FAQ answers slide open (see faq-item.tsx); browsers without
+   ::details-content just open instantly. */
+.faq-item {
+  interpolate-size: allow-keywords;
+}
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    block-size 400ms var(--ease-smooth),
+    opacity 400ms var(--ease-smooth),
+    content-visibility 400ms allow-discrete;
+}
+.faq-item[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content {
+    transition: none;
+  }
+}

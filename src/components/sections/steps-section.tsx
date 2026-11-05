@@ -129,46 +129,58 @@ const StepsSection = () => {
           {items.map((item, i) => {
             const isActive = active === i
             return (
-              <button
+              // The button is the progress bar and number; the title and text
+              // stay plain heading/paragraph text, and clicking them selects
+              // the step too.
+              <div
                 key={item.id}
-                type="button"
                 onClick={() => setActive(i)}
-                aria-pressed={isActive}
                 className="flex flex-1 cursor-pointer flex-col gap-3 text-left"
               >
-                <span className="relative block h-0.5 w-full overflow-hidden bg-white/10">
-                  {isActive && (
-                    <span
-                      key={active}
-                      className="absolute inset-y-0 left-0 bg-foreground animate-[progress-fill_8s_linear_forwards] motion-reduce:w-full motion-reduce:animate-none"
-                    />
-                  )}
-                </span>
-                <span
-                  className={cn(
-                    'text-[0.8125rem] font-extrabold tabular-nums transition-opacity duration-500',
-                    !isActive && 'opacity-45',
-                  )}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setActive(i)
+                  }}
+                  aria-pressed={isActive}
+                  aria-label={`${item.id}. ${item.title}`}
+                  className="flex cursor-pointer flex-col gap-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-foreground/60"
                 >
-                  {item.id}
-                </span>
-                <span
+                  <span className="relative block h-0.5 w-full overflow-hidden bg-white/10">
+                    {isActive && (
+                      <span
+                        key={active}
+                        className="absolute inset-y-0 left-0 bg-foreground animate-[progress-fill_8s_linear_forwards] motion-reduce:w-full motion-reduce:animate-none"
+                      />
+                    )}
+                  </span>
+                  <span
+                    className={cn(
+                      'text-[0.8125rem] font-extrabold tabular-nums transition-opacity duration-500',
+                      !isActive && 'opacity-45',
+                    )}
+                  >
+                    {item.id}
+                  </span>
+                </button>
+                <h3
                   className={cn(
-                    'text-[1.375rem] font-bold tracking-[-0.02em] transition-opacity duration-500',
+                    'm-0 text-[1.375rem] font-bold tracking-[-0.02em] transition-opacity duration-500',
                     !isActive && 'opacity-55',
                   )}
                 >
                   {item.title}
-                </span>
-                <span
+                </h3>
+                <p
                   className={cn(
-                    'text-[0.9375rem] leading-normal transition-opacity duration-500',
+                    'm-0 text-[0.9375rem] leading-normal transition-opacity duration-500',
                     isActive ? 'opacity-60' : 'opacity-40',
                   )}
                 >
                   {item.text}
-                </span>
-              </button>
+                </p>
+              </div>
             )
           })}
         </div>

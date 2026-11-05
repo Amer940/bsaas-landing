@@ -77,7 +77,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         'chairo aplikacija: današnji raspored salona i obavijest o novom terminu',
     },
     features: {
-      eyebrow: 'Šta dobiješ',
+      eyebrow: 'Funkcije aplikacije',
       title: 'Sve što salon treba,\nništa što ne treba.',
       items: [
         {
@@ -150,7 +150,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       ],
     },
     cta: {
-      title: 'Brini o klijentima,\nne o ==rasporedu==.',
+      title: 'Rani pristup\nza tvoj ==salon==.',
       body: 'Chairo je u ranom pristupu. Ostavi email i javimo se s pristupom za tvoj salon.',
       emailLabel: 'Email adresa za rani pristup',
       emailPlaceholder: 'tvoj@email.com',
@@ -159,7 +159,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       error: 'Nešto nije u redu. Pokušaj ponovo.',
     },
     faq: {
-      eyebrow: 'Pitanja',
+      eyebrow: 'Česta pitanja',
       title: 'Pitanja i odgovori.',
       items: [
         {
@@ -201,7 +201,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'Kada mogu početi koristiti chairo?',
           answer:
-            'Chairo je trenutno u ranom pristupu. Ostavi email u formi na ovoj stranici i javit ćemo ti se s pristupom za tvoj salon.',
+            'Chairo je trenutno u ranom pristupu. Ostavi email na chairo.app/#prijava i javit ćemo ti se s pristupom za tvoj salon.',
         },
       ],
     },
@@ -223,7 +223,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         "The chairo app: today's salon schedule and a new booking notification",
     },
     features: {
-      eyebrow: 'What you get',
+      eyebrow: 'App features',
       title: "Everything a salon needs,\nnothing it doesn't.",
       items: [
         {
@@ -297,7 +297,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       ],
     },
     cta: {
-      title: 'Focus on clients,\nnot ==scheduling==.',
+      title: 'Early access\nfor your ==salon==.',
       body: "Chairo is in early access. Leave your email and we'll get in touch with access for your salon.",
       emailLabel: 'Email address for early access',
       emailPlaceholder: 'your@email.com',
@@ -348,7 +348,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'When can I start using chairo?',
           answer:
-            "Chairo is in early access right now. Leave your email in the form on this page and we'll get in touch with access for your salon.",
+            "Chairo is in early access right now. Leave your email at chairo.app/en#prijava and we'll get in touch with access for your salon.",
         },
       ],
     },

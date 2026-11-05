@@ -1,78 +1,48 @@
-import { useId, useState } from 'react'
+import { useRef } from 'react'
 import { Plus } from 'lucide-react'
 
 import { cn } from '#/lib/utils.ts'
 import { useHashTarget } from '#/lib/use-hash-target'
 
+/**
+ * FAQ as native `<details>`: works without JavaScript, the question stays a
+ * real heading (not button text) for crawlers and AI tools, and the shared
+ * `name` keeps one answer open at a time. The open/close animation is in
+ * styles.css (`::details-content`), where supported.
+ */
 function FAQItem({
   id,
   title,
   answer,
-  isOpen,
-  onToggle,
+  defaultOpen,
 }: {
   id?: string
   title: string
   answer: string
-  isOpen: boolean
-  onToggle: () => void
+  defaultOpen?: boolean
 }) {
-  const answerId = useId()
-
   return (
-    // A closed item opens from a click anywhere on it; once open, only the
-    // question closes it, so the answer text stays selectable.
-    <div
+    <details
       id={id}
+      name="faq"
+      open={defaultOpen}
       data-slot="faq-item"
-      onClick={isOpen ? undefined : onToggle}
-      className={cn(
-        'scroll-mt-24 border-t border-border py-5.5',
-        !isOpen && 'cursor-pointer',
-      )}
+      className="faq-item group scroll-mt-24 border-t border-border py-5.5"
     >
-      <h3 className="m-0">
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation()
-            onToggle()
-          }}
-          aria-expanded={isOpen}
-          aria-controls={answerId}
-          className="flex w-full cursor-pointer items-center justify-between gap-4 text-left text-base font-bold md:text-[1.0625rem]"
-        >
-          {title}
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/8">
-            <Plus
-              aria-hidden="true"
-              className={cn(
-                'size-3.5 transition-transform duration-400 ease-smooth',
-                isOpen && 'rotate-45',
-              )}
-              strokeWidth={2.5}
-            />
-          </span>
-        </button>
-      </h3>
-
-      <div
-        id={answerId}
-        className="grid transition-[grid-template-rows] duration-400 ease-smooth"
-        style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
-      >
-        <div
-          className={cn(
-            'overflow-hidden transition-opacity duration-400 ease-smooth',
-            isOpen ? 'opacity-100' : 'opacity-0',
-          )}
-        >
-          <p className="m-0 mt-2.5 max-w-160 text-[0.9375rem] leading-[1.55] text-foreground/65">
-            {answer}
-          </p>
-        </div>
-      </div>
-    </div>
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left outline-none focus-visible:ring-2 focus-visible:ring-foreground/60 [&::-webkit-details-marker]:hidden">
+        <h3 className="m-0 text-base font-bold md:text-[1.0625rem]">{title}</h3>
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/8">
+          <Plus
+            aria-hidden="true"
+            className="size-3.5 transition-transform duration-400 ease-smooth group-open:rotate-45"
+            strokeWidth={2.5}
+          />
+        </span>
+      </summary>
+      <p className="m-0 mt-2.5 max-w-160 text-[0.9375rem] leading-[1.55] text-foreground/65">
+        {answer}
+      </p>
+    </details>
   )
 }
 
@@ -80,18 +50,22 @@ function FAQAccordion({
   items,
   className,
 }: {
-  items: { id?: string; title: string; answer: string }[]
+  items: Array<{ id?: string; title: string; answer: string }>
   className?: string
 }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const listRef = useRef<HTMLDivElement>(null)
 
+  // A link to `#<id>` opens that answer.
   useHashTarget((hash) => {
-    const index = items.findIndex((item) => item.id === hash)
-    if (index !== -1) setOpenIndex(index)
+    const target = listRef.current?.querySelector<HTMLDetailsElement>(
+      `details[id="${CSS.escape(hash)}"]`,
+    )
+    if (target) target.open = true
   })
 
   return (
     <div
+      ref={listRef}
       className={cn(
         'mx-auto w-full max-w-205 border-b border-border',
         className,
@@ -103,10 +77,7 @@ function FAQAccordion({
           id={item.id}
           title={item.title}
           answer={item.answer}
-          isOpen={openIndex === index}
-          onToggle={() =>
-            setOpenIndex((open) => (open === index ? null : index))
-          }
+          defaultOpen={index === 0}
         />
       ))}
     </div>
