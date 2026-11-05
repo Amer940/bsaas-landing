@@ -4,6 +4,7 @@ import { RichText } from '../rich-text'
 import { useLocale } from '#/i18n/locale-context'
 import { landingContent } from '#/content/landing'
 import { joinWaitlist } from '#/lib/waitlist'
+import { useTurnstile } from '#/lib/turnstile'
 
 type Status = 'idle' | 'pending' | 'success' | 'error'
 
@@ -11,13 +12,18 @@ export function CTASection() {
   const { locale } = useLocale()
   const c = landingContent[locale].cta
   const [status, setStatus] = useState<Status>('idle')
+  const turnstile = useTurnstile('waitlist')
 
   const handleSubmit = async (email: string) => {
     setStatus('pending')
     try {
-      await joinWaitlist(email, locale)
+      const token = await turnstile.getToken()
+      await joinWaitlist(email, locale, token)
       setStatus('success')
-    } catch {
+    } catch (e) {
+      console.error('waitlist signup failed', e)
+      // Tokens are single-use: get a fresh one for the next try.
+      turnstile.reset()
       setStatus('error')
     }
   }
@@ -52,6 +58,8 @@ export function CTASection() {
                   {c.error}
                 </p>
               )}
+              {/* Turnstile stays invisible unless Cloudflare asks for a click. */}
+              <div ref={turnstile.ref} className="mt-3 empty:hidden" />
             </>
           )}
         </div>
