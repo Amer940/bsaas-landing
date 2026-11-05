@@ -12,7 +12,8 @@
     "test": "vitest run",
     "lint": "eslint",
     "format": "prettier --write . && eslint --fix",
-    "check": "prettier --check ."
+    "check": "prettier --check .",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.1",
