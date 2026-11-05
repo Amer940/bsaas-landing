@@ -55,3 +55,66 @@ export function noindexHead(title: string) {
     meta: [{ title }, { name: 'robots', content: 'noindex' }],
   }
 }
+
+/** A `<script type="application/ld+json">` entry for `head().scripts`. */
+export function jsonLdScript(data: unknown) {
+  return {
+    type: 'application/ld+json',
+    // Inserted as raw HTML: `<` escaped so the JSON can't end the tag.
+    children: JSON.stringify(data).replace(/</g, '\\u003c'),
+  }
+}
+
+export const ORGANIZATION_ID = `${SITE_URL}/#organization`
+export const WEBSITE_ID = `${SITE_URL}/#website`
+
+const HOME_LABEL: Record<Locale, string> = { bs: 'Početna', en: 'Home' }
+
+/**
+ * Schema.org data for a page under the home page: the page itself (as
+ * `type`, e.g. ContactPage) and its breadcrumb trail.
+ */
+export function subpageSchema({
+  locale,
+  page,
+  name,
+  description,
+  type = 'WebPage',
+}: {
+  locale: Locale
+  page: IndexedPage
+  name: string
+  description: string
+  type?: string
+}) {
+  const url = SITE_URL + localizePath(page, locale)
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': type,
+        '@id': `${url}#webpage`,
+        url,
+        name,
+        description,
+        inLanguage: locale,
+        isPartOf: { '@id': WEBSITE_ID },
+        publisher: { '@id': ORGANIZATION_ID },
+        breadcrumb: { '@id': `${url}#breadcrumb` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: HOME_LABEL[locale],
+            item: SITE_URL + localizePath('/', locale),
+          },
+          { '@type': 'ListItem', position: 2, name, item: url },
+        ],
+      },
+    ],
+  }
+}

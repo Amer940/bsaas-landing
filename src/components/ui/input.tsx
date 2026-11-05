@@ -16,6 +16,8 @@ function Input({ className, ...props }: React.ComponentProps<'input'>) {
 }
 
 interface EmailInputProps {
+  /** Accessible name of the field; defaults to the placeholder. */
+  label?: string
   placeholder?: string
   buttonLabel?: string
   onSubmit?: (email: string) => void
@@ -24,6 +26,7 @@ interface EmailInputProps {
 }
 
 function EmailInput({
+  label,
   placeholder = 'Enter Email',
   buttonLabel = 'Sign Up',
   onSubmit,
@@ -47,8 +50,10 @@ function EmailInput({
     >
       <input
         type="email"
+        name="email"
+        autoComplete="email"
         required
-        aria-label={placeholder}
+        aria-label={label ?? placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}

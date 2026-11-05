@@ -7,7 +7,8 @@ import StepsSection from '#/components/sections/steps-section'
 import Hero from '#/components/sections/hero-section'
 import { PricingSection } from '#/components/sections/pricing-section'
 import { Footer } from '#/components/sections/footer'
-import { pageHead } from '#/i18n/seo'
+import { AboutSection } from '#/components/sections/about-section'
+import { ORGANIZATION_ID, WEBSITE_ID, jsonLdScript, pageHead } from '#/i18n/seo'
 import { landingContent } from '#/content/landing'
 import { SITE_URL, localizePath, routeLocale } from '#/i18n/translations'
 import type { Locale } from '#/i18n/translations'
@@ -18,16 +19,7 @@ export const Route = createFileRoute('/{-$locale}/')({
     const locale = routeLocale(params.locale)
     return {
       ...pageHead({ locale, page: '/', ...landingContent[locale].meta }),
-      scripts: [
-        {
-          type: 'application/ld+json',
-          // Inserted as raw HTML: `<` escaped so the JSON can't end the tag.
-          children: JSON.stringify(structuredData(locale)).replace(
-            /</g,
-            '\\u003c',
-          ),
-        },
-      ],
+      scripts: [jsonLdScript(structuredData(locale))],
     }
   },
   component: Home,
@@ -35,13 +27,15 @@ export const Route = createFileRoute('/{-$locale}/')({
 
 /**
  * Schema.org data for search engines and AI answers: who makes Chairo, what
- * the app is, and the FAQ. Only what the page itself says (no price or store
- * links until launch).
+ * the app is, and the FAQ. Only what the page itself says: free during early
+ * access, Android first (no store link until the listing is public). Add
+ * profile URLs to `sameAs` as they go live.
  */
 function structuredData(locale: Locale) {
-  const { meta, faq } = landingContent[locale]
+  const { meta, faq, about } = landingContent[locale]
   const url = SITE_URL + localizePath('/', locale)
-  const organization = { '@id': `${SITE_URL}/#organization` }
+  const organization = { '@id': ORGANIZATION_ID }
+  const bosnia = { '@type': 'Country', name: 'Bosnia and Herzegovina' }
 
   return {
     '@context': 'https://schema.org',
@@ -52,11 +46,25 @@ function structuredData(locale: Locale) {
         name: 'Chairo',
         url: `${SITE_URL}/`,
         logo: `${SITE_URL}/logo512.png`,
+        description: about.paragraphs[0],
         email: 'support@chairo.app',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Tešanj',
+          addressCountry: 'BA',
+        },
+        areaServed: bosnia,
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          email: 'support@chairo.app',
+          url: SITE_URL + localizePath('/support', locale),
+          availableLanguage: ['bs', 'en'],
+        },
       },
       {
         '@type': 'WebSite',
-        '@id': `${SITE_URL}/#website`,
+        '@id': WEBSITE_ID,
         name: 'Chairo',
         url: `${SITE_URL}/`,
         inLanguage: ['bs', 'en'],
@@ -69,8 +77,23 @@ function structuredData(locale: Locale) {
         url,
         description: meta.description,
         applicationCategory: 'BusinessApplication',
-        operatingSystem: 'iOS, Android',
-        inLanguage: locale,
+        applicationSubCategory: 'Appointment scheduling',
+        operatingSystem: 'Android',
+        inLanguage: ['bs', 'en'],
+        countriesSupported: 'BA',
+        audience: {
+          '@type': 'BusinessAudience',
+          audienceType: 'Barbers, hairdressers and hair salons',
+        },
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'BAM',
+          description:
+            locale === 'bs'
+              ? 'Besplatno tokom ranog pristupa'
+              : 'Free during early access',
+        },
         publisher: organization,
       },
       {
@@ -95,6 +118,7 @@ function Home() {
         <Hero />
         <FeaturesGridSection />
         <StepsSection />
+        <AboutSection />
         {SHOW_PRICING && <PricingSection />}
         <CTASection />
         <FAQSection />

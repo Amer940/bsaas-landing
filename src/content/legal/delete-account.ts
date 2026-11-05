@@ -3,6 +3,7 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const deleteAccountContent: LocalizedLegalDoc = {
   bs: {
     title: 'Brisanje računa u aplikaciji Chairo',
+    metaTitle: 'Brisanje računa u aplikaciji Chairo',
     blocks: [
       {
         type: 'p',
@@ -87,6 +88,7 @@ export const deleteAccountContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Deleting your Chairo account',
+    metaTitle: 'Deleting your Chairo account',
     blocks: [
       {
         type: 'p',

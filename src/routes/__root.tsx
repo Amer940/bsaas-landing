@@ -41,6 +41,15 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
+      // Both Latin subsets render the first screen (š, č, ž, đ are in
+      // latin-ext); preload them instead of waiting for the CSS.
+      ...['latin', 'latin-ext'].map((subset) => ({
+        rel: 'preload',
+        href: `/fonts/geist-${subset}.woff2`,
+        as: 'font',
+        type: 'font/woff2',
+        crossOrigin: 'anonymous' as const,
+      })),
       { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },

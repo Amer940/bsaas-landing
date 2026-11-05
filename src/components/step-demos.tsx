@@ -60,9 +60,9 @@ function SettingsScreen({ data }: { data: StepDemos['settings'] }) {
   return (
     <AppScreen>
       <ScreenHeader title={data.header} action={data.save} />
-      <h4 className="m-0 mt-1 text-xl font-bold tracking-[-0.02em]">
+      <p className="m-0 mt-1 text-xl font-bold tracking-[-0.02em]">
         {data.title}
-      </h4>
+      </p>
       <div
         className="relative flex h-24 items-end rounded-2xl bg-[#3a3128] p-2.5"
         style={{
@@ -158,9 +158,9 @@ function CodeScreen({ data }: { data: StepDemos['code'] }) {
     <AppScreen>
       <ScreenHeader title={data.title} />
       <div>
-        <h4 className="m-0 mt-1 text-xl font-bold tracking-[-0.02em]">
+        <p className="m-0 mt-1 text-xl font-bold tracking-[-0.02em]">
           {data.title}
-        </h4>
+        </p>
         <p className="m-0 mt-1 text-[0.75rem] leading-normal text-foreground/55">
           {data.body}
         </p>

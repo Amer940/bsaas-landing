@@ -1,4 +1,23 @@
-# Cloudflare Pages. iOS reads this file only as JSON, and it has no extension
+# Cloudflare Pages. Security headers for every response; Pages' default
+# `Access-Control-Allow-Origin: *` is dropped (nothing here is meant to be
+# read cross-origin).
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  ! Access-Control-Allow-Origin
+
+# Vite's hashed build files never change under the same name.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts and share images aren't hashed: cache for a while, not forever.
+/fonts/*
+  Cache-Control: public, max-age=2592000
+/og-image-*
+  Cache-Control: public, max-age=604800
+
+# iOS reads this file only as JSON, and it has no extension
 # to say so.
 /.well-known/apple-app-site-association
   Content-Type: application/json

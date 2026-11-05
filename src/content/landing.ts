@@ -38,9 +38,15 @@ interface LandingContent {
     includedLabel: string
     features: Array<string>
   }
+  about: {
+    eyebrow: string
+    title: string
+    paragraphs: Array<string>
+  }
   cta: {
     title: string
     body: string
+    emailLabel: string
     emailPlaceholder: string
     submit: string
     success: string
@@ -57,14 +63,14 @@ interface LandingContent {
 export const landingContent: Record<Locale, LandingContent> = {
   bs: {
     meta: {
-      title: 'Chairo | Aplikacija za frizere i barbere',
+      title: 'Chairo | Aplikacija za zakazivanje termina za frizere',
       description:
-        'Chairo je aplikacija za zakazivanje termina za frizere i barbere. Klijenti rezervišu 0-24, bez poziva i poruka. Manje propuštenih termina, pun raspored.',
+        'Chairo je aplikacija za online zakazivanje termina za frizere, barbere i salone u BiH. Klijenti rezervišu 0-24, bez poziva i poruka. Manje nedolazaka, pun raspored.',
     },
     hero: {
-      eyebrow: 'Za frizere i salone',
+      eyebrow: 'Aplikacija za zakazivanje termina',
       title: 'Klijenti zakazuju online.\nTi samo ==šišaš==.',
-      body: 'Nema više poruka i poziva za termine. Cijeli dan vidiš na jednom ekranu: termine, pauze, nedolaske i zaradu.',
+      body: 'Chairo je aplikacija za online zakazivanje termina za frizere, barbere i salone u BiH. Nema više poruka i poziva: cijeli dan vidiš na jednom ekranu, s terminima, pauzama, nedolascima i zaradom.',
       howItWorks: 'Pogledaj kako radi',
       note: 'Besplatno tokom ranog pristupa',
       imageAlt:
@@ -99,7 +105,7 @@ export const landingContent: Record<Locale, LandingContent> = {
     steps: {
       eyebrow: 'Kako radi',
       title: 'Od prijave do prvog\ntermina za ==minut==.',
-      body: 'Bez instalacije kod klijenta, bez obuke. Ti postaviš salon, klijenti dođu sami.',
+      body: 'Bez obuke i bez komplikacija. Ti postaviš salon, klijenti dođu sami.',
       items: [
         {
           title: 'Prijavi se i kreni',
@@ -134,12 +140,22 @@ export const landingContent: Record<Locale, LandingContent> = {
         'Pregled zarade i nedolazaka',
       ],
     },
+    about: {
+      eyebrow: 'Šta je chairo',
+      title: 'Napravljeno u Tešnju,\nza salone u ==BiH==.',
+      paragraphs: [
+        'Chairo je aplikacija za zakazivanje termina namijenjena frizerima, barberima i frizerskim salonima u Bosni i Hercegovini. Klijenti sami biraju frizera, uslugu i slobodan termin, 0–24, a ti sve vidiš u jednom rasporedu, bez dopisivanja na Instagramu i Viberu i bez poziva usred šišanja.',
+        'Radi jednako dobro za barbera sa jednom stolicom i za salon sa cijelim timom. Svaki frizer ima svoj raspored, radne sedmice postavljaš šablonima, a slobodne dane frizeri traže u aplikaciji. Stalni klijenti mogu imati stalni termin, pa se isti dogovor ne ponavlja svake sedmice.',
+        'Chairo pravimo u Tešnju. Aplikacija je na bosanskom i engleskom jeziku, a tokom ranog pristupa je besplatna.',
+      ],
+    },
     cta: {
       title: 'Brini o klijentima,\nne o ==rasporedu==.',
-      body: 'Ostavi email i javimo se s pristupom za tvoj salon.',
+      body: 'Chairo je u ranom pristupu. Ostavi email i javimo se s pristupom za tvoj salon.',
+      emailLabel: 'Email adresa za rani pristup',
       emailPlaceholder: 'tvoj@email.com',
       submit: 'Prijavi se',
-      success: 'Hvala! Javit ćemo ti se čim chairo bude spreman.',
+      success: 'Hvala! Javit ćemo ti se s pristupom za tvoj salon.',
       error: 'Nešto nije u redu. Pokušaj ponovo.',
     },
     faq: {
@@ -149,27 +165,43 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'Koliko brzo mogu početi primati termine?',
           answer:
-            'Čim uneseš usluge i radno vrijeme i podijeliš kod salona. Za većinu salona to traje nekoliko minuta.',
+            'Kad dobiješ pristup, uneseš usluge i radno vrijeme i podijeliš kod salona ili QR kod s klijentima. Za većinu salona to traje nekoliko minuta. Ne treba ti obuka ni poseban uređaj, dovoljan je telefon.',
         },
         {
-          title: 'Šta je kod za preporuku i kako radi?',
+          title: 'Šta je kod salona i kako radi?',
           answer:
-            'Svaki salon ima svoj kod i QR, a klijenti ga mogu podijeliti s prijateljima. Ko se registruje s tim kodom, odmah je u tvom salonu — bez traženja.',
+            'Svaki salon ima svoj kod i QR. Klijent upiše kod ili skenira QR, na primjer s ogledala ili s tvog Instagram profila, i odmah je u tvom salonu, bez traženja. Klijenti kod mogu podijeliti i s prijateljima, pa novi klijenti dolaze preko postojećih.',
         },
         {
           id: 'nedolasci',
           title: 'Šta ako klijent ne dođe?',
           answer:
-            'Označiš nedolazak jednim dodirom. Kad klijent dođe do granice koju postaviš (npr. 3 nedolaska), više ne može zakazati sam u aplikaciji — mora pozvati salon.',
+            'Označiš nedolazak jednim dodirom. Kad klijent dođe do granice koju postaviš (npr. 3 nedolaska), više ne može zakazati sam u aplikaciji, nego mora pozvati salon. Broj nedolazaka po sedmici i mjesecu vidiš u pregledu zarade.',
         },
         {
-          title: 'Ima li chairo za Android?',
-          answer: 'Da. chairo radi na iPhone i Android telefonima.',
+          title: 'Dobijaju li klijenti podsjetnik?',
+          answer:
+            'Da. Klijent dobija podsjetnik prije termina, što smanjuje broj zaboravljenih termina. Svaki novi termin odmah vidiš u Rasporedu, pa ne moraš ništa prepisivati iz poruka.',
+        },
+        {
+          title: 'Ima li chairo za Android i iPhone?',
+          answer:
+            'Android verzija dolazi prva, a verzija za iPhone stiže uskoro. Salon i klijenti koriste istu aplikaciju: ti upravljaš rasporedom, a klijenti zakazuju termine.',
+        },
+        {
+          title: 'Koliko košta chairo?',
+          answer:
+            'Tokom ranog pristupa chairo je besplatan. Cijenu za period nakon ranog pristupa objavit ćemo na vrijeme, prije nego što bilo šta treba platiti.',
+        },
+        {
+          title: 'Za koga je chairo i gdje radi?',
+          answer:
+            'Za frizere, barbere i frizerske salone u Bosni i Hercegovini, od jedne stolice do salona sa cijelim timom. Aplikacija je na bosanskom i engleskom jeziku, a pravimo je u Tešnju.',
         },
         {
           title: 'Kada mogu početi koristiti chairo?',
           answer:
-            'Ostavi email iznad i javit ćemo ti se čim aplikacija bude spremna.',
+            'Chairo je trenutno u ranom pristupu. Ostavi email u formi na ovoj stranici i javit ćemo ti se s pristupom za tvoj salon.',
         },
       ],
     },
@@ -177,14 +209,14 @@ export const landingContent: Record<Locale, LandingContent> = {
 
   en: {
     meta: {
-      title: 'Chairo | The app for barbers',
+      title: 'Chairo | Booking app for barbers and hair salons',
       description:
-        'Chairo is the booking app barbers use to save time. 24/7 online booking, no more DMs and calls, fewer no-shows and a fully booked chair.',
+        'Chairo is an appointment booking app for barbers and hair salons in Bosnia and Herzegovina. Clients book 24/7, no DMs or calls. Fewer no-shows, a full chair.',
     },
     hero: {
-      eyebrow: 'For barbers and salons',
+      eyebrow: 'Booking app for barbers and salons',
       title: 'Clients book online.\nYou just ==cut==.',
-      body: 'No more DMs and calls to set up appointments. See your whole day on one screen: bookings, breaks, no-shows and earnings.',
+      body: 'Chairo is an online booking app for barbers, hairdressers and salons in Bosnia and Herzegovina. No more DMs and calls: see your whole day on one screen, with bookings, breaks, no-shows and earnings.',
       howItWorks: 'See how it works',
       note: 'Free during early access',
       imageAlt:
@@ -220,7 +252,7 @@ export const landingContent: Record<Locale, LandingContent> = {
     steps: {
       eyebrow: 'How it works',
       title: 'From sign-up to your first\nbooking in a ==minute==.',
-      body: 'Nothing for clients to install, no training. You set up the salon, clients come on their own.',
+      body: 'No training, no hassle. You set up the salon, clients come on their own.',
       items: [
         {
           title: 'Sign up and go',
@@ -255,12 +287,22 @@ export const landingContent: Record<Locale, LandingContent> = {
         'Earnings and no-show overview',
       ],
     },
+    about: {
+      eyebrow: 'What chairo is',
+      title: 'Made in Tešanj,\nfor salons in ==Bosnia==.',
+      paragraphs: [
+        'Chairo is an appointment booking app for barbers, hairdressers and hair salons in Bosnia and Herzegovina. Clients pick their barber, service and an open slot themselves, 24/7, and you see everything in one schedule, without DMs on Instagram and Viber or calls in the middle of a cut.',
+        'It works just as well for a barber with one chair as for a salon with a whole team. Every barber has their own schedule, you set up working weeks with templates, and barbers request days off in the app. Regular clients can have a recurring appointment, so the same booking never has to be arranged twice.',
+        'We build Chairo in Tešanj. The app is in Bosnian and English, and it is free during early access.',
+      ],
+    },
     cta: {
       title: 'Focus on clients,\nnot ==scheduling==.',
-      body: "Leave your email and we'll get in touch with access for your salon.",
+      body: "Chairo is in early access. Leave your email and we'll get in touch with access for your salon.",
+      emailLabel: 'Email address for early access',
       emailPlaceholder: 'your@email.com',
       submit: 'Sign up',
-      success: "Thanks! We'll be in touch as soon as chairo is ready.",
+      success: "Thanks! We'll be in touch with access for your salon.",
       error: 'Something went wrong. Please try again.',
     },
     faq: {
@@ -270,27 +312,43 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'How quickly can I start taking bookings?',
           answer:
-            'As soon as you add your services and opening hours and share your salon code. For most salons that takes a few minutes.',
+            'Once you have access, add your services and opening hours and share your salon code or QR code with clients. For most salons that takes a few minutes. No training or special hardware needed, your phone is enough.',
         },
         {
-          title: 'What is the referral code, and how does it work?',
+          title: 'What is the salon code, and how does it work?',
           answer:
-            'Every salon has its own code and QR, and clients can share it with friends. Anyone who signs up with that code is in your salon straight away — no searching.',
+            'Every salon has its own code and QR. A client enters the code or scans the QR, say from your mirror or your Instagram profile, and is in your salon straight away, no searching. Clients can share the code with friends, so new clients come through the ones you have.',
         },
         {
           id: 'nedolasci',
           title: "What if a client doesn't show up?",
           answer:
-            "Mark the no-show with one tap. Once a client reaches the limit you set (say, 3 no-shows), they can't book in the app on their own anymore — they have to call the salon.",
+            "Mark the no-show with one tap. Once a client reaches the limit you set (say, 3 no-shows), they can't book in the app on their own anymore and have to call the salon. You see no-shows by week and month next to your earnings.",
         },
         {
-          title: 'Is chairo available on Android?',
-          answer: 'Yes. chairo works on iPhone and Android phones.',
+          title: 'Do clients get reminders?',
+          answer:
+            'Yes. Clients get a reminder before their appointment, which cuts down on forgotten bookings. Every new booking shows up in your Schedule right away, so there is nothing to copy over from messages.',
+        },
+        {
+          title: 'Is chairo available on Android and iPhone?',
+          answer:
+            'The Android version comes first, and the iPhone version is coming soon. Salons and clients use the same app: you manage the schedule, clients book appointments.',
+        },
+        {
+          title: 'How much does chairo cost?',
+          answer:
+            "Chairo is free during early access. We'll announce pricing for after early access well in advance, before anything has to be paid.",
+        },
+        {
+          title: 'Who is chairo for, and where does it work?',
+          answer:
+            'For barbers, hairdressers and hair salons in Bosnia and Herzegovina, from a single chair to a salon with a whole team. The app is in Bosnian and English, and we build it in Tešanj.',
         },
         {
           title: 'When can I start using chairo?',
           answer:
-            "Leave your email above and we'll let you know as soon as the app is ready.",
+            "Chairo is in early access right now. Leave your email in the form on this page and we'll get in touch with access for your salon.",
         },
       ],
     },

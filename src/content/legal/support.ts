@@ -3,6 +3,10 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const supportContent: LocalizedLegalDoc = {
   bs: {
     title: 'Podrška',
+    metaTitle: 'Podrška i kontakt | Chairo',
+    description:
+      'Trebate pomoć s aplikacijom Chairo? Pišite nam na support@chairo.app, odgovaramo u roku od 2 radna dana. Pitanja o računu, terminima i privatnosti.',
+    schemaType: 'ContactPage',
     blocks: [
       {
         type: 'p',
@@ -39,6 +43,10 @@ export const supportContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Support',
+    metaTitle: 'Support and contact | Chairo',
+    description:
+      'Need help with the Chairo app? Email support@chairo.app and we usually reply within 2 business days. Questions about your account, bookings and privacy.',
+    schemaType: 'ContactPage',
     blocks: [
       {
         type: 'p',

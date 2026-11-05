@@ -40,16 +40,33 @@ function FeaturesGridSection() {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr]">
         {c.items.map((item, i) => {
           const hash = links[i]
-          const className = cn(
-            'glass flex min-w-0 flex-col gap-5 rounded-[28px] p-5.5 md:p-6.5',
-            i === 0 && 'md:row-span-2',
+          // Only the title is the link (so its text is the anchor text); its
+          // ::after stretches over the card to keep the whole card clickable.
+          const title = hash ? (
+            <LocalizedLink
+              to="/"
+              hash={hash}
+              className="text-inherit no-underline outline-none after:absolute after:inset-0 after:rounded-[28px] focus-visible:after:ring-2 focus-visible:after:ring-foreground/60"
+            >
+              {item.title}
+            </LocalizedLink>
+          ) : (
+            item.title
           )
-          const body = (
-            <>
+
+          return (
+            <article
+              key={item.title}
+              className={cn(
+                'glass relative flex min-w-0 flex-col gap-5 rounded-[28px] p-5.5 md:p-6.5',
+                i === 0 && 'md:row-span-2',
+                hash && 'cursor-pointer',
+              )}
+            >
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <h3 className="m-0 text-[1.3125rem] font-bold tracking-[-0.02em]">
-                    {item.title}
+                    {title}
                   </h3>
                   <p className="m-0 mt-1.5 text-[0.9375rem] leading-[1.45] text-foreground/60">
                     {item.description}
@@ -68,24 +85,6 @@ function FeaturesGridSection() {
               <Reveal className="mt-auto select-none">
                 <div aria-hidden="true">{visuals[i]}</div>
               </Reveal>
-            </>
-          )
-
-          return hash ? (
-            <LocalizedLink
-              key={item.title}
-              to="/"
-              hash={hash}
-              className={cn(
-                className,
-                'cursor-pointer text-inherit no-underline outline-none focus-visible:ring-2 focus-visible:ring-foreground/60',
-              )}
-            >
-              {body}
-            </LocalizedLink>
-          ) : (
-            <article key={item.title} className={className}>
-              {body}
             </article>
           )
         })}

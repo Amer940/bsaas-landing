@@ -3,7 +3,7 @@ import { Navbar } from '#/components/navigation'
 import { Footer } from '#/components/sections/footer'
 import { useLocale } from '#/i18n/locale-context'
 import { LocalizedLink, isLocalizedPath } from '#/i18n/localized-link'
-import { pageHead } from '#/i18n/seo'
+import { jsonLdScript, pageHead, subpageSchema } from '#/i18n/seo'
 import type { IndexedPage } from '#/i18n/pages'
 import { routeLocale } from '#/i18n/translations'
 import type { Locale } from '#/i18n/translations'
@@ -20,6 +20,12 @@ type Block =
 
 interface LegalDoc {
   title: string
+  /** `<title>`; defaults to "<title> | Chairo". */
+  metaTitle?: string
+  /** Meta description; defaults to the first paragraph. */
+  description?: string
+  /** Schema.org page type, e.g. ContactPage; defaults to WebPage. */
+  schemaType?: string
   updated?: string
   blocks: Array<Block>
 }
@@ -153,12 +159,22 @@ function legalHead(content: LocalizedLegalDoc, page: IndexedPage) {
   return ({ params }: { params: { locale?: string } }) => {
     const locale = routeLocale(params.locale)
     const doc = content[locale]
-    return pageHead({
-      locale,
-      page,
-      title: `${doc.title} | Chairo`,
-      description: describe(doc) ?? doc.title,
-    })
+    const title = doc.metaTitle ?? `${doc.title} | Chairo`
+    const description = doc.description ?? describe(doc) ?? doc.title
+    return {
+      ...pageHead({ locale, page, title, description }),
+      scripts: [
+        jsonLdScript(
+          subpageSchema({
+            locale,
+            page,
+            name: doc.title,
+            description,
+            type: doc.schemaType,
+          }),
+        ),
+      ],
+    }
   }
 }
 

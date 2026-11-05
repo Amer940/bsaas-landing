@@ -1,4 +1,3 @@
-import { supabase } from './supabase'
 import type { Locale } from '#/i18n/translations'
 
 /**
@@ -6,12 +5,16 @@ import type { Locale } from '#/i18n/translations'
  * `join-waitlist` (bsaas-app, supabase/functions), which checks the Turnstile
  * `token` and inserts the row. Browsers can't write to `public.waitlist`
  * directly. Already-listed emails count as success.
+ *
+ * The Supabase client is loaded on submit, so it isn't part of the landing
+ * page's first load.
  */
 export async function joinWaitlist(
   email: string,
   locale: Locale,
   token: string,
 ) {
+  const { supabase } = await import('./supabase')
   const { error } = await supabase.functions.invoke('join-waitlist', {
     body: { email: email.trim().toLowerCase(), locale, token },
   })

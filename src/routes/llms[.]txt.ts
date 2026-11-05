@@ -9,20 +9,33 @@ const plain = (text: string) => text.replace(/==/g, '').replace(/\n/g, ' ')
 
 function llmsTxt() {
   const { bs, en } = landingContent
+  const faq = (items: typeof en.faq.items) =>
+    items.map((f) => `### ${f.title}\n\n${f.answer}`).join('\n\n')
+
   return `# Chairo
 
 > ${en.meta.description}
 
-The site is in Bosnian (${SITE_URL}/) and English (${SITE_URL}/en).
+${en.about.paragraphs.join('\n\n')}
+
+## Key facts
+
+- What: appointment booking app for barbers, hairdressers and hair salons (salon side and client side in one app)
+- Where: Bosnia and Herzegovina; company based in Tešanj
+- Languages: Bosnian and English
+- Status: early access (waitlist at ${SITE_URL}/#prijava)
+- Platforms: Android first, iPhone coming soon
+- Price: free during early access
+- Contact: support@chairo.app
 
 ## Pages
 
 - [Home (Bosnian)](${SITE_URL}/): ${bs.meta.description}
 - [Home (English)](${SITE_URL}/en): ${en.meta.description}
-- [Support](${SITE_URL}/en/support): how to get help
-- [Privacy policy](${SITE_URL}/en/privacy)
-- [Terms of use](${SITE_URL}/en/terms)
-- [Delete your account](${SITE_URL}/en/delete-account)
+- [Support](${SITE_URL}/en/support) ([Bosnian](${SITE_URL}/support)): how to get help
+- [Privacy policy](${SITE_URL}/en/privacy) ([Bosnian](${SITE_URL}/privacy))
+- [Terms of use](${SITE_URL}/en/terms) ([Bosnian](${SITE_URL}/terms))
+- [Delete your account](${SITE_URL}/en/delete-account) ([Bosnian](${SITE_URL}/delete-account))
 
 ## What it does
 
@@ -36,7 +49,15 @@ ${en.steps.items.map((s, i) => `${i + 1}. ${s.title}: ${s.text}`).join('\n')}
 
 ## FAQ
 
-${en.faq.items.map((f) => `### ${f.title}\n\n${f.answer}`).join('\n\n')}
+${faq(en.faq.items)}
+
+## Ukratko na bosanskom
+
+${bs.about.paragraphs.join('\n\n')}
+
+### Česta pitanja
+
+${faq(bs.faq.items).replace(/^### /gm, '#### ')}
 `
 }
 

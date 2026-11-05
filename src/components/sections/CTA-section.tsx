@@ -48,6 +48,7 @@ export function CTASection() {
           ) : (
             <>
               <EmailInput
+                label={c.emailLabel}
                 placeholder={c.emailPlaceholder}
                 buttonLabel={c.submit}
                 onSubmit={handleSubmit}

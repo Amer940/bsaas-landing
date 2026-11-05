@@ -3,6 +3,8 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const termsContent: LocalizedLegalDoc = {
   bs: {
     title: 'Uslovi korištenja',
+    description:
+      'Uslovi korištenja aplikacije Chairo za zakazivanje termina u frizerskim salonima: računi, termini, nedolasci, plaćanje i vaša prava. Važi pravo BiH.',
     updated: 'Posljednja izmjena: 19. oktobar 2026.',
     blocks: [
       { type: 'h2', text: '1. O usluzi' },
@@ -121,6 +123,8 @@ export const termsContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Terms of use',
+    description:
+      'Terms of use for Chairo, the booking app for barbershops and hair salons: accounts, bookings, no-shows, payments and your rights. Governed by the law of BiH.',
     updated: 'Last updated: 19 October 2026',
     blocks: [
       { type: 'h2', text: '1. About the service' },
