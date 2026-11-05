@@ -1,3 +1,5 @@
+import { noindexHead } from '#/i18n/seo'
+import { routeLocale } from '#/i18n/translations'
 import { createFileRoute, notFound } from '@tanstack/react-router'
 import { CodeLinkPage } from '#/components/code-link-page'
 import { inviteContent } from '#/content/invite'
@@ -9,6 +11,10 @@ import { inviteContent } from '#/content/invite'
 const CODE_FORMAT = /^[ABCDEFGHJKMNPQRSTUVWXYZ2-9]{6}$/
 
 export const Route = createFileRoute('/{-$locale}/invite/$code')({
+  // Reads its link in the browser; never prerendered, kept out of search.
+  ssr: false,
+  head: ({ params }) =>
+    noindexHead(inviteContent[routeLocale(params.locale)].metaTitle),
   beforeLoad: ({ params }) => {
     if (!CODE_FORMAT.test(normalizeCode(params.code))) throw notFound()
   },

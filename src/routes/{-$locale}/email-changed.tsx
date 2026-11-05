@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { noindexHead } from '#/i18n/seo'
+import { routeLocale } from '#/i18n/translations'
 import { createFileRoute } from '@tanstack/react-router'
 import { Button } from '#/components/ui/button'
 import { AuthCard } from '#/components/auth-card'
@@ -14,6 +16,10 @@ import { emailChangedContent } from '#/content/email-changed'
 // wiped from the address bar. The app picks the new email up by itself.
 
 export const Route = createFileRoute('/{-$locale}/email-changed')({
+  // Reads its link in the browser; never prerendered, kept out of search.
+  ssr: false,
+  head: ({ params }) =>
+    noindexHead(emailChangedContent[routeLocale(params.locale)].metaTitle),
   component: EmailChangedPage,
 })
 
@@ -36,7 +42,7 @@ function EmailChangedPage() {
   }, [])
 
   return (
-    <AuthCard metaTitle={c.metaTitle} homeLabel={c.home}>
+    <AuthCard homeLabel={c.home}>
       <div role="status" className="animate-fade-up">
         <h1 className="m-0 text-[1.75rem] leading-[1.1] font-bold tracking-[-0.03em]">
           {status === 'done' ? c.doneTitle : c.expiredTitle}

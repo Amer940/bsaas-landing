@@ -99,7 +99,7 @@ export function CodeLinkPage({ code, kind, content }: CodeLinkPageProps) {
   const showIosSoon = platform === 'ios' && !APP_STORE_URL
 
   return (
-    <AuthCard metaTitle={c.metaTitle} homeLabel={c.home}>
+    <AuthCard homeLabel={c.home}>
       <h1 className="m-0 text-[1.75rem] leading-[1.1] font-bold tracking-[-0.03em]">
         {c.title}
       </h1>

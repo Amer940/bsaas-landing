@@ -1,0 +1,15 @@
+# Cloudflare Pages. The build writes the public pages as HTML files and
+# 404.html for paths without one (a real 404 status). These pages render only
+# in the browser (`ssr: false` routes), so they get the app shell instead.
+/reset-password              /app-shell 200
+/en/reset-password           /app-shell 200
+/email-changed               /app-shell 200
+/en/email-changed            /app-shell 200
+/delete-account/confirm      /app-shell 200
+/en/delete-account/confirm   /app-shell 200
+/invite/*                    /app-shell 200
+/en/invite/*                 /app-shell 200
+/join/*                      /app-shell 200
+/en/join/*                   /app-shell 200
+/admin                       /app-shell 200
+/admin/*                     /app-shell 200

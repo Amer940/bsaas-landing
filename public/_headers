@@ -3,9 +3,26 @@
 /.well-known/apple-app-site-association
   Content-Type: application/json
 
-# The admin page: keep it out of search results, also for crawlers that
-# don't run JS (the page sets the same as a meta tag).
+# Pages that render only in the browser (see _redirects): keep them out of
+# search results, also for crawlers that don't run JS (each page sets the same
+# as a meta tag).
 /admin
   X-Robots-Tag: noindex
 /admin/*
+  X-Robots-Tag: noindex
+/app-shell
+  X-Robots-Tag: noindex
+/*reset-password
+  X-Robots-Tag: noindex
+/*email-changed
+  X-Robots-Tag: noindex
+/*delete-account/confirm
+  X-Robots-Tag: noindex
+/invite/*
+  X-Robots-Tag: noindex
+/en/invite/*
+  X-Robots-Tag: noindex
+/join/*
+  X-Robots-Tag: noindex
+/en/join/*
   X-Robots-Tag: noindex

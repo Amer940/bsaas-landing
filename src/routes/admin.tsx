@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
+import { noindexHead } from '#/i18n/seo'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Session } from '@supabase/supabase-js'
 import { Logo } from '#/components/logo'
@@ -33,6 +34,8 @@ const OTHER_TABS = ['feedback', 'privacy', 'users'] as const
 type OtherTab = (typeof OTHER_TABS)[number]
 
 export const Route = createFileRoute('/admin')({
+  ssr: false,
+  head: () => noindexHead('Admin · chairo.'),
   // ?tab=feedback, ?tab=privacy or ?tab=users; anything else means Outreach.
   validateSearch: (search: Record<string, unknown>): { tab?: OtherTab } => ({
     tab: OTHER_TABS.find((tab) => tab === search.tab),
@@ -58,8 +61,6 @@ function AdminPage() {
     // Everything here keeps corners at 8px or less. The shared Button is a
     // pill on the landing page, so it is squared off for this page only.
     <div className="[&_[data-slot=button]]:rounded-lg">
-      <title>Admin · chairo.</title>
-      <meta name="robots" content="noindex" />
       {session === undefined ? (
         <CenteredCard>
           <Loading />

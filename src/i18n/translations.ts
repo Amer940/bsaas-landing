@@ -16,6 +16,20 @@ export function localeFromParam(param: string | undefined): Locale | null {
     : null
 }
 
+/** The locale a `{-$locale}` route renders in (the default if invalid). */
+export function routeLocale(param: string | undefined): Locale {
+  return localeFromParam(param) ?? DEFAULT_LOCALE
+}
+
+/** The locale of any pathname: `/en/...` is English, anything else default. */
+export function localeFromPathname(pathname: string): Locale {
+  const first = pathname.split('/')[1]
+  return first !== DEFAULT_LOCALE &&
+    (LOCALES as ReadonlyArray<string>).includes(first)
+    ? (first as Locale)
+    : DEFAULT_LOCALE
+}
+
 /** The `{-$locale}` route param for a locale (undefined for the default). */
 export function localeParam(locale: Locale): string | undefined {
   return locale === DEFAULT_LOCALE ? undefined : locale

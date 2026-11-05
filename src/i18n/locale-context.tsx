@@ -18,6 +18,7 @@ function LocaleProvider({
   locale: Locale
   children: ReactNode
 }) {
+  // Prerendered pages already have it; the app shell doesn't.
   useEffect(() => {
     document.documentElement.lang = locale
   }, [locale])

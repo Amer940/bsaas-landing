@@ -3,7 +3,9 @@ import { Navbar } from '#/components/navigation'
 import { Footer } from '#/components/sections/footer'
 import { useLocale } from '#/i18n/locale-context'
 import { LocalizedLink, isLocalizedPath } from '#/i18n/localized-link'
-import { Seo } from '#/i18n/seo'
+import { pageHead } from '#/i18n/seo'
+import type { IndexedPage } from '#/i18n/pages'
+import { routeLocale } from '#/i18n/translations'
 import type { Locale } from '#/i18n/translations'
 
 /**
@@ -146,6 +148,20 @@ function describe(doc: LegalDoc): string | undefined {
   return first.text.replace(/\*\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
 }
 
+/** `head()` for a legal page's route. */
+function legalHead(content: LocalizedLegalDoc, page: IndexedPage) {
+  return ({ params }: { params: { locale?: string } }) => {
+    const locale = routeLocale(params.locale)
+    const doc = content[locale]
+    return pageHead({
+      locale,
+      page,
+      title: `${doc.title} | Chairo`,
+      description: describe(doc) ?? doc.title,
+    })
+  }
+}
+
 interface LegalPageProps {
   content: LocalizedLegalDoc
 }
@@ -156,7 +172,6 @@ function LegalPage({ content }: LegalPageProps) {
 
   return (
     <>
-      <Seo title={`${doc.title} | Chairo`} description={describe(doc)} />
       <Navbar />
       <main className="md:px-4 px-2">
         <div className="site-container site-border">
@@ -176,5 +191,5 @@ function LegalPage({ content }: LegalPageProps) {
   )
 }
 
-export { LegalPage }
+export { LegalPage, legalHead }
 export type { LegalDoc, LocalizedLegalDoc }

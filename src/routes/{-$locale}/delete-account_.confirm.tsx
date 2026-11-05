@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import { noindexHead } from '#/i18n/seo'
+import { routeLocale } from '#/i18n/translations'
 import { createFileRoute } from '@tanstack/react-router'
 import { Eye, EyeOff } from 'lucide-react'
 import { Button } from '#/components/ui/button'
@@ -19,6 +21,10 @@ import { cn } from '#/lib/utils.ts'
 // deletion triggers.
 
 export const Route = createFileRoute('/{-$locale}/delete-account_/confirm')({
+  // Reads its link in the browser; never prerendered, kept out of search.
+  ssr: false,
+  head: ({ params }) =>
+    noindexHead(deleteAccountFormContent[routeLocale(params.locale)].metaTitle),
   component: DeleteAccountConfirmPage,
 })
 
@@ -119,7 +125,7 @@ function DeleteAccountConfirmPage() {
   }
 
   return (
-    <AuthCard metaTitle={c.metaTitle} homeLabel={c.home}>
+    <AuthCard homeLabel={c.home}>
       {step === 'done' ? (
         <div role="status" className="animate-fade-up">
           <h1 className="m-0 text-[1.75rem] leading-[1.1] font-bold tracking-[-0.03em]">
