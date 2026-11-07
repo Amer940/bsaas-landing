@@ -3,7 +3,7 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const privacyContent: LocalizedLegalDoc = {
   bs: {
     title: 'Politika privatnosti',
-    updated: 'Posljednja izmjena: 1. novembar 2026.',
+    updated: 'Posljednja izmjena: 7. novembar 2026.',
     blocks: [
       {
         type: 'p',
@@ -37,7 +37,8 @@ export const privacyContent: LocalizedLegalDoc = {
       {
         type: 'ul',
         items: [
-          'Email adresa i lozinka. Lozinka se čuva samo u obliku koji se ne može pročitati.',
+          'Email adresa i lozinka, ako je koristite. Lozinka se čuva samo u obliku koji se ne može pročitati.',
+          'Ako se prijavite putem Google ili Apple računa: Google nam daje vaše ime, email i profilnu fotografiju, a Apple ime i email. Apple umjesto vašeg pravog emaila može dati skrivenu adresu za prosljeđivanje. Google profilnu fotografiju čuvamo kao vašu profilnu fotografiju u aplikaciji. Vašu lozinku za Google ili Apple ne vidimo.',
           'Podaci o prijavi: kada je račun napravljen, kada ste se zadnji put prijavili i kada je email potvrđen.',
           'Ime, prezime, korisničko ime i kod salona preko kojeg ste se pridružili.',
           'Broj telefona, samo kod starijih računa. Aplikacija ga više ne traži.',
@@ -173,7 +174,7 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           [
             'Apple i Google',
-            'Preuzimanje aplikacije, prema njihovim pravilima privatnosti',
+            'Preuzimanje aplikacije i prijava putem Google ili Apple računa, prema njihovim pravilima privatnosti',
           ],
           [
             'Expo (650 Industries)',
@@ -300,7 +301,7 @@ export const privacyContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Privacy policy',
-    updated: 'Last updated: 1 November 2026',
+    updated: 'Last updated: 7 November 2026',
     blocks: [
       {
         type: 'p',
@@ -334,7 +335,8 @@ export const privacyContent: LocalizedLegalDoc = {
       {
         type: 'ul',
         items: [
-          'Email address and password. The password is stored only in a form that cannot be read.',
+          'Email address and password, if you use one. The password is stored only in a form that cannot be read.',
+          'If you sign in with Google or Apple: Google shares your name, email and profile picture with us, and Apple shares your name and email. Apple may give us a hidden relay address instead of your real email. We keep the Google profile picture as your Chairo profile photo. We never see your Google or Apple password.',
           'Sign-in details: when the account was created, when you last signed in, and when your email was confirmed.',
           'First name, last name, username, and the shop code you joined with.',
           'Phone number, only on older accounts. The app no longer asks for it.',
@@ -479,7 +481,7 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           [
             'Apple and Google',
-            'App downloads, under their own privacy policies',
+            'App downloads and sign-in with Google or Apple, under their own privacy policies',
           ],
           [
             'Expo (650 Industries)',
