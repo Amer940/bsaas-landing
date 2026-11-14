@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { landingContent } from '#/content/landing'
 import { SITE_URL } from '#/i18n/translations'
+import { APP_STORE_URL, PLAY_STORE_URL } from '#/lib/store-links'
 
 // llms.txt (llmstxt.org): a plain summary of the site for AI assistants,
 // built from the landing page copy. Prerendered to dist/llms.txt.
@@ -23,8 +24,8 @@ ${en.about.paragraphs.join('\n\n')}
 - What: appointment booking app for barbers, hairdressers and hair salons (salon side and client side in one app)
 - Where: Bosnia and Herzegovina; company based in Tešanj
 - Languages: Bosnian and English
-- Status: early access (waitlist at ${SITE_URL}/#prijava)
-- Platforms: Android first, iPhone coming soon
+- Status: early access; clients can download the app, salons apply for a business profile at ${SITE_URL}/#prijava
+- Platforms: iPhone (${APP_STORE_URL}) and Android (${PLAY_STORE_URL})
 - Price: free during early access
 - Contact: support@chairo.app
 

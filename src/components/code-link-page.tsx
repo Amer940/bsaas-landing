@@ -3,8 +3,10 @@ import { Check, Copy } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
 import { AuthCard } from '#/components/auth-card'
 import { Button } from '#/components/ui/button'
+import { StoreBadges } from '#/components/store-badges'
 import { useLocale } from '#/i18n/locale-context'
 import type { Locale } from '#/i18n/translations'
+import { PLAY_STORE_URL } from '#/lib/store-links'
 
 // What a code link opens when the app isn't there to: a shop's
 // (chairo.app/join/<code>, its QR and shared link) or a friend's invite
@@ -24,9 +26,8 @@ export interface CodeLinkContent {
   codeLabel: string
   copy: string
   copied: string
-  googlePlay: string
   playHint: string
-  iosSoon: string
+  appStoreHint: string
   openApp: string
   qrTitle: string
   qrCaption: string
@@ -42,12 +43,6 @@ interface CodeLinkPageProps {
   kind: CodeLinkKind
   content: Record<Locale, CodeLinkContent>
 }
-
-const PLAY_STORE_URL =
-  'https://play.google.com/store/apps/details?id=com.chairo.app'
-// TODO: the App Store link once the iOS app is out; until then iPhones get
-// the "coming soon" line instead of a store button.
-const APP_STORE_URL: string | null = null
 
 // What the QR encodes: the same link the app's own QR carries, without a
 // locale, so the phone that scans it lands on the app or this page.
@@ -96,8 +91,6 @@ export function CodeLinkPage({ code, kind, content }: CodeLinkPageProps) {
     timer.current = setTimeout(() => setCopied(false), COPIED_MS)
   }
 
-  const showIosSoon = platform === 'ios' && !APP_STORE_URL
-
   return (
     <AuthCard homeLabel={c.home}>
       <h1 className="m-0 text-[1.75rem] leading-[1.1] font-bold tracking-[-0.03em]">
@@ -145,17 +138,17 @@ export function CodeLinkPage({ code, kind, content }: CodeLinkPageProps) {
         </div>
       )}
 
-      {showIosSoon ? (
-        <p className="m-0 mt-7 text-base text-foreground/65">{c.iosSoon}</p>
-      ) : (
-        <>
-          <Button asChild size="lg" className="mt-7 w-full">
-            <a href={playStoreUrl(kind, code)}>{c.googlePlay}</a>
-          </Button>
-          <p className="m-0 mt-3 text-sm leading-normal text-foreground/50">
-            {c.playHint}
-          </p>
-        </>
+      {/* Each phone gets its own store; a computer gets both, under the QR. */}
+      <StoreBadges
+        playHref={playStoreUrl(kind, code)}
+        appStore={platform !== 'android'}
+        googlePlay={platform !== 'ios'}
+        className="mt-7 justify-center"
+      />
+      {platform !== 'other' && (
+        <p className="m-0 mt-3 text-center text-sm leading-normal text-foreground/50">
+          {platform === 'ios' ? c.appStoreHint : c.playHint}
+        </p>
       )}
 
       {/* With the app installed but the link opened in the browser anyway

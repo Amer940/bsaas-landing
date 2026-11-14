@@ -10,7 +10,7 @@ interface LandingContent {
     eyebrow: string
     title: string
     body: string
-    howItWorks: string
+    businessPrompt: string
     note: string
     imageAlt: string
   }
@@ -71,7 +71,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       eyebrow: 'Aplikacija za zakazivanje termina',
       title: 'Klijenti zakazuju online.\nTi samo ==šišaš==.',
       body: 'Chairo je aplikacija za online zakazivanje termina za frizere, barbere i salone u BiH. Nema više poruka i poziva: cijeli dan vidiš na jednom ekranu, s terminima, pauzama, nedolascima i zaradom.',
-      howItWorks: 'Pogledaj kako radi',
+      businessPrompt: 'Imaš salon ili radiš kao barber?',
       note: 'Besplatno tokom ranog pristupa',
       imageAlt:
         'chairo aplikacija: današnji raspored salona i obavijest o novom terminu',
@@ -150,11 +150,11 @@ export const landingContent: Record<Locale, LandingContent> = {
       ],
     },
     cta: {
-      title: 'Rani pristup\nza tvoj ==salon==.',
-      body: 'Chairo je u ranom pristupu. Ostavi email i javimo se s pristupom za tvoj salon.',
-      emailLabel: 'Email adresa za rani pristup',
+      title: 'Poslovni profil\nza tvoj ==salon==.',
+      body: 'Klijenti već mogu preuzeti chairo. Za salone i barbere otvaramo poslovne profile postepeno: ostavi email i javimo se kad tvoj salon bude spreman.',
+      emailLabel: 'Email adresa za poslovni profil',
       emailPlaceholder: 'tvoj@email.com',
-      submit: 'Prijavi se',
+      submit: 'Pošalji prijavu',
       success: 'Hvala! Javit ćemo ti se s pristupom za tvoj salon.',
       error: 'Nešto nije u redu. Pokušaj ponovo.',
     },
@@ -201,7 +201,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'Kada mogu početi koristiti chairo?',
           answer:
-            'Chairo je trenutno u ranom pristupu. Ostavi email na chairo.app/#prijava i javit ćemo ti se s pristupom za tvoj salon.',
+            'Aplikaciju možeš odmah preuzeti s App Storea ili Google Playa. Za poslovni profil salona prijavi se na chairo.app/#prijava i javit ćemo ti se s pristupom.',
         },
       ],
     },
@@ -217,7 +217,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       eyebrow: 'Booking app for barbers and salons',
       title: 'Clients book online.\nYou just ==cut==.',
       body: 'Chairo is an online booking app for barbers, hairdressers and salons in Bosnia and Herzegovina. No more DMs and calls: see your whole day on one screen, with bookings, breaks, no-shows and earnings.',
-      howItWorks: 'See how it works',
+      businessPrompt: 'Own a salon or work as a barber?',
       note: 'Free during early access',
       imageAlt:
         "The chairo app: today's salon schedule and a new booking notification",
@@ -297,11 +297,11 @@ export const landingContent: Record<Locale, LandingContent> = {
       ],
     },
     cta: {
-      title: 'Early access\nfor your ==salon==.',
-      body: "Chairo is in early access. Leave your email and we'll get in touch with access for your salon.",
-      emailLabel: 'Email address for early access',
+      title: 'A business profile\nfor your ==salon==.',
+      body: "Clients can already download chairo. We're opening business profiles for salons and barbers gradually: leave your email and we'll get in touch to set up yours.",
+      emailLabel: 'Email address for a business profile',
       emailPlaceholder: 'your@email.com',
-      submit: 'Sign up',
+      submit: 'Apply',
       success: "Thanks! We'll be in touch with access for your salon.",
       error: 'Something went wrong. Please try again.',
     },
@@ -348,7 +348,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'When can I start using chairo?',
           answer:
-            "Chairo is in early access right now. Leave your email at chairo.app/en#prijava and we'll get in touch with access for your salon.",
+            "You can download the app now from the App Store or Google Play. For a salon business profile, apply at chairo.app/en#prijava and we'll get in touch with access.",
         },
       ],
     },

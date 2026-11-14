@@ -9,10 +9,9 @@ export const joinContent: Record<Locale, CodeLinkContent> = {
     codeLabel: 'Kod salona',
     copy: 'Kopiraj',
     copied: 'Kopirano',
-    googlePlay: 'Preuzmi s Google Playa',
     playHint:
       'Preuzmeš li aplikaciju preko ovog dugmeta, kod će već biti upisan.',
-    iosSoon: 'Chairo za iPhone stiže uskoro.',
+    appStoreHint: 'Nakon instalacije otvori aplikaciju i unesi kod iznad.',
     openApp: 'Već imaš aplikaciju? Otvori je',
     qrTitle: 'Skeniraj telefonom',
     qrCaption:
@@ -27,10 +26,9 @@ export const joinContent: Record<Locale, CodeLinkContent> = {
     codeLabel: 'Shop code',
     copy: 'Copy',
     copied: 'Copied',
-    googlePlay: 'Get it on Google Play',
     playHint:
       'Install through this button and the code will already be filled in.',
-    iosSoon: 'Chairo for iPhone is coming soon.',
+    appStoreHint: 'Once installed, open the app and enter the code above.',
     openApp: 'Already have the app? Open it',
     qrTitle: 'Scan with your phone',
     qrCaption: 'Point your camera at the code to open this page on your phone.',

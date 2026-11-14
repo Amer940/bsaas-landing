@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import { Button } from '../ui/button'
 import { RichText } from '../rich-text'
 import { HeroScene } from '../hero-scene'
+import { StoreBadges } from '../store-badges'
 import { useLocale } from '#/i18n/locale-context'
 import { landingContent } from '#/content/landing'
 import { LocalizedLink } from '#/i18n/localized-link'
@@ -21,16 +22,15 @@ const Hero = () => {
         <p className="m-0 max-w-117.5 text-[1.0625rem] leading-normal text-foreground/65 md:text-[1.1875rem]">
           {c.body}
         </p>
-        <div className="mt-1.5 flex flex-col gap-2.5 sm:flex-row">
-          <Button size="lg" asChild>
+        <StoreBadges className="mt-1.5 justify-center sm:justify-start" />
+        <div className="flex flex-col items-center gap-2.5 sm:flex-row">
+          <span className="text-[0.9375rem] text-foreground/65">
+            {c.businessPrompt}
+          </span>
+          <Button variant="outline" asChild>
             <LocalizedLink to="/" hash="prijava">
               {t('nav.cta')}
               <ArrowRight aria-hidden="true" strokeWidth={2.3} />
-            </LocalizedLink>
-          </Button>
-          <Button variant="outline" size="lg" asChild>
-            <LocalizedLink to="/" hash="kako-radi">
-              {c.howItWorks}
             </LocalizedLink>
           </Button>
         </div>
