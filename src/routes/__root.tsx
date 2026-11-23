@@ -8,6 +8,7 @@ import {
 import type { ReactNode } from 'react'
 import type { QueryClient } from '@tanstack/react-query'
 
+import { CookieConsent } from '#/components/cookie-consent'
 import { NotFoundPage } from '#/components/not-found-page'
 import {
   DEFAULT_LOCALE,
@@ -73,6 +74,7 @@ function RootDocument({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
+        <CookieConsent />
         <Scripts />
       </body>
     </html>

@@ -68,6 +68,13 @@ export const translations = {
     'footer.support': 'Podrška',
     'footer.deleteAccount': 'Brisanje računa',
     'footer.rights': 'Sva prava zadržana.',
+    'footer.cookies': 'Postavke kolačića',
+    'cookies.title': 'Kolačići',
+    'cookies.body':
+      'Uz vaš pristanak koristimo Google Analytics da vidimo koliko ljudi posjećuje stranicu i koje stranice čitaju. Bez pristanka ne postavljamo kolačiće za analitiku.',
+    'cookies.learnMore': 'Više u politici privatnosti',
+    'cookies.accept': 'Prihvati',
+    'cookies.reject': 'Odbij',
   },
   en: {
     'nav.howItWorks': 'How it works',
@@ -84,6 +91,13 @@ export const translations = {
     'footer.support': 'Support',
     'footer.deleteAccount': 'Delete account',
     'footer.rights': 'All rights reserved.',
+    'footer.cookies': 'Cookie settings',
+    'cookies.title': 'Cookies',
+    'cookies.body':
+      'With your consent we use Google Analytics to see how many people visit the site and which pages they read. Without it, we set no analytics cookies.',
+    'cookies.learnMore': 'More in our privacy policy',
+    'cookies.accept': 'Accept',
+    'cookies.reject': 'Reject',
   },
 } satisfies Record<Locale, Record<string, string>>
 

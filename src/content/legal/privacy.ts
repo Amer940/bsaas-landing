@@ -3,7 +3,7 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const privacyContent: LocalizedLegalDoc = {
   bs: {
     title: 'Politika privatnosti',
-    updated: 'Posljednja izmjena: 7. novembar 2026.',
+    updated: 'Posljednja izmjena: 23. novembar 2026.',
     blocks: [
       {
         type: 'p',
@@ -91,7 +91,39 @@ export const privacyContent: LocalizedLegalDoc = {
           'Za registraciju i prijavu: ime, email i lozinka. To je isti račun kao u aplikaciji.',
           'Naš hosting (Cloudflare) bilježi IP adrese posjetilaca u tehničkim zapisima.',
           'Ako se prijavite za rani pristup: vaš email i jezik stranice.',
-          'Ne koristimo analitiku, reklame ni kolačiće za praćenje. Preglednik čuva samo ono što je potrebno za prijavu.',
+          'Analitika (Google Analytics), samo ako prihvatite kolačiće: koje stranice posjećujete, odakle ste došli na stranicu, približna lokacija (država i grad, iz IP adrese), vrsta uređaja i preglednika, jezik i vrijeme posjete. Google skraćuje IP adresu i ne čuva je. Ne šaljemo Googleu vaše ime, email ni druge podatke s računa.',
+          'Ne koristimo kolačiće za reklame.',
+        ],
+      },
+      { type: 'h3', text: 'Kolačići na web stranici' },
+      {
+        type: 'p',
+        text: 'Kada prvi put otvorite stranicu, pitamo vas da li prihvatate kolačiće za analitiku. Dok ne prihvatite, Google Analytics se ne učitava. Odluku možete promijeniti bilo kada preko linka **Postavke kolačića** na dnu stranice. Ako odbijete nakon što ste prihvatili, brišemo kolačiće Google Analyticsa.',
+      },
+      {
+        type: 'table',
+        head: ['Naziv', 'Svrha', 'Trajanje'],
+        rows: [
+          [
+            'chairo-cookie-consent-v1 (pohrana preglednika)',
+            'Pamti vaš izbor o kolačićima. Neophodno, ne šalje se nikome.',
+            'Dok ga ne obrišete u pregledniku',
+          ],
+          [
+            'Prijava (pohrana preglednika)',
+            'Drži vas prijavljenim. Neophodno.',
+            'Do odjave',
+          ],
+          [
+            '_ga',
+            'Google Analytics: razlikuje posjetioce. Samo uz pristanak.',
+            '2 godine',
+          ],
+          [
+            '_ga_<ID>',
+            'Google Analytics: čuva stanje posjete. Samo uz pristanak.',
+            '2 godine',
+          ],
         ],
       },
       { type: 'h3', text: 'Na vašem telefonu' },
@@ -107,7 +139,7 @@ export const privacyContent: LocalizedLegalDoc = {
       { type: 'h3', text: 'Šta ne radimo' },
       {
         type: 'p',
-        text: 'Ne koristimo analitiku, praćenje ni reklame. Ne koristimo vašu lokaciju. Ne prodajemo vaše podatke.',
+        text: 'Aplikacija ne koristi analitiku ni praćenje. Web stranica koristi Google Analytics samo uz vaš pristanak. Ne prikazujemo reklame. Aplikacija ne koristi vašu lokaciju. Ne prodajemo vaše podatke.',
       },
 
       { type: 'h2', text: '4. Zašto obrađujemo podatke i na kojoj osnovi' },
@@ -131,6 +163,10 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           ['Odgovori na zahtjeve u vezi s privatnošću', 'Zakonska obaveza'],
           ['Obavijest o pokretanju aplikacije (rani pristup)', 'Vaš pristanak'],
+          [
+            'Analitika posjeta web stranici (Google Analytics)',
+            'Vaš pristanak, koji možete povući bilo kada',
+          ],
           ['Naplata pretplate vlasnicima salona', 'Izvršenje ugovora'],
         ],
       },
@@ -167,6 +203,10 @@ export const privacyContent: LocalizedLegalDoc = {
           [
             'Google (Gmail)',
             'Prijem emailova koje nam pošaljete i naših internih upozorenja',
+          ],
+          [
+            'Google (Google Analytics)',
+            'Statistika posjeta web stranici, samo ako prihvatite kolačiće. Isključili smo Google signale i korištenje podataka za reklame.',
           ],
           [
             'Lemon Squeezy',
@@ -243,6 +283,10 @@ export const privacyContent: LocalizedLegalDoc = {
             'Emailovi poslani na support@ i privacy@',
             'Čuvaju se u našem email sandučetu. Na vaš zahtjev ih brišemo.',
           ],
+          [
+            'Podaci Google Analyticsa',
+            '14 mjeseci, zatim ih Google automatski briše',
+          ],
         ],
       },
 
@@ -301,7 +345,7 @@ export const privacyContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Privacy policy',
-    updated: 'Last updated: 7 November 2026',
+    updated: 'Last updated: 23 November 2026',
     blocks: [
       {
         type: 'p',
@@ -389,7 +433,39 @@ export const privacyContent: LocalizedLegalDoc = {
           "To sign up and sign in: name, email and password. It's the same account as in the app.",
           "Our host (Cloudflare) records visitors' IP addresses in technical logs.",
           'If you sign up for early access: your email and the site language.',
-          "We use no analytics, ads or tracking cookies. Your browser keeps only what's needed to stay signed in.",
+          "Analytics (Google Analytics), only if you accept cookies: which pages you visit, where you came from, approximate location (country and city, from your IP address), device and browser type, language and time of visit. Google truncates the IP address and doesn't store it. We don't send Google your name, email or any account data.",
+          'We use no advertising cookies.',
+        ],
+      },
+      { type: 'h3', text: 'Cookies on the website' },
+      {
+        type: 'p',
+        text: "When you first open the site, we ask whether you accept analytics cookies. Google Analytics doesn't load until you do. You can change your choice at any time with the **Cookie settings** link at the bottom of the page. If you reject after accepting, we delete the Google Analytics cookies.",
+      },
+      {
+        type: 'table',
+        head: ['Name', 'Purpose', 'Duration'],
+        rows: [
+          [
+            'chairo-cookie-consent-v1 (browser storage)',
+            'Remembers your cookie choice. Necessary, never sent anywhere.',
+            'Until you clear it in your browser',
+          ],
+          [
+            'Sign-in (browser storage)',
+            'Keeps you signed in. Necessary.',
+            'Until you sign out',
+          ],
+          [
+            '_ga',
+            'Google Analytics: tells visitors apart. Only with consent.',
+            '2 years',
+          ],
+          [
+            '_ga_<ID>',
+            'Google Analytics: keeps the state of a visit. Only with consent.',
+            '2 years',
+          ],
         ],
       },
       { type: 'h3', text: 'On your phone' },
@@ -405,7 +481,7 @@ export const privacyContent: LocalizedLegalDoc = {
       { type: 'h3', text: "What we don't do" },
       {
         type: 'p',
-        text: "No analytics, tracking or ads. We don't use your location. We don't sell your data.",
+        text: "The app has no analytics or tracking. The website uses Google Analytics only with your consent. We show no ads. The app doesn't use your location. We don't sell your data.",
       },
 
       { type: 'h2', text: '4. Why we process data and on what legal basis' },
@@ -438,6 +514,10 @@ export const privacyContent: LocalizedLegalDoc = {
           ['Email, push or SMS news', 'Only with your consent'],
           ['Answering privacy requests', 'Legal obligation'],
           ['Telling you when the app launches (early access)', 'Your consent'],
+          [
+            'Website visit analytics (Google Analytics)',
+            'Your consent, which you can withdraw at any time',
+          ],
           ['Charging shop owners a subscription', 'Performance of a contract'],
         ],
       },
@@ -474,6 +554,10 @@ export const privacyContent: LocalizedLegalDoc = {
           [
             'Google (Gmail)',
             'Receiving the emails you send us and our internal alerts',
+          ],
+          [
+            'Google (Google Analytics)',
+            "Website visit statistics, only if you accept cookies. We've turned off Google signals and any use of the data for ads.",
           ],
           [
             'Lemon Squeezy',
@@ -549,6 +633,10 @@ export const privacyContent: LocalizedLegalDoc = {
           [
             'Emails sent to support@ and privacy@',
             'Kept in our mailbox. We delete them on request.',
+          ],
+          [
+            'Google Analytics data',
+            '14 months, then Google deletes it automatically',
           ],
         ],
       },

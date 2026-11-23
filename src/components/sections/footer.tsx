@@ -6,6 +6,7 @@ import { linkedInIcon } from '../ui/linkedIn-icon'
 import { xIcon } from '../ui/x-icon'
 import { useLocale } from '#/i18n/locale-context'
 import { LocalizedLink } from '#/i18n/localized-link'
+import { ANALYTICS_ENABLED, openConsentSettings } from '#/lib/analytics'
 import { SHOW_SOCIAL_LINKS } from '#/lib/features'
 
 const SOCIAL_LINKS = [
@@ -76,6 +77,15 @@ function Footer() {
               {t(link.labelKey)}
             </LocalizedLink>
           ))}
+          {ANALYTICS_ENABLED && (
+            <button
+              type="button"
+              onClick={openConsentSettings}
+              className="cursor-pointer border-0 bg-transparent p-0 text-inherit hover:text-foreground transition-colors duration-250"
+            >
+              {t('footer.cookies')}
+            </button>
+          )}
         </div>
       </div>
     </footer>
