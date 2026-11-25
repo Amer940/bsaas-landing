@@ -56,6 +56,22 @@ export interface SlotPick {
 
 type DetailErrors = Partial<Record<keyof Details, string>>
 
+/** How long a sent code works (the server's limit). */
+const CODE_VALID_MS = 10 * 60 * 1000
+
+/**
+ * The last code sent and the booking it goes with. Kept by BookingFlow, so a
+ * trip back to the times (slot taken) or the details doesn't lose it: the
+ * same email goes straight back to the code, which still works.
+ */
+export interface SentCode {
+  request: BookingRequest
+  /** When a new code may be asked for. */
+  resendAt: number
+  /** When the code stops working. */
+  expiresAt: number
+}
+
 /** Booking ends: booked, or a refusal the flow handles (slot taken, limits). */
 export interface CheckoutHandlers {
   onBooked: (booking: BookingSummary, email: string) => void
@@ -124,11 +140,15 @@ export function Checkout({
   onDetails,
   stage,
   onStage,
+  sent,
+  onSent,
   handlers,
 }: {
   pick: SlotPick
   details: Details
   onDetails: (details: Details) => void
+  sent?: SentCode
+  onSent: (sent: SentCode) => void
   stage: 'details' | 'code'
   onStage: (stage: 'details' | 'code') => void
   handlers: CheckoutHandlers
@@ -139,8 +159,6 @@ export function Checkout({
   const [errors, setErrors] = useState<DetailErrors>({})
   const [formError, setFormError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
-  const [request, setRequest] = useState<BookingRequest | null>(null)
-  const [resendAt, setResendAt] = useState(0)
 
   async function token() {
     try {
@@ -150,13 +168,37 @@ export function Checkout({
     }
   }
 
-  /** Sends the code for `next`; true when it went out. */
-  async function send(next: BookingRequest) {
+  /**
+   * Sends the code for `next`: 'sent', 'wait' when one went out under a
+   * minute ago (that one still works, so the code step opens with the
+   * countdown), or false on a refusal (already handled).
+   */
+  async function send(next: BookingRequest): Promise<'sent' | 'wait' | false> {
+    const now = Date.now()
     try {
       const result = await sendCode(next, await token())
-      setResendAt(Date.now() + result.resend_after_seconds * 1000)
-      return true
+      onSent({
+        request: next,
+        resendAt: now + result.resend_after_seconds * 1000,
+        expiresAt: now + CODE_VALID_MS,
+      })
+      return 'sent'
     } catch (error) {
+      if (
+        error instanceof BookingError &&
+        error.hint === 'resend_too_soon' &&
+        error.resendAfterSeconds !== undefined
+      ) {
+        onSent({
+          request: next,
+          resendAt: now + error.resendAfterSeconds * 1000,
+          expiresAt:
+            sent?.request.email === next.email
+              ? sent.expiresAt
+              : now + CODE_VALID_MS,
+        })
+        return 'wait'
+      }
       handle(hintOf(error))
       return false
     } finally {
@@ -190,7 +232,6 @@ export function Checkout({
     if (Object.keys(checked.errors).length > 0 || !checked.phone) return
 
     const next = bookingRequest(pick, details, checked.phone, locale)
-    setRequest(next)
     setBusy(true)
 
     const device = rememberedDevice(next.email)
@@ -212,9 +253,22 @@ export function Checkout({
       }
     }
 
-    const sent = await send(next)
+    // A code for this email is still out (back from the times or the code
+    // step): use it with the updated booking rather than send another.
+    if (
+      sent &&
+      sent.request.email === next.email &&
+      sent.expiresAt > Date.now()
+    ) {
+      onSent({ ...sent, request: next })
+      setBusy(false)
+      onStage('code')
+      return
+    }
+
+    const result = await send(next)
     setBusy(false)
-    if (sent) onStage('code')
+    if (result) onStage('code')
   }
 
   return (
@@ -292,13 +346,13 @@ export function Checkout({
             {busy ? c.submittingDetails : c.submitDetails}
           </Button>
         </form>
-      ) : request ? (
+      ) : sent ? (
         <CodeStep
-          request={request}
-          resendAt={resendAt}
+          request={sent.request}
+          resendAt={sent.resendAt}
           onResend={async () => {
             setFormError(null)
-            return send(request)
+            return (await send(sent.request)) === 'sent'
           }}
           onChangeEmail={() => {
             setFormError(null)

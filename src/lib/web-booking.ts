@@ -35,7 +35,11 @@ export type BookingHint = (typeof BOOKING_HINTS)[number]
 
 /** A refusal from the RPCs or the Edge Function, as one of BOOKING_HINTS. */
 export class BookingError extends Error {
-  constructor(readonly hint: BookingHint) {
+  constructor(
+    readonly hint: BookingHint,
+    /** With `resend_too_soon`: how long until a new code can be sent. */
+    readonly resendAfterSeconds?: number,
+  ) {
     super(hint)
     this.name = 'BookingError'
   }
@@ -194,7 +198,9 @@ export interface BookingSummary {
   }
 }
 
-type FunctionResult<T> = ({ ok: true } & T) | { ok: false; error?: unknown }
+type FunctionResult<T> =
+  | ({ ok: true } & T)
+  | { ok: false; error?: unknown; resend_after_seconds?: unknown }
 
 async function call<T>(
   action: string,
@@ -215,7 +221,13 @@ async function call<T>(
         : null
   }
   if (!result || typeof result !== 'object') throw new BookingError('failed')
-  if (!result.ok) throw new BookingError(toHint(result.error))
+  if (!result.ok) {
+    const wait = result.resend_after_seconds
+    throw new BookingError(
+      toHint(result.error),
+      typeof wait === 'number' ? wait : undefined,
+    )
+  }
   return result
 }
 

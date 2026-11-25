@@ -13,7 +13,7 @@ import {
   TimeStep,
 } from '#/components/booking/booking-steps'
 import { Checkout } from '#/components/booking/checkout'
-import type { Details } from '#/components/booking/checkout'
+import type { Details, SentCode } from '#/components/booking/checkout'
 import { StoreBadges } from '#/components/store-badges'
 import { bookContent } from '#/content/book'
 import { useLocale } from '#/i18n/locale-context'
@@ -64,6 +64,8 @@ export function BookingFlow({ code, shop }: { code: string; shop: WebShop }) {
   }>()
   // A refusal only the shop can get past (booking off, a limit): its phone.
   const [blocked, setBlocked] = useState<BookingHint>()
+  // The last code sent; survives leaving the code step (see SentCode).
+  const [sent, setSent] = useState<SentCode>()
 
   function go(next: Step) {
     setStep(next)
@@ -78,7 +80,12 @@ export function BookingFlow({ code, shop }: { code: string; shop: WebShop }) {
     if (hint === 'slot_taken') {
       setMinutes(undefined)
       setTimeNotice(c.slotTakenNotice)
-      void queryClient.invalidateQueries({ queryKey: ['web-booking', code] })
+      // Only the times: the shop and the lists before them stay as they are.
+      for (const list of ['days', 'slots']) {
+        void queryClient.invalidateQueries({
+          queryKey: ['web-booking', code, list],
+        })
+      }
       go('time')
       return
     }
@@ -95,7 +102,11 @@ export function BookingFlow({ code, shop }: { code: string; shop: WebShop }) {
           onBack={
             blocked === 'web_booking_off'
               ? undefined
-              : () => setBlocked(undefined)
+              : () => {
+                  // Back to the form, whichever step was refused.
+                  setBlocked(undefined)
+                  if (step === 'code') go('details')
+                }
           }
         />
         <ShopUnavailable
@@ -229,6 +240,8 @@ export function BookingFlow({ code, shop }: { code: string; shop: WebShop }) {
             onDetails={setDetails}
             stage={step}
             onStage={go}
+            sent={sent}
+            onSent={setSent}
             handlers={{
               onBooked: (booking, email) => {
                 setBooked({ booking, email })

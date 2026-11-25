@@ -42,24 +42,30 @@ function BookPage() {
     queryKey: ['web-booking', code, 'shop'],
     queryFn: () => fetchWebShop(code),
     // Read fresh on each visit: the owner may have switched booking off.
+    // Not again on focus: coming back from the mail app mid-booking must
+    // not reload the page under the person.
     staleTime: 0,
+    refetchOnWindowFocus: false,
   })
 
   if (query.isSuccess && !query.data) return <NotFoundPage />
 
   return (
     <AuthCard homeLabel={c.home}>
-      {query.isPending ? (
-        <Loading />
+      {/* Once the shop is read, a later failed refetch keeps the page. */}
+      {query.data ? (
+        query.data.bookable ? (
+          // TODO: web booking should also need the shop's active subscription
+          // once subscriptions have a backend (web_booking_shop's `bookable`).
+          <BookingFlow code={code} shop={query.data} />
+        ) : (
+          <ShopUnavailable shop={query.data} />
+        )
       ) : query.isError ? (
         <LoadFailed onRetry={() => void query.refetch()} />
-      ) : query.data && !query.data.bookable ? (
-        <ShopUnavailable shop={query.data} />
-      ) : query.data ? (
-        // TODO: web booking should also need the shop's active subscription
-        // once subscriptions have a backend (web_booking_shop's `bookable`).
-        <BookingFlow code={code} shop={query.data} />
-      ) : null}
+      ) : (
+        <Loading />
+      )}
     </AuthCard>
   )
 }

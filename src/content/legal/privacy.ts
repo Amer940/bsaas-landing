@@ -95,9 +95,9 @@ export const privacyContent: LocalizedLegalDoc = {
         items: [
           'Uz termin čuvamo ime, prezime, email, broj telefona i napomenu ako je upišete, te jezik stranice. Salon i njegov tim vide ove podatke i broj nedolazaka za taj broj telefona u tom salonu.',
           'Na email vam šaljemo kod za potvrdu, potvrdu termina s linkom za otkazivanje, podsjetnik dan prije termina i obavijest ako salon termin otkaže ili pomjeri.',
-          'Kod za potvrdu čuvamo samo u obliku koji se ne može pročitati. Radi zaštite od zloupotrebe bilježimo IP adresu i vrijeme slanja kodova i pokušaja zakazivanja.',
+          'Kod za potvrdu čuvamo samo u obliku koji se ne može pročitati. Radi zaštite od zloupotrebe bilježimo vrijeme svakog poslanog koda i IP adresu u nečitljivom obliku (hash).',
           'Nakon potvrđenog koda, preglednik pamti oznaku za taj email, pa pri sljedećem zakazivanju s istim emailom na tom uređaju kod nije potreban.',
-          'Prije slanja koda Cloudflare Turnstile provjerava da stranicu koristi osoba, a ne program.',
+          'Prije slanja koda, ili kada zapamćeni email zakazuje bez koda, Cloudflare Turnstile provjerava da stranicu koristi osoba, a ne program.',
         ],
       },
       { type: 'h3', text: 'Web stranica' },
@@ -309,7 +309,7 @@ export const privacyContent: LocalizedLegalDoc = {
             'Dok salon koristi Chairo, ili dok ne zatražite brisanje',
           ],
           [
-            'Kodovi za potvrdu, IP adrese i zapisi o pokušajima online zakazivanja',
+            'Kodovi za potvrdu i zapisi o poslanim kodovima (s IP adresom u nečitljivom obliku)',
             '24 sata',
           ],
           [
@@ -470,9 +470,9 @@ export const privacyContent: LocalizedLegalDoc = {
         items: [
           'With the booking we keep your first and last name, email, phone number, the note if you write one, and the page language. The shop and its team see these, and the number of no-shows for that phone number at that shop.',
           'We email you a confirmation code, the booking confirmation with a link to cancel, a reminder the day before, and a message if the shop cancels or moves the booking.',
-          "The confirmation code is stored only in a form that can't be read. To prevent abuse we record the IP address and time of codes sent and booking attempts.",
+          "The confirmation code is stored only in a form that can't be read. To prevent abuse we record a hashed IP address and the time of each code sent.",
           "After a confirmed code, your browser remembers a token for that email, so booking again with the same email on that device doesn't need a code.",
-          'Before a code is sent, Cloudflare Turnstile checks that a person, not a program, is using the page.',
+          'Before a code is sent or a remembered email books, Cloudflare Turnstile checks that a person, not a program, is using the page.',
         ],
       },
       { type: 'h3', text: 'Website' },
@@ -693,7 +693,7 @@ export const privacyContent: LocalizedLegalDoc = {
             'While the shop uses Chairo, or until you ask us to delete them',
           ],
           [
-            'Confirmation codes, IP addresses and records of online booking attempts',
+            'Confirmation codes and records of codes sent (with a hashed IP address)',
             '24 hours',
           ],
           [

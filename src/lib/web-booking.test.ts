@@ -84,6 +84,30 @@ describe('web-booking function', () => {
     })
   })
 
+  test('resend_too_soon carries the wait', async () => {
+    invoke.mockResolvedValue({
+      data: null,
+      error: {
+        context: new Response(
+          JSON.stringify({
+            ok: false,
+            error: 'resend_too_soon',
+            resend_after_seconds: 42,
+          }),
+          { status: 429 },
+        ),
+      },
+    })
+    await expect(sendCode(booking, 't')).rejects.toMatchObject({
+      hint: 'resend_too_soon',
+      resendAfterSeconds: 42,
+    })
+  })
+
+  test('device_token_invalid is its own hint', () => {
+    expect(toHint('device_token_invalid')).toBe('device_token_invalid')
+  })
+
   test('a network failure is failed', async () => {
     invoke.mockResolvedValue({ data: null, error: new Error('offline') })
     await expect(sendCode(booking, 't')).rejects.toMatchObject({
