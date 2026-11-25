@@ -159,7 +159,8 @@ export function BookingFlow({ code, shop }: { code: string; shop: WebShop }) {
             : undefined
         }
       />
-      <div key={step} className="animate-fade-up">
+      {/* Details and code share one Checkout, which holds the sent booking. */}
+      <div key={step === 'code' ? 'details' : step} className="animate-fade-up">
         {step === 'barber' ? (
           <BarberStep
             code={code}

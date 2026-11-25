@@ -268,7 +268,7 @@ export function TimeStep({
                   )}
                 >
                   <span className="text-xs capitalize opacity-70">
-                    {weekdayShort(d, locale).replace('.', '')}
+                    {weekdayShort(d, locale)}
                   </span>
                   <span className="text-lg font-bold">{dayOfMonth(d)}</span>
                 </button>

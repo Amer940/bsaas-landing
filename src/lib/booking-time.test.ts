@@ -1,10 +1,13 @@
 import { describe, expect, test } from 'vitest'
 import {
   addDays,
+  longDay,
   minutesLabel,
+  monthLabel,
   priceLabel,
   startsAtParts,
   todayIn,
+  weekdayShort,
 } from './booking-time'
 
 describe('booking-time', () => {
@@ -31,6 +34,15 @@ describe('booking-time', () => {
     expect(
       startsAtParts('2026-11-25T08:30:00Z', 'Europe/Sarajevo', 'en').time,
     ).toBe('09:30')
+  })
+
+  test('Bosnian names without relying on the browser', () => {
+    expect(longDay('2026-11-25', 'bs')).toBe('srijeda, 25. novembar')
+    expect(weekdayShort('2026-11-29', 'bs')).toBe('ned')
+    expect(monthLabel('2026-12-01', 'bs')).toBe('decembar 2026.')
+    expect(
+      startsAtParts('2026-11-25T23:30:00Z', 'Europe/Sarajevo', 'bs'),
+    ).toEqual({ day: 'četvrtak, 26. novembar 2026.', time: '00:30' })
   })
 
   test('priceLabel', () => {

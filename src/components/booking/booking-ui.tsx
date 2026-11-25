@@ -213,10 +213,13 @@ export function Field({
   hint?: string
   children: ReactNode
 }) {
+  // The message sits outside the label, so it isn't read as the field's name.
   return (
-    <label className="block">
-      <span className="text-sm text-foreground/65">{label}</span>
-      <span className="mt-1.5 block">{children}</span>
+    <div>
+      <label className="block">
+        <span className="text-sm text-foreground/65">{label}</span>
+        <span className="mt-1.5 block">{children}</span>
+      </label>
       {error ? (
         <span role="alert" className="mt-1.5 block text-sm text-[#ff8a7e]">
           {error}
@@ -224,6 +227,6 @@ export function Field({
       ) : hint ? (
         <span className="mt-1.5 block text-sm text-foreground/50">{hint}</span>
       ) : null}
-    </label>
+    </div>
   )
 }

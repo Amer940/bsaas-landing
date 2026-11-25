@@ -169,6 +169,18 @@ export function Checkout({
     }
   }
 
+  /** Changes fields and clears their messages. */
+  function edit(patch: Partial<Details>) {
+    onDetails({ ...details, ...patch })
+    setErrors((current) => {
+      const next = { ...current }
+      for (const key of Object.keys(patch) as Array<keyof Details>) {
+        delete next[key === 'country' ? 'phone' : key]
+      }
+      return next
+    })
+  }
+
   function handle(hint: BookingHint) {
     if (FLOW_HINTS.includes(hint)) handlers.onRefused(hint)
     else setFormError(c.errors[hint])
@@ -213,7 +225,7 @@ export function Checkout({
   return (
     <>
       {stage === 'details' ? (
-        <form onSubmit={submitDetails} noValidate>
+        <form onSubmit={submitDetails} noValidate className="animate-fade-up">
           <StepTitle body={c.detailsBody}>{c.detailsTitle}</StepTitle>
           <div className="mt-7 flex flex-col gap-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -222,9 +234,7 @@ export function Checkout({
                   autoComplete="given-name"
                   value={details.firstName}
                   maxLength={NAME_MAX + 10}
-                  onChange={(e) =>
-                    onDetails({ ...details, firstName: e.target.value })
-                  }
+                  onChange={(e) => edit({ firstName: e.target.value })}
                   aria-invalid={!!errors.firstName}
                   className="h-13 rounded-2xl px-5"
                 />
@@ -234,9 +244,7 @@ export function Checkout({
                   autoComplete="family-name"
                   value={details.lastName}
                   maxLength={NAME_MAX + 10}
-                  onChange={(e) =>
-                    onDetails({ ...details, lastName: e.target.value })
-                  }
+                  onChange={(e) => edit({ lastName: e.target.value })}
                   aria-invalid={!!errors.lastName}
                   className="h-13 rounded-2xl px-5"
                 />
@@ -254,18 +262,16 @@ export function Checkout({
                 inputMode="email"
                 autoComplete="email"
                 value={details.email}
-                onChange={(e) =>
-                  onDetails({ ...details, email: e.target.value })
-                }
+                onChange={(e) => edit({ email: e.target.value })}
                 aria-invalid={!!errors.email}
                 className="h-13 rounded-2xl px-5"
               />
             </Field>
             <PhoneField
               country={details.country}
-              onCountry={(country) => onDetails({ ...details, country })}
+              onCountry={(country) => edit({ country })}
               value={details.phone}
-              onChange={(phone) => onDetails({ ...details, phone })}
+              onChange={(phone) => edit({ phone })}
               error={errors.phone}
             />
             <Field label={c.note} error={errors.note} hint={c.noteHint}>
@@ -273,9 +279,7 @@ export function Checkout({
                 value={details.note}
                 maxLength={NOTE_MAX}
                 rows={2}
-                onChange={(e) =>
-                  onDetails({ ...details, note: e.target.value })
-                }
+                onChange={(e) => edit({ note: e.target.value })}
                 aria-invalid={!!errors.note}
                 className="min-h-13 rounded-2xl border-none bg-white/8 px-5 py-3.5 text-base shadow-none focus-visible:ring-2 focus-visible:ring-foreground/30 md:text-base"
               />
@@ -392,6 +396,7 @@ function CodeStep({
 
   return (
     <form
+      className="animate-fade-up"
       onSubmit={(event) => {
         event.preventDefault()
         void confirm(otp)
