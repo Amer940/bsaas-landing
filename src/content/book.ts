@@ -199,6 +199,8 @@ export const bookContent: Record<Locale, BookContent> = {
       cancel_too_late:
         'Termin se više ne može otkazati online. Ako ne možeš doći, javi se salonu.',
       not_found: 'Ne možemo pronaći ovaj termin.',
+      device_token_invalid:
+        'Ovaj uređaj više ne pamti tvoj email. Poslat ćemo ti novi kod.',
       failed: 'Nešto nije uspjelo. Pokušaj ponovo.',
     },
   },
@@ -312,6 +314,8 @@ export const bookContent: Record<Locale, BookContent> = {
       cancel_too_late:
         "It's too late to cancel online. If you can't make it, contact the shop.",
       not_found: "We can't find this appointment.",
+      device_token_invalid:
+        "This device no longer remembers your email. We'll send you a code.",
       failed: 'Something went wrong. Try again.',
     },
   },

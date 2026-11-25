@@ -27,6 +27,7 @@ export const BOOKING_HINTS = [
   'resend_too_soon',
   'cancel_too_late',
   'not_found',
+  'device_token_invalid',
   'failed',
 ] as const
 

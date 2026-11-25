@@ -115,13 +115,8 @@ const FLOW_HINTS: ReadonlyArray<BookingHint> = [
   'no_show_limit',
 ]
 
-/** A remembered device token the server no longer takes: ask for a code. */
-const STALE_DEVICE_HINTS: ReadonlyArray<BookingHint> = [
-  'invalid_input',
-  'not_found',
-  'code_expired',
-  'code_wrong',
-]
+/** The remembered device token is bad, expired or another email's: ask for a code. */
+const STALE_DEVICE_HINTS: ReadonlyArray<BookingHint> = ['device_token_invalid']
 
 export function Checkout({
   pick,
