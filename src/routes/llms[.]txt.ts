@@ -22,7 +22,7 @@ ${en.about.paragraphs.join('\n\n')}
 ## Key facts
 
 - What: appointment booking app for barbers, hairdressers and hair salons (salon side and client side in one app)
-- Where: Bosnia and Herzegovina; company based in Tešanj
+- Where: available to salons anywhere; company based in Tešanj, Bosnia and Herzegovina
 - Languages: Bosnian and English
 - Status: early access; clients can download the app, salons apply for a business profile at ${SITE_URL}/#prijava
 - Platforms: iPhone (${APP_STORE_URL}) and Android (${PLAY_STORE_URL})

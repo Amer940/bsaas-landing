@@ -65,12 +65,12 @@ export const landingContent: Record<Locale, LandingContent> = {
     meta: {
       title: 'Chairo | Aplikacija za zakazivanje termina za frizere',
       description:
-        'Chairo je aplikacija za online zakazivanje termina za frizere, barbere i salone u BiH. Klijenti rezervišu 0-24, bez poziva i poruka. Manje nedolazaka, pun raspored.',
+        'Chairo je aplikacija za online zakazivanje termina za frizere, barbere i salone. Klijenti rezervišu 0-24, bez poziva i poruka. Manje nedolazaka, pun raspored.',
     },
     hero: {
       eyebrow: 'Aplikacija za zakazivanje termina',
       title: 'Klijenti zakazuju online.\nTi samo ==šišaš==.',
-      body: 'Chairo je aplikacija za online zakazivanje termina za frizere, barbere i salone u BiH. Nema više poruka i poziva: cijeli dan vidiš na jednom ekranu, s terminima, pauzama, nedolascima i zaradom.',
+      body: 'Chairo je aplikacija za online zakazivanje termina za frizere, barbere i salone. Nema više poruka i poziva: cijeli dan vidiš na jednom ekranu, s terminima, pauzama, nedolascima i zaradom.',
       businessPrompt: 'Imaš salon ili radiš kao barber?',
       note: 'Besplatno tokom ranog pristupa',
       imageAlt:
@@ -142,11 +142,11 @@ export const landingContent: Record<Locale, LandingContent> = {
     },
     about: {
       eyebrow: 'Šta je chairo',
-      title: 'Napravljeno u Tešnju,\nza salone u ==BiH==.',
+      title: 'Napravljeno za salone,\nbilo ==gdje==.',
       paragraphs: [
-        'Chairo je aplikacija za zakazivanje termina namijenjena frizerima, barberima i frizerskim salonima u Bosni i Hercegovini. Klijenti sami biraju frizera, uslugu i slobodan termin, 0–24, a ti sve vidiš u jednom rasporedu, bez dopisivanja na Instagramu i Viberu i bez poziva usred šišanja.',
+        'Chairo je aplikacija za zakazivanje termina namijenjena frizerima, barberima i frizerskim salonima. Klijenti sami biraju frizera, uslugu i slobodan termin, 0–24, a ti sve vidiš u jednom rasporedu, bez dopisivanja na Instagramu i Viberu i bez poziva usred šišanja.',
         'Radi jednako dobro za barbera sa jednom stolicom i za salon sa cijelim timom. Svaki frizer ima svoj raspored, radne sedmice postavljaš šablonima, a slobodne dane frizeri traže u aplikaciji. Stalni klijenti mogu imati stalni termin, pa se isti dogovor ne ponavlja svake sedmice.',
-        'Chairo pravimo u Tešnju. Aplikacija je na bosanskom i engleskom jeziku, a tokom ranog pristupa je besplatna.',
+        'Aplikacija je na bosanskom i engleskom jeziku, a tokom ranog pristupa je besplatna.',
       ],
     },
     cta: {
@@ -196,7 +196,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'Za koga je chairo i gdje radi?',
           answer:
-            'Za frizere, barbere i frizerske salone u Bosni i Hercegovini, od jedne stolice do salona sa cijelim timom. Aplikacija je na bosanskom i engleskom jeziku, a pravimo je u Tešnju.',
+            'Za frizere, barbere i frizerske salone, od jedne stolice do salona sa cijelim timom, gdje god radili. Aplikacija je na bosanskom i engleskom jeziku.',
         },
         {
           title: 'Kada mogu početi koristiti chairo?',
@@ -211,12 +211,12 @@ export const landingContent: Record<Locale, LandingContent> = {
     meta: {
       title: 'Chairo | Booking app for barbers and hair salons',
       description:
-        'Chairo is an appointment booking app for barbers and hair salons in Bosnia and Herzegovina. Clients book 24/7, no DMs or calls. Fewer no-shows, a full chair.',
+        'Chairo is an appointment booking app for barbers and hair salons. Clients book 24/7, no DMs or calls. Fewer no-shows, a full chair.',
     },
     hero: {
       eyebrow: 'Booking app for barbers and salons',
       title: 'Clients book online.\nYou just ==cut==.',
-      body: 'Chairo is an online booking app for barbers, hairdressers and salons in Bosnia and Herzegovina. No more DMs and calls: see your whole day on one screen, with bookings, breaks, no-shows and earnings.',
+      body: 'Chairo is an online booking app for barbers, hairdressers and salons. No more DMs and calls: see your whole day on one screen, with bookings, breaks, no-shows and earnings.',
       businessPrompt: 'Own a salon or work as a barber?',
       note: 'Free during early access',
       imageAlt:
@@ -289,11 +289,11 @@ export const landingContent: Record<Locale, LandingContent> = {
     },
     about: {
       eyebrow: 'What chairo is',
-      title: 'Made in Tešanj,\nfor salons in ==Bosnia==.',
+      title: 'Made for salons,\n==anywhere==.',
       paragraphs: [
-        'Chairo is an appointment booking app for barbers, hairdressers and hair salons in Bosnia and Herzegovina. Clients pick their barber, service and an open slot themselves, 24/7, and you see everything in one schedule, without DMs on Instagram and Viber or calls in the middle of a cut.',
+        'Chairo is an appointment booking app for barbers, hairdressers and hair salons. Clients pick their barber, service and an open slot themselves, 24/7, and you see everything in one schedule, without DMs on Instagram and Viber or calls in the middle of a cut.',
         'It works just as well for a barber with one chair as for a salon with a whole team. Every barber has their own schedule, you set up working weeks with templates, and barbers request days off in the app. Regular clients can have a recurring appointment, so the same booking never has to be arranged twice.',
-        'We build Chairo in Tešanj. The app is in Bosnian and English, and it is free during early access.',
+        'The app is in Bosnian and English, and it is free during early access.',
       ],
     },
     cta: {
@@ -343,7 +343,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'Who is chairo for, and where does it work?',
           answer:
-            'For barbers, hairdressers and hair salons in Bosnia and Herzegovina, from a single chair to a salon with a whole team. The app is in Bosnian and English, and we build it in Tešanj.',
+            'For barbers, hairdressers and hair salons, from a single chair to a salon with a whole team, wherever you work. The app is in Bosnian and English.',
         },
         {
           title: 'When can I start using chairo?',

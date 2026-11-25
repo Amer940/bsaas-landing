@@ -35,7 +35,6 @@ function structuredData(locale: Locale) {
   const { meta, faq, about } = landingContent[locale]
   const url = SITE_URL + localizePath('/', locale)
   const organization = { '@id': ORGANIZATION_ID }
-  const bosnia = { '@type': 'Country', name: 'Bosnia and Herzegovina' }
 
   return {
     '@context': 'https://schema.org',
@@ -54,7 +53,6 @@ function structuredData(locale: Locale) {
           addressLocality: 'Tešanj',
           addressCountry: 'BA',
         },
-        areaServed: bosnia,
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'customer support',
