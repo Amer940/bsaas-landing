@@ -3,7 +3,7 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const privacyContent: LocalizedLegalDoc = {
   bs: {
     title: 'Politika privatnosti',
-    updated: 'Posljednja izmjena: 23. novembar 2026.',
+    updated: 'Posljednja izmjena: 25. novembar 2026.',
     blocks: [
       {
         type: 'p',
@@ -28,6 +28,7 @@ export const privacyContent: LocalizedLegalDoc = {
           'frizere i druge članove tima salona,',
           'vlasnike salona,',
           'osobe bez korisničkog računa koje salon upiše uz termin,',
+          'osobe koje zakažu termin preko linka salona za online zakazivanje, bez korisničkog računa,',
           'posjetioce web stranice chairo.app.',
         ],
       },
@@ -84,6 +85,21 @@ export const privacyContent: LocalizedLegalDoc = {
         type: 'p',
         text: 'Ako vas salon upiše za termin bez korisničkog računa u aplikaciji, čuvamo ime i broj telefona koje je salon unio.',
       },
+      { type: 'h3', text: 'Online zakazivanje preko linka salona' },
+      {
+        type: 'p',
+        text: 'Salon može objaviti link za online zakazivanje (chairo.app/book/…), na primjer na svom Google profilu. Termin tamo zakazujete bez korisničkog računa. Takav termin se ne povezuje s računom u aplikaciji, ni kada imate račun s istim emailom.',
+      },
+      {
+        type: 'ul',
+        items: [
+          'Uz termin čuvamo ime, prezime, email, broj telefona i napomenu ako je upišete, te jezik stranice. Salon i njegov tim vide ove podatke i broj nedolazaka za taj broj telefona u tom salonu.',
+          'Na email vam šaljemo kod za potvrdu, potvrdu termina s linkom za otkazivanje, podsjetnik dan prije termina i obavijest ako salon termin otkaže ili pomjeri.',
+          'Kod za potvrdu čuvamo samo u obliku koji se ne može pročitati. Radi zaštite od zloupotrebe bilježimo IP adresu i vrijeme slanja kodova i pokušaja zakazivanja.',
+          'Nakon potvrđenog koda, preglednik pamti oznaku za taj email, pa pri sljedećem zakazivanju s istim emailom na tom uređaju kod nije potreban.',
+          'Prije slanja koda Cloudflare Turnstile provjerava da stranicu koristi osoba, a ne program.',
+        ],
+      },
       { type: 'h3', text: 'Web stranica' },
       {
         type: 'ul',
@@ -113,6 +129,11 @@ export const privacyContent: LocalizedLegalDoc = {
             'Prijava (pohrana preglednika)',
             'Drži vas prijavljenim. Neophodno.',
             'Do odjave',
+          ],
+          [
+            'chairo-booking-device:<email> (pohrana preglednika)',
+            'Pamti da je email potvrđen kodom pri online zakazivanju, pa kod ne treba ponovo. Postavlja se samo kada potvrdite kod.',
+            '90 dana',
           ],
           [
             '_ga',
@@ -149,6 +170,10 @@ export const privacyContent: LocalizedLegalDoc = {
         rows: [
           ['Vaš račun i prijava', 'Izvršenje ugovora (uslova korištenja)'],
           ['Zakazivanje termina i rad salona', 'Izvršenje ugovora'],
+          [
+            'Online zakazivanje preko linka salona i emailovi o tom terminu (kod, potvrda, podsjetnik, otkazivanje ili pomjeranje)',
+            'Izvršenje ugovora, na vaš zahtjev za termin',
+          ],
           ['Obavijesti u aplikaciji o terminima', 'Izvršenje ugovora'],
           [
             'Push obavijesti o vašim terminima i računu (novi, pomjereni i otkazani termini, podsjetnici prije termina, ponude i izmjene stalnih termina i odgovori na njih, propušteni termini, uklanjanje iz tima, zatvaranje salona)',
@@ -194,11 +219,11 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           [
             'Resend',
-            'Slanje emailova u vezi s računom i emaila dobrodošlice za rani pristup, te internih upozorenja nama. Upozorenja samo javljaju da je stigla nova prijava greške ili zahtjev u vezi s privatnošću, bez ličnih podataka.',
+            'Slanje emailova u vezi s računom, emaila dobrodošlice za rani pristup, emailova o terminima zakazanim online (kod, potvrda, podsjetnik, otkazivanje, pomjeranje), te internih upozorenja nama. Upozorenja samo javljaju da je stigla nova prijava greške ili zahtjev u vezi s privatnošću, bez ličnih podataka.',
           ],
           [
             'Cloudflare',
-            'Hosting web stranice i prosljeđivanje emailova poslanih na support@ i privacy@',
+            'Hosting web stranice, provjera Turnstile pri prijavi za rani pristup i online zakazivanju, te prosljeđivanje emailova poslanih na support@ i privacy@',
           ],
           [
             'Google (Gmail)',
@@ -280,6 +305,14 @@ export const privacyContent: LocalizedLegalDoc = {
             'Dok salon koristi Chairo, ili dok ne zatražite brisanje',
           ],
           [
+            'Termini zakazani online preko linka salona (ime, email, telefon, napomena)',
+            'Dok salon koristi Chairo, ili dok ne zatražite brisanje',
+          ],
+          [
+            'Kodovi za potvrdu, IP adrese i zapisi o pokušajima online zakazivanja',
+            '24 sata',
+          ],
+          [
             'Emailovi poslani na support@ i privacy@',
             'Čuvaju se u našem email sandučetu. Na vaš zahtjev ih brišemo.',
           ],
@@ -345,7 +378,7 @@ export const privacyContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Privacy policy',
-    updated: 'Last updated: 23 November 2026',
+    updated: 'Last updated: 25 November 2026',
     blocks: [
       {
         type: 'p',
@@ -370,6 +403,7 @@ export const privacyContent: LocalizedLegalDoc = {
           'barbers and other shop team members,',
           'shop owners,',
           'people without an account whom a shop enters for an appointment,',
+          "people without an account who book through a shop's online booking link,",
           'visitors to chairo.app.',
         ],
       },
@@ -426,6 +460,21 @@ export const privacyContent: LocalizedLegalDoc = {
         type: 'p',
         text: 'If a shop books you without a Chairo account, we keep the name and phone number the shop entered.',
       },
+      { type: 'h3', text: "Online booking through a shop's link" },
+      {
+        type: 'p',
+        text: "A shop can publish an online booking link (chairo.app/book/…), for example on its Google profile. There you book without an account. Such a booking isn't linked to an app account, even if you have one with the same email.",
+      },
+      {
+        type: 'ul',
+        items: [
+          'With the booking we keep your first and last name, email, phone number, the note if you write one, and the page language. The shop and its team see these, and the number of no-shows for that phone number at that shop.',
+          'We email you a confirmation code, the booking confirmation with a link to cancel, a reminder the day before, and a message if the shop cancels or moves the booking.',
+          "The confirmation code is stored only in a form that can't be read. To prevent abuse we record the IP address and time of codes sent and booking attempts.",
+          "After a confirmed code, your browser remembers a token for that email, so booking again with the same email on that device doesn't need a code.",
+          'Before a code is sent, Cloudflare Turnstile checks that a person, not a program, is using the page.',
+        ],
+      },
       { type: 'h3', text: 'Website' },
       {
         type: 'ul',
@@ -455,6 +504,11 @@ export const privacyContent: LocalizedLegalDoc = {
             'Sign-in (browser storage)',
             'Keeps you signed in. Necessary.',
             'Until you sign out',
+          ],
+          [
+            'chairo-booking-device:<email> (browser storage)',
+            "Remembers that an email was confirmed with a code for online booking, so it isn't asked for again. Set only when you confirm a code.",
+            '90 days',
           ],
           [
             '_ga',
@@ -496,6 +550,10 @@ export const privacyContent: LocalizedLegalDoc = {
           [
             'Booking appointments and running the shop',
             'Performance of a contract',
+          ],
+          [
+            "Online booking through a shop's link and the emails about that booking (code, confirmation, reminder, cancellation or move)",
+            'Performance of a contract, at your request for a booking',
           ],
           [
             'In-app notifications about appointments',
@@ -545,11 +603,11 @@ export const privacyContent: LocalizedLegalDoc = {
           ],
           [
             'Resend',
-            'Sending account emails and the early access welcome email, plus internal alerts to us. Alerts only say that a new bug report or privacy request arrived, with no personal data.',
+            'Sending account emails, the early access welcome email, emails about bookings made online (code, confirmation, reminder, cancellation, move), plus internal alerts to us. Alerts only say that a new bug report or privacy request arrived, with no personal data.',
           ],
           [
             'Cloudflare',
-            'Hosting the website and forwarding email sent to support@ and privacy@',
+            'Hosting the website, the Turnstile check on early access sign-up and online booking, and forwarding email sent to support@ and privacy@',
           ],
           [
             'Google (Gmail)',
@@ -629,6 +687,14 @@ export const privacyContent: LocalizedLegalDoc = {
           [
             'Appointments of people without an account',
             'While the shop uses Chairo, or until you ask us to delete them',
+          ],
+          [
+            "Bookings made online through a shop's link (name, email, phone, note)",
+            'While the shop uses Chairo, or until you ask us to delete them',
+          ],
+          [
+            'Confirmation codes, IP addresses and records of online booking attempts',
+            '24 hours',
           ],
           [
             'Emails sent to support@ and privacy@',
