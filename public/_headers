@@ -45,3 +45,7 @@
   X-Robots-Tag: noindex
 /en/join/*
   X-Robots-Tag: noindex
+/book/*
+  X-Robots-Tag: noindex
+/en/book/*
+  X-Robots-Tag: noindex

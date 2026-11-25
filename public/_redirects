@@ -11,5 +11,7 @@
 /en/invite/*                 /app-shell 200
 /join/*                      /app-shell 200
 /en/join/*                   /app-shell 200
+/book/*                      /app-shell 200
+/en/book/*                   /app-shell 200
 /admin                       /app-shell 200
 /admin/*                     /app-shell 200
