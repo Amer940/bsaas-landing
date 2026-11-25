@@ -28,6 +28,8 @@ interface BookContent {
 
   timeTitle: string
   noDays: string
+  earlierDays: string
+  laterDays: string
   noSlots: string
   slotTakenNotice: string
 
@@ -112,6 +114,8 @@ export const bookContent: Record<Locale, BookContent> = {
 
     timeTitle: 'Izaberi dan i vrijeme',
     noDays: 'Nema slobodnih termina u narednim sedmicama.',
+    earlierDays: 'Raniji dani',
+    laterDays: 'Kasniji dani',
     noSlots: 'Za ovaj dan više nema slobodnih termina.',
     slotTakenNotice:
       'Neko je upravo zauzeo to vrijeme. Izaberi neko od preostalih.',
@@ -227,6 +231,8 @@ export const bookContent: Record<Locale, BookContent> = {
 
     timeTitle: 'Choose a day and time',
     noDays: 'No free times in the coming weeks.',
+    earlierDays: 'Earlier days',
+    laterDays: 'Later days',
     noSlots: 'No free times left on this day.',
     slotTakenNotice:
       'Someone just took that time. Choose one of the times still free.',

@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import {
   Avatar,
   LoadFailed,
@@ -231,6 +231,38 @@ export function TimeStep({
       ?.scrollIntoView({ block: 'nearest', inline: 'center' })
   }, [activeDay, days.data])
 
+  // Desktop: arrows page the strip, and a vertical wheel scrolls it sideways
+  // (a mouse has no sideways swipe). Arrows hide at either end.
+  const [edges, setEdges] = useState({ start: true, end: true })
+  useEffect(() => {
+    const el = strip.current
+    if (!el) return
+    const update = () =>
+      setEdges({
+        start: el.scrollLeft <= 1,
+        end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 1,
+      })
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return
+      if (el.scrollWidth <= el.clientWidth) return
+      e.preventDefault()
+      el.scrollLeft += e.deltaY
+    }
+    update()
+    el.addEventListener('scroll', update, { passive: true })
+    el.addEventListener('wheel', onWheel, { passive: false })
+    window.addEventListener('resize', update)
+    return () => {
+      el.removeEventListener('scroll', update)
+      el.removeEventListener('wheel', onWheel)
+      window.removeEventListener('resize', update)
+    }
+  }, [days.data])
+  const page = (dir: 1 | -1) => {
+    const el = strip.current
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' })
+  }
+
   return (
     <>
       <StepTitle body={`${barber.display_name} · ${service.name}`}>
@@ -246,9 +278,31 @@ export function TimeStep({
           <Notice tone="info">{c.noDays}</Notice>
         ) : (
           <>
-            <p className="m-0 text-sm font-bold text-foreground/65 first-letter:uppercase">
-              {monthLabel(activeDay, locale)}
-            </p>
+            <div className="flex items-center justify-between">
+              <p className="m-0 text-sm font-bold text-foreground/65 first-letter:uppercase">
+                {monthLabel(activeDay, locale)}
+              </p>
+              <div className="flex gap-1">
+                <button
+                  type="button"
+                  onClick={() => page(-1)}
+                  disabled={edges.start}
+                  aria-label={c.earlierDays}
+                  className="grid size-8 place-items-center rounded-full bg-white/8 transition-colors hover:bg-white/12 focus-visible:ring-2 focus-visible:ring-foreground/40 focus-visible:outline-none disabled:opacity-30"
+                >
+                  <ChevronLeft className="size-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => page(1)}
+                  disabled={edges.end}
+                  aria-label={c.laterDays}
+                  className="grid size-8 place-items-center rounded-full bg-white/8 transition-colors hover:bg-white/12 focus-visible:ring-2 focus-visible:ring-foreground/40 focus-visible:outline-none disabled:opacity-30"
+                >
+                  <ChevronRight className="size-4" />
+                </button>
+              </div>
+            </div>
             <div
               ref={strip}
               className="-mx-6 mt-2 flex gap-2 overflow-x-auto px-6 pb-2 [scrollbar-width:none] md:-mx-9 md:px-9"
