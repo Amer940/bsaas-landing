@@ -186,7 +186,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'Ima li chairo za Android i iPhone?',
           answer:
-            'Android verzija dolazi prva, a verzija za iPhone stiže uskoro. Salon i klijenti koriste istu aplikaciju: ti upravljaš rasporedom, a klijenti zakazuju termine.',
+            'Da, chairo je dostupan na Google Playu i App Storeu, za sve. Salon i klijenti koriste istu aplikaciju: ti upravljaš rasporedom, a klijenti zakazuju termine.',
         },
         {
           title: 'Koliko košta chairo?',
@@ -333,7 +333,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         {
           title: 'Is chairo available on Android and iPhone?',
           answer:
-            'The Android version comes first, and the iPhone version is coming soon. Salons and clients use the same app: you manage the schedule, clients book appointments.',
+            'Yes, chairo is on Google Play and the App Store, open to everyone. Salons and clients use the same app: you manage the schedule, clients book appointments.',
         },
         {
           title: 'How much does chairo cost?',
