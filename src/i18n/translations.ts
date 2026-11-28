@@ -55,7 +55,6 @@ export function unlocalizePath(pathname: string): string {
 export const translations = {
   bs: {
     'nav.howItWorks': 'Kako radi',
-    'nav.pricing': 'Cijena',
     'nav.faq': 'Pitanja',
     'nav.cta': 'Otvori svoj salon',
     'nav.home': 'Početna',
@@ -78,7 +77,6 @@ export const translations = {
   },
   en: {
     'nav.howItWorks': 'How it works',
-    'nav.pricing': 'Pricing',
     'nav.faq': 'FAQ',
     'nav.cta': 'Create your business',
     'nav.home': 'Home',

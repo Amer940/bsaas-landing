@@ -66,11 +66,6 @@ export const deleteAccountContent: LocalizedLegalDoc = {
             'Dokaz da smo zahtjev obradili',
             '3 godine',
           ],
-          [
-            'Podaci o plaćanju kod Lemon Squeezy',
-            'Zakonske obaveze prodavca',
-            'Prema pravilima Lemon Squeezy',
-          ],
         ],
       },
 
@@ -150,11 +145,6 @@ export const deleteAccountContent: LocalizedLegalDoc = {
             'Record of a privacy request, without the message text',
             'Proof that we handled it',
             '3 years',
-          ],
-          [
-            'Payment records at Lemon Squeezy',
-            "The seller's legal obligations",
-            "Under Lemon Squeezy's rules",
           ],
         ],
       },

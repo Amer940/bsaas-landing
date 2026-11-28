@@ -3,7 +3,7 @@ import type { LocalizedLegalDoc } from '#/components/legal/legal-page'
 export const privacyContent: LocalizedLegalDoc = {
   bs: {
     title: 'Politika privatnosti',
-    updated: 'Posljednja izmjena: 25. novembar 2026.',
+    updated: 'Posljednja izmjena: 28. novembar 2026.',
     blocks: [
       {
         type: 'p',
@@ -77,7 +77,6 @@ export const privacyContent: LocalizedLegalDoc = {
         items: [
           'Profil salona: naziv, opis, adresa, telefon, vremenska zona, usluge, cijene i pravila rezervacije.',
           'Fotografije salona (logo, naslovna i galerija). One su javno vidljive.',
-          'Pretplata: plan, status i datum isteka.',
         ],
       },
       { type: 'h3', text: 'Osobe bez korisničkog računa' },
@@ -192,7 +191,6 @@ export const privacyContent: LocalizedLegalDoc = {
             'Analitika posjeta web stranici (Google Analytics)',
             'Vaš pristanak, koji možete povući bilo kada',
           ],
-          ['Naplata pretplate vlasnicima salona', 'Izvršenje ugovora'],
         ],
       },
 
@@ -234,10 +232,6 @@ export const privacyContent: LocalizedLegalDoc = {
             'Statistika posjeta web stranici, samo ako prihvatite kolačiće. Isključili smo Google signale i korištenje podataka za reklame.',
           ],
           [
-            'Lemon Squeezy',
-            'Naplata pretplate vlasnicima salona. Podatke o kartici obrađuje Lemon Squeezy; mi ih ne vidimo.',
-          ],
-          [
             'Apple i Google',
             'Preuzimanje aplikacije i prijava putem Google ili Apple računa, prema njihovim pravilima privatnosti',
           ],
@@ -263,7 +257,7 @@ export const privacyContent: LocalizedLegalDoc = {
       { type: 'h2', text: '6. Prijenos podataka izvan BiH' },
       {
         type: 'p',
-        text: 'Naša baza podataka nalazi se u Evropskoj uniji. Neki pružaoci usluga (Supabase, Resend, Cloudflare, Google, Apple, Expo i Lemon Squeezy) su kompanije iz SAD-a i mogu obrađivati podatke izvan BiH i EU. Za takve prijenose oslanjamo se na njihove ugovorne zaštite, kao što su standardne ugovorne klauzule.',
+        text: 'Naša baza podataka nalazi se u Evropskoj uniji. Neki pružaoci usluga (Supabase, Resend, Cloudflare, Google, Apple i Expo) su kompanije iz SAD-a i mogu obrađivati podatke izvan BiH i EU. Za takve prijenose oslanjamo se na njihove ugovorne zaštite, kao što su standardne ugovorne klauzule.',
       },
 
       { type: 'h2', text: '7. Koliko dugo čuvamo podatke' },
@@ -378,7 +372,7 @@ export const privacyContent: LocalizedLegalDoc = {
 
   en: {
     title: 'Privacy policy',
-    updated: 'Last updated: 25 November 2026',
+    updated: 'Last updated: 28 November 2026',
     blocks: [
       {
         type: 'p',
@@ -452,7 +446,6 @@ export const privacyContent: LocalizedLegalDoc = {
         items: [
           'Shop profile: name, description, address, phone, time zone, services, prices and booking rules.',
           'Shop photos (logo, cover and gallery). These are public.',
-          'Subscription: plan, status and end date.',
         ],
       },
       { type: 'h3', text: 'People without an account' },
@@ -576,7 +569,6 @@ export const privacyContent: LocalizedLegalDoc = {
             'Website visit analytics (Google Analytics)',
             'Your consent, which you can withdraw at any time',
           ],
-          ['Charging shop owners a subscription', 'Performance of a contract'],
         ],
       },
 
@@ -618,10 +610,6 @@ export const privacyContent: LocalizedLegalDoc = {
             "Website visit statistics, only if you accept cookies. We've turned off Google signals and any use of the data for ads.",
           ],
           [
-            'Lemon Squeezy',
-            'Charging shop owners a subscription. Lemon Squeezy handles card details; we never see them.',
-          ],
-          [
             'Apple and Google',
             'App downloads and sign-in with Google or Apple, under their own privacy policies',
           ],
@@ -647,7 +635,7 @@ export const privacyContent: LocalizedLegalDoc = {
       { type: 'h2', text: '6. Transfers outside Bosnia and Herzegovina' },
       {
         type: 'p',
-        text: 'Our database is in the European Union. Some providers (Supabase, Resend, Cloudflare, Google, Apple, Expo and Lemon Squeezy) are US companies and may process data outside BiH and the EU. For these transfers we rely on their contractual safeguards, such as standard contractual clauses.',
+        text: 'Our database is in the European Union. Some providers (Supabase, Resend, Cloudflare, Google, Apple and Expo) are US companies and may process data outside BiH and the EU. For these transfers we rely on their contractual safeguards, such as standard contractual clauses.',
       },
 
       { type: 'h2', text: '7. How long we keep data' },

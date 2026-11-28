@@ -5,14 +5,12 @@ import { CTASection } from '#/components/sections/CTA-section'
 import { FAQSection } from '#/components/sections/faq-sections'
 import StepsSection from '#/components/sections/steps-section'
 import Hero from '#/components/sections/hero-section'
-import { PricingSection } from '#/components/sections/pricing-section'
 import { Footer } from '#/components/sections/footer'
 import { AboutSection } from '#/components/sections/about-section'
 import { ORGANIZATION_ID, WEBSITE_ID, jsonLdScript, pageHead } from '#/i18n/seo'
 import { landingContent } from '#/content/landing'
 import { SITE_URL, localizePath, routeLocale } from '#/i18n/translations'
 import type { Locale } from '#/i18n/translations'
-import { SHOW_PRICING } from '#/lib/features'
 
 export const Route = createFileRoute('/{-$locale}/')({
   head: ({ params }) => {
@@ -27,8 +25,7 @@ export const Route = createFileRoute('/{-$locale}/')({
 
 /**
  * Schema.org data for search engines and AI answers: who makes Chairo, what
- * the app is, and the FAQ. Only what the page itself says: free during early
- * access, Android first (no store link until the listing is public). Add
+ * the app is, and the FAQ. Only what the page itself says: free, Android first (no store link until the listing is public). Add
  * profile URLs to `sameAs` as they go live.
  */
 function structuredData(locale: Locale) {
@@ -89,10 +86,7 @@ function structuredData(locale: Locale) {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'BAM',
-          description:
-            locale === 'bs'
-              ? 'Besplatno tokom ranog pristupa'
-              : 'Free during early access',
+          description: locale === 'bs' ? 'Besplatno' : 'Free',
         },
         publisher: organization,
       },
@@ -119,7 +113,6 @@ function Home() {
         <FeaturesGridSection />
         <StepsSection />
         <AboutSection />
-        {SHOW_PRICING && <PricingSection />}
         <CTASection />
         <FAQSection />
       </main>

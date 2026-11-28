@@ -4,8 +4,8 @@ export const termsContent: LocalizedLegalDoc = {
   bs: {
     title: 'Uslovi korištenja',
     description:
-      'Uslovi korištenja aplikacije Chairo za zakazivanje termina u frizerskim salonima: računi, termini, nedolasci, plaćanje i vaša prava. Važi pravo BiH.',
-    updated: 'Posljednja izmjena: 19. oktobar 2026.',
+      'Uslovi korištenja aplikacije Chairo za zakazivanje termina u frizerskim salonima: računi, termini, nedolasci i vaša prava. Važi pravo BiH.',
+    updated: 'Posljednja izmjena: 28. novembar 2026.',
     blocks: [
       { type: 'h2', text: '1. O usluzi' },
       {
@@ -64,20 +64,10 @@ export const termsContent: LocalizedLegalDoc = {
         ],
       },
 
-      { type: 'h2', text: '7. Pretplata za vlasnike salona' },
+      { type: 'h2', text: '7. Cijena' },
       {
         type: 'p',
-        text: 'Korištenje aplikacije za klijente je besplatno. Vlasnici salona plaćaju pretplatu:',
-      },
-      {
-        type: 'ul',
-        items: [
-          'pretplata se kupuje samo na web stranici chairo.app,',
-          'naplatu vrši Lemon Squeezy kao prodavac, prema svojim uslovima,',
-          'cijena i period naplate prikazani su prije plaćanja,',
-          'pretplatu možete otkazati u bilo kojem trenutku, a vrijedi do kraja plaćenog perioda,',
-          'uplaćeni iznosi se ne vraćaju.',
-        ],
+        text: 'Chairo je besplatan, i za klijente i za vlasnike salona.',
       },
 
       { type: 'h2', text: '8. Vaš sadržaj' },
@@ -124,8 +114,8 @@ export const termsContent: LocalizedLegalDoc = {
   en: {
     title: 'Terms of use',
     description:
-      'Terms of use for Chairo, the booking app for barbershops and hair salons: accounts, bookings, no-shows, payments and your rights. Governed by the law of BiH.',
-    updated: 'Last updated: 19 October 2026',
+      'Terms of use for Chairo, the booking app for barbershops and hair salons: accounts, bookings, no-shows and your rights. Governed by the law of BiH.',
+    updated: 'Last updated: 28 November 2026',
     blocks: [
       { type: 'h2', text: '1. About the service' },
       {
@@ -184,20 +174,10 @@ export const termsContent: LocalizedLegalDoc = {
         ],
       },
 
-      { type: 'h2', text: '7. Subscription for shop owners' },
+      { type: 'h2', text: '7. Price' },
       {
         type: 'p',
-        text: 'The app is free for clients. Shop owners pay a subscription:',
-      },
-      {
-        type: 'ul',
-        items: [
-          'it can be bought only on the chairo.app website,',
-          'payment is handled by Lemon Squeezy as the seller, under its own terms,',
-          'the price and billing period are shown before you pay,',
-          'you can cancel at any time, and the subscription runs until the end of the paid period,',
-          'payments are non-refundable.',
-        ],
+        text: 'Chairo is free, for clients and shop owners alike.',
       },
 
       { type: 'h2', text: '8. Your content' },

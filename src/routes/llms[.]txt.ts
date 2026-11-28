@@ -26,7 +26,7 @@ ${en.about.paragraphs.join('\n\n')}
 - Languages: Bosnian and English
 - Status: early access; clients can download the app, salons apply for a business profile at ${SITE_URL}/#prijava
 - Platforms: iPhone (${APP_STORE_URL}) and Android (${PLAY_STORE_URL})
-- Price: free during early access
+- Price: free
 - Contact: support@chairo.app
 
 ## Pages

@@ -26,18 +26,6 @@ interface LandingContent {
     body: string
     items: Array<{ title: string; text: string }>
   }
-  pricing: {
-    eyebrow: string
-    title: string
-    plan: string
-    price: string
-    period: string
-    description: string
-    cta: string
-    note: string
-    includedLabel: string
-    features: Array<string>
-  }
   about: {
     eyebrow: string
     title: string
@@ -72,7 +60,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       title: 'Klijenti zakazuju online.\nTi samo ==šišaš==.',
       body: 'Chairo je aplikacija za online zakazivanje termina za frizere, barbere i salone. Nema više poruka i poziva: cijeli dan vidiš na jednom ekranu, s terminima, pauzama, nedolascima i zaradom.',
       businessPrompt: 'Imaš salon ili radiš kao barber?',
-      note: 'Besplatno tokom ranog pristupa',
+      note: 'Besplatno',
       imageAlt:
         'chairo aplikacija: današnji raspored salona i obavijest o novom terminu',
     },
@@ -121,32 +109,13 @@ export const landingContent: Record<Locale, LandingContent> = {
         },
       ],
     },
-    pricing: {
-      eyebrow: 'Cijena',
-      title: 'Jedna cijena.\n==Sve== uključeno.',
-      plan: 'Jedna stolica · mjesečno',
-      price: '29 KM',
-      period: '/ mjesečno',
-      description:
-        'Za salone koji žele brže zakazivanje, manje nedolazaka i mirniji dan.',
-      cta: 'Uzmi svoju stolicu',
-      note: '14 dana besplatno · otkaži kad hoćeš',
-      includedLabel: 'Sve uključeno',
-      features: [
-        'Online zakazivanje 0–24',
-        'SMS i email podsjetnici',
-        'Tim, šabloni i neradni dani',
-        'Historija klijenata i stalni termini',
-        'Pregled zarade i nedolazaka',
-      ],
-    },
     about: {
       eyebrow: 'Šta je chairo',
       title: 'Napravljeno za salone,\nbilo ==gdje==.',
       paragraphs: [
         'Chairo je aplikacija za zakazivanje termina namijenjena frizerima, barberima i frizerskim salonima. Klijenti sami biraju frizera, uslugu i slobodan termin, 0–24, a ti sve vidiš u jednom rasporedu, bez dopisivanja na Instagramu i Viberu i bez poziva usred šišanja.',
         'Radi jednako dobro za barbera sa jednom stolicom i za salon sa cijelim timom. Svaki frizer ima svoj raspored, radne sedmice postavljaš šablonima, a slobodne dane frizeri traže u aplikaciji. Stalni klijenti mogu imati stalni termin, pa se isti dogovor ne ponavlja svake sedmice.',
-        'Aplikacija je na bosanskom i engleskom jeziku, a tokom ranog pristupa je besplatna.',
+        'Aplikacija je na bosanskom i engleskom jeziku i besplatna je.',
       ],
     },
     cta: {
@@ -190,8 +159,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         },
         {
           title: 'Koliko košta chairo?',
-          answer:
-            'Tokom ranog pristupa chairo je besplatan. Cijenu za period nakon ranog pristupa objavit ćemo na vrijeme, prije nego što bilo šta treba platiti.',
+          answer: 'Chairo je besplatan, i za salone i za klijente.',
         },
         {
           title: 'Za koga je chairo i gdje radi?',
@@ -218,7 +186,7 @@ export const landingContent: Record<Locale, LandingContent> = {
       title: 'Clients book online.\nYou just ==cut==.',
       body: 'Chairo is an online booking app for barbers, hairdressers and salons. No more DMs and calls: see your whole day on one screen, with bookings, breaks, no-shows and earnings.',
       businessPrompt: 'Own a salon or work as a barber?',
-      note: 'Free during early access',
+      note: 'Free',
       imageAlt:
         "The chairo app: today's salon schedule and a new booking notification",
     },
@@ -268,32 +236,13 @@ export const landingContent: Record<Locale, LandingContent> = {
         },
       ],
     },
-    pricing: {
-      eyebrow: 'Pricing',
-      title: 'One price.\n==Everything== included.',
-      plan: 'One chair · monthly',
-      price: '29 KM',
-      period: '/ month',
-      description:
-        'For salons that want faster booking, fewer no-shows and a calmer day.',
-      cta: 'Claim your chair',
-      note: '14 days free · cancel anytime',
-      includedLabel: 'Everything included',
-      features: [
-        'Online booking 24/7',
-        'SMS and email reminders',
-        'Team, templates and days off',
-        'Client history and recurring appointments',
-        'Earnings and no-show overview',
-      ],
-    },
     about: {
       eyebrow: 'What chairo is',
       title: 'Made for salons,\n==anywhere==.',
       paragraphs: [
         'Chairo is an appointment booking app for barbers, hairdressers and hair salons. Clients pick their barber, service and an open slot themselves, 24/7, and you see everything in one schedule, without DMs on Instagram and Viber or calls in the middle of a cut.',
         'It works just as well for a barber with one chair as for a salon with a whole team. Every barber has their own schedule, you set up working weeks with templates, and barbers request days off in the app. Regular clients can have a recurring appointment, so the same booking never has to be arranged twice.',
-        'The app is in Bosnian and English, and it is free during early access.',
+        'The app is in Bosnian and English, and it is free.',
       ],
     },
     cta: {
@@ -337,8 +286,7 @@ export const landingContent: Record<Locale, LandingContent> = {
         },
         {
           title: 'How much does chairo cost?',
-          answer:
-            "Chairo is free during early access. We'll announce pricing for after early access well in advance, before anything has to be paid.",
+          answer: 'Chairo is free, for salons and clients alike.',
         },
         {
           title: 'Who is chairo for, and where does it work?',
